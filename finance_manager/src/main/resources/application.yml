@@ -1,0 +1,16 @@
+logging:
+  level:
+    org.springframework: ERROR
+
+currency-api:
+  exchangerate:
+    url: https://api.exchangerate.host
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        decode404: false
