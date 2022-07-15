@@ -1,0 +1,18 @@
+{
+  "motd": {
+    "msg": "placeholder",
+    "url": "https://exchangerate.host"
+  },
+  "success": true,
+  "query": {
+    "from": "USD",
+    "to": "EUR",
+    "amount": 1
+  },
+  "info": {
+    "rate": 0.997226
+  },
+  "historical": false,
+  "date": "2022-07-15",
+  "result": 0.997226
+}

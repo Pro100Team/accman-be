@@ -11,3 +11,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: baeldung
     password: baeldung
+
+currency-api:
+  exchangerate:
+    url: http://localhost:9091
