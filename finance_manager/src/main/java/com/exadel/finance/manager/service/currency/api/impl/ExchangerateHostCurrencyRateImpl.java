@@ -16,13 +16,13 @@ public class ExchangerateHostCurrencyRateImpl implements CurrencyRateApi {
 
     @Override
     public CurrencyRateDto getAllRatesForBaseCurrency(Currency baseCurrency) {
-        log.debug("getAllRatesForBaseCurrency is called for currency: " + baseCurrency);
+        log.debug("getAllRatesForBaseCurrency() is called for currency: " + baseCurrency);
         return currencyApi.getAllRatesForBaseCurrency(baseCurrency.value());
     }
 
     @Override
     public CurrencyRateDto getRateBetweenCurrencyPair(Currency from, Currency to, int amount) {
-        log.debug("getRateBetweenCurrencyPair is called for currency "
+        log.debug("getRateBetweenCurrencyPair() is called for currency "
                 + "FROM: {}, TO: {}, AMOUNT: {} ", from, to, amount);
         return currencyApi.getRateBetweenCurrencyPair(from.value(), to.value(), amount);
     }
