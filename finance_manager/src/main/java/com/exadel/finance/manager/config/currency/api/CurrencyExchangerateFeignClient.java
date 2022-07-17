@@ -1,6 +1,6 @@
 package com.exadel.finance.manager.config.currency.api;
 
-import com.exadel.finance.manager.model.dto.CurrencyRateDto;
+import com.exadel.finance.manager.model.dto.response.CurrencyRateDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

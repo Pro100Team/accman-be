@@ -1,4 +1,4 @@
-package com.exadel.finance.manager.model.dto;
+package com.exadel.finance.manager.model.dto.response;
 
 import com.exadel.finance.manager.model.currency.api.jakson.Query;
 import com.exadel.finance.manager.model.currency.api.jakson.Rates;

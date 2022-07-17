@@ -2,6 +2,20 @@ logging:
   level:
     org.springframework: ERROR
 
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: baeldung
+    password: baeldung
+
 currency-api:
   exchangerate:
     url: https://api.exchangerate.host

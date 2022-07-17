@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.exadel.finance.manager.config.AbstractTest;
-import com.exadel.finance.manager.model.dto.CurrencyRateDto;
+import com.exadel.finance.manager.model.dto.response.CurrencyRateDto;
 import feign.FeignException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
