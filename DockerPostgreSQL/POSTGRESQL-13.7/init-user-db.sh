@@ -13,7 +13,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
             CONNECTION LIMIT = -1;
 EOSQL
 
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "db1" <<-EOSQL
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "accman" <<-EOSQL
     grant ALL on SCHEMA public to dbu;
 EOSQL
 
