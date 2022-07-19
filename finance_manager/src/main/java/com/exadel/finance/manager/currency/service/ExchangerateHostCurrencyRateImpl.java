@@ -1,9 +1,9 @@
-package com.exadel.finance.manager.service.currency.api.impl;
+package com.exadel.finance.manager.currency.service;
 
-import com.exadel.finance.manager.config.currency.api.CurrencyExchangerateFeignClient;
-import com.exadel.finance.manager.config.currency.list.Currency;
-import com.exadel.finance.manager.model.dto.CurrencyRateDto;
-import com.exadel.finance.manager.service.CurrencyRateApi;
+import com.exadel.finance.manager.currency.config.api.CurrencyExchangerateFeignClient;
+import com.exadel.finance.manager.currency.config.list.Currency;
+import com.exadel.finance.manager.currency.model.dto.CurrencyRateDto;
+import com.exadel.finance.manager.currency.service.api.CurrencyRateApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
