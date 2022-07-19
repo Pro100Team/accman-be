@@ -28,12 +28,18 @@ public class WalletController {
     private final WalletService walletService;
     private final UserService userService;
 
+    @GetMapping
+    public ResponseEntity<List<WalletResponseDto>> getWalletsBySpecification(
+            @RequestParam(value = "search") String search) {
+        return ResponseEntity.ok(mapToList(walletService.findAll(search), WalletResponseDto.class));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<WalletResponseDto> getWalletById(@PathVariable("id") Long walletId) {
         return ResponseEntity.ok(map(walletService.findById(walletId), WalletResponseDto.class));
     }
 
-    @GetMapping
+    @GetMapping("/personal")
     public ResponseEntity<List<WalletResponseDto>> getAllUserWallets(
             @RequestParam(name = "accountId") Long userId) {
         return ResponseEntity.ok(mapToList(walletService
@@ -42,14 +48,8 @@ public class WalletController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteWalletById(@PathVariable("id") Long walletId) {
-        Wallet wallet = walletService.findById(walletId);
-        if (wallet.getIsDefault()) {
-            return ResponseEntity.badRequest().body("This is default wallet. "
-                    + "Please mark another wallet as default before deletion.");
-        }
         walletService.deleteById(walletId);
-        return ResponseEntity.ok(map(wallet, WalletResponseDto.class).getName()
-                + " wallet has been deleted successfully");
+        return ResponseEntity.ok("Wallet has been deleted successfully");
     }
 
     @PutMapping
@@ -58,7 +58,6 @@ public class WalletController {
             @RequestBody @Valid WalletRequestDto walletRequestDto) {
         Wallet wallet = map(walletRequestDto, Wallet.class);
         wallet.setUser(userService.findById(userId));
-        wallet = walletService.saveOrUpdate(walletService.setUniqueDefaultWallet(wallet));
-        return ResponseEntity.ok(map(wallet, WalletResponseDto.class));
+        return ResponseEntity.ok(map(walletService.saveOrUpdate(wallet), WalletResponseDto.class));
     }
 }

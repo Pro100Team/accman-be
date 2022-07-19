@@ -5,6 +5,7 @@ import com.exadel.finance.manager.validation.Password;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanWrapperImpl;
 
 @Log4j2
@@ -25,6 +26,6 @@ public class PasswordValidator implements ConstraintValidator<Password, UserRegi
                 .getPropertyValue(field);
         Object fieldMatchValue = new BeanWrapperImpl(registrationDto)
                 .getPropertyValue(fieldMatch);
-        return fieldValue != null && fieldValue.equals(fieldMatchValue);
+        return StringUtils.equals((CharSequence) fieldValue, (CharSequence) fieldMatchValue);
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,22 +27,18 @@ public class UserController {
 
     @PostMapping("/register")
     public UserResponseDto create(@RequestBody @Valid UserRegistrationDto userDto) {
-        User user = userService.save(map(userDto, User.class));
+        User user = userService.saveOrUpdate(map(userDto, User.class));
         return map(user, UserResponseDto.class);
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        return ResponseEntity.ok(mapToList(userService.findAll(), UserResponseDto.class));
+    public ResponseEntity<List<UserResponseDto>> getAllUsersBySpecification(
+            @RequestParam(value = "search") String search) {
+        return ResponseEntity.ok(mapToList(userService.findAll(search), UserResponseDto.class));
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable("id") Long userId) {
         return ResponseEntity.ok(map(userService.findById(userId), UserResponseDto.class));
-    }
-
-    @GetMapping("/email/{email}")
-    public ResponseEntity<UserResponseDto> getUserByEmail(@PathVariable("email") String userEmail) {
-        return ResponseEntity.ok(map(userService.findByEmail(userEmail), UserResponseDto.class));
     }
 }

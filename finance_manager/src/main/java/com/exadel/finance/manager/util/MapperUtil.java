@@ -2,16 +2,16 @@ package com.exadel.finance.manager.util;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.dozer.Mapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public final class MapperUtil {
-    private static Mapper mapper;
+    private static ModelMapper mapper;
 
     @Autowired
-    public MapperUtil(Mapper mapper) {
+    public MapperUtil(ModelMapper mapper) {
         MapperUtil.mapper = mapper;
     }
 

@@ -11,16 +11,19 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "roles")
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
+    @ToString.Exclude
     private Long id;
 
     @Column(name = "role_name", unique = true, nullable = false)
@@ -29,11 +32,5 @@ public class Role {
 
     public Role(UserRoleName roleName) {
         this.roleName = roleName;
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "("
-                + "roleName = " + roleName.name() + ")";
     }
 }

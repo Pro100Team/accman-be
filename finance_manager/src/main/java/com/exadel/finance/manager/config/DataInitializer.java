@@ -32,8 +32,8 @@ public class DataInitializer {
         List<Role> roles = roleService.findAll();
 
         if (roles.isEmpty()) {
-            roleService.save(new Role(ADMIN));
-            roleService.save(new Role(USER));
+            roleService.saveOrUpdate(new Role(ADMIN));
+            roleService.saveOrUpdate(new Role(USER));
             roles = roleService.findAll();
             log.debug(String.format("Roles injected: %s", roles.toString()));
         }
@@ -44,7 +44,7 @@ public class DataInitializer {
             bobAdmin.setEmail("bob@i.ua");
             bobAdmin.setPassword("1234");
             bobAdmin.setName("bob");
-            bobAdmin = userService.save(bobAdmin);
+            bobAdmin = userService.saveOrUpdate(bobAdmin);
 
             Wallet bobWallet1 = new Wallet(bobAdmin, "cash",
                     Currency.EUR, BigDecimal.valueOf(124.3345), true);
@@ -58,7 +58,7 @@ public class DataInitializer {
             aliceUser.setEmail("alice@i.ua");
             aliceUser.setPassword("1234");
             aliceUser.setName("alice");
-            aliceUser = userService.save(aliceUser);
+            aliceUser = userService.saveOrUpdate(aliceUser);
 
             Wallet aliceWallet = new Wallet(aliceUser, "cash",
                     Currency.AED, BigDecimal.valueOf(999.33), true);
@@ -69,7 +69,7 @@ public class DataInitializer {
             thirdUserNoWallet.setEmail("another@i.ua");
             thirdUserNoWallet.setPassword("1234");
             thirdUserNoWallet.setName("another");
-            thirdUserNoWallet = userService.save(thirdUserNoWallet);
+            userService.saveOrUpdate(thirdUserNoWallet);
 
             log.debug("User and wallets have been injected");
         }

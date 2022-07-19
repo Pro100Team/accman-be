@@ -3,10 +3,11 @@ package com.exadel.finance.manager.repository;
 import com.exadel.finance.manager.model.User;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends SpecificationRepository<User, Long> {
     @Query("FROM User u JOIN FETCH u.roles WHERE u.id = ?1")
     Optional<User> findById(Long id);
 
