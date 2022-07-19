@@ -1,18 +1,24 @@
 # accman-be
 Account managed BE
 
-Local DB
+<br>Local DB
+<pre>
 localhost:5432
 DB: accman
 sql user: dbu
 sql user password: dbpass
+</pre>
 
-How to run Docker DB Container for local development.
-On Windows cmd: 
+<br>How to run Docker DB Container for local development.
+<br>On Windows cmd: 
+<pre>
 cd DockerPostgreSQL
 runPostgreSql.bat  
+</pre>
 
-On Linux shell: 
+<br>On Linux shell: 
+<pre>
 cd DockerPostgreSQL
 ./runPostgreSql.sh
+</pre>
 
