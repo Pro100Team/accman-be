@@ -1,0 +1,32 @@
+logging:
+  level:
+    org.springframework: ERROR
+
+currency-api:
+  exchangerate:
+    url: https://api.exchangerate.host
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        decode404: false
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  liquibase:
+    change-log: classpath:db/changelog/liquibase-changelog.yaml
+    enabled: true
