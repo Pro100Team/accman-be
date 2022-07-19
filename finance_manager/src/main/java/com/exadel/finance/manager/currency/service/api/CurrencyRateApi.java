@@ -1,7 +1,7 @@
-package com.exadel.finance.manager.service;
+package com.exadel.finance.manager.currency.service.api;
 
-import com.exadel.finance.manager.config.currency.list.Currency;
-import com.exadel.finance.manager.model.dto.CurrencyRateDto;
+import com.exadel.finance.manager.currency.config.list.Currency;
+import com.exadel.finance.manager.currency.model.dto.CurrencyRateDto;
 
 public interface CurrencyRateApi {
     CurrencyRateDto getAllRatesForBaseCurrency(Currency baseCurrency);

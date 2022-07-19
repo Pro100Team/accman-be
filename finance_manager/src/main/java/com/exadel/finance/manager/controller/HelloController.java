@@ -1,4 +1,4 @@
-package com.exadel.finance.manager.controllers;
+package com.exadel.finance.manager.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.exadel.finance.manager.config.currency.list;
+package com.exadel.finance.manager.currency.config.list;
 
 public enum Currency {
     USD("USD"),
