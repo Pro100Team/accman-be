@@ -25,7 +25,7 @@ public class AbstractEntityService<T> implements GenericService<T> {
     public T findById(Long id) {
         log.debug("findById() is called for {}", id);
         return repository.findById(id).orElseThrow(
-                () -> new ObjectNotFoundException(id, "Unable to locate object in database"));
+                () -> new ObjectNotFoundException(id, "Unable to locate object in database: "));
     }
 
     @Override
