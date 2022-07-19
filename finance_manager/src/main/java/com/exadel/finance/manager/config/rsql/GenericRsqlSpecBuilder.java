@@ -1,12 +1,11 @@
 package com.exadel.finance.manager.config.rsql;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import cz.jirutka.rsql.parser.ast.ComparisonNode;
 import cz.jirutka.rsql.parser.ast.LogicalNode;
 import cz.jirutka.rsql.parser.ast.LogicalOperator;
 import cz.jirutka.rsql.parser.ast.Node;
+import java.util.List;
+import java.util.Objects;
 import org.springframework.data.jpa.domain.Specification;
 
 public class GenericRsqlSpecBuilder<T> {
@@ -22,11 +21,10 @@ public class GenericRsqlSpecBuilder<T> {
     }
 
     public Specification<T> createSpecification(LogicalNode logicalNode) {
-        List<Specification> specs = logicalNode.getChildren()
+        List<Specification<T>> specs = logicalNode.getChildren()
                 .stream()
-                .map(node -> createSpecification(node))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .map(this::createSpecification)
+                .filter(Objects::nonNull).toList();
 
         Specification<T> result = specs.get(0);
         if (logicalNode.getOperator() == LogicalOperator.AND) {
@@ -42,13 +40,12 @@ public class GenericRsqlSpecBuilder<T> {
     }
 
     public Specification<T> createSpecification(ComparisonNode comparisonNode) {
-        Specification<T> result = Specification.where(
+        return Specification.where(
                 new GenericRsqlSpecification<T>(
                         comparisonNode.getSelector(),
                         comparisonNode.getOperator(),
                         comparisonNode.getArguments()
                 )
         );
-        return result;
     }
 }

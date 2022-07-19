@@ -2,9 +2,9 @@ package com.exadel.finance.manager.service;
 
 import com.exadel.finance.manager.config.rsql.CustomRsqlVisitor;
 import com.exadel.finance.manager.repository.SpecificationRepository;
-import java.util.List;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.ObjectNotFoundException;

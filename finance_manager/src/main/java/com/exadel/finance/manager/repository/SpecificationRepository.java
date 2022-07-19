@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface SpecificationRepository<T, ID> extends JpaRepository<T, ID> {
+public interface SpecificationRepository<T, I> extends JpaRepository<T, I> {
     List<T> findAll(Specification<T> specification);
 
     List<T> findAll(Specification<T> specification, Sort sort);
