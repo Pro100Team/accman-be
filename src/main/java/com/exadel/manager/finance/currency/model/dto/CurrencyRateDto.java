@@ -1,7 +1,7 @@
 package com.exadel.manager.finance.currency.model.dto;
 
-import com.exadel.manager.finance.currency.model.currency.api.jakson.Query;
-import com.exadel.manager.finance.currency.model.currency.api.jakson.Rates;
+import com.exadel.manager.finance.currency.model.api.jakson.Query;
+import com.exadel.manager.finance.currency.model.api.jakson.Rates;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 

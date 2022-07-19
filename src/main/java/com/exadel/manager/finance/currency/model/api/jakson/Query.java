@@ -1,4 +1,4 @@
-package com.exadel.manager.finance.currency.model.currency.api.jakson;
+package com.exadel.manager.finance.currency.model.api.jakson;
 
 import lombok.Data;
 
