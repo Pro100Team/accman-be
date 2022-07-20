@@ -6,11 +6,11 @@ import com.exadel.finance.manager.repository.WalletRepository;
 import com.exadel.finance.manager.service.AbstractEntityService;
 import com.exadel.finance.manager.service.WalletService;
 import java.util.List;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
-@Log4j2
+@Slf4j
 public class WalletServiceImpl extends AbstractEntityService<Wallet> implements WalletService {
     private final WalletRepository walletRepository;
 
@@ -45,11 +45,11 @@ public class WalletServiceImpl extends AbstractEntityService<Wallet> implements 
     }
 
     private boolean isUniqueUserWalletName(Wallet createdWallet) {
-            return createdWallet.getId() != null
-                    || this.findAllByUser(createdWallet.getUser())
-                        .stream()
-                        .noneMatch(userWallet -> userWallet.getName()
-                                                .equals(createdWallet.getName()));
+        return createdWallet.getId() != null
+                || this.findAllByUser(createdWallet.getUser())
+                    .stream()
+                    .noneMatch(userWallet -> userWallet.getName()
+                                            .equals(createdWallet.getName()));
     }
 
     private Wallet selectUniqueDefaultWallet(Wallet createdWallet) {

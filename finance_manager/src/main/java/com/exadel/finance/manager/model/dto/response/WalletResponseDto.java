@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class WalletResponseDto {
     private Long id;
+    private Long userId;
     private String name;
     private BigDecimal amount;
     private Currency currency;
