@@ -11,7 +11,9 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,5 +42,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable("id") Long userId) {
         return ResponseEntity.ok(map(userService.findById(userId), UserResponseDto.class));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable("id") Long userId) {
+        userService.deleteById(userId);
+        return ResponseEntity.ok("User was marked as deleted");
     }
 }
