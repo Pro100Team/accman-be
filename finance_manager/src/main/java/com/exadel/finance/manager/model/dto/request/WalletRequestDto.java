@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class WalletRequestDto {
+    private Long id;
     @NotBlank(message = "Please enter wallet name")
     @Size(min = 3, message = "Name must be at least 3 symbols long")
     private String name;

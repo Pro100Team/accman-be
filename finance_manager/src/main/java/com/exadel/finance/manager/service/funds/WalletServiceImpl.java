@@ -45,9 +45,11 @@ public class WalletServiceImpl extends AbstractEntityService<Wallet> implements 
     }
 
     private boolean isUniqueUserWalletName(Wallet createdWallet) {
-        return this.findAllByUser(createdWallet.getUser())
-                .stream()
-                .noneMatch(userWallet -> userWallet.getName().equals(createdWallet.getName()));
+            return createdWallet.getId() != null
+                    || this.findAllByUser(createdWallet.getUser())
+                        .stream()
+                        .noneMatch(userWallet -> userWallet.getName()
+                                                .equals(createdWallet.getName()));
     }
 
     private Wallet selectUniqueDefaultWallet(Wallet createdWallet) {
