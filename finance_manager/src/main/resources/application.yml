@@ -24,9 +24,9 @@ spring:
     show-sql: true
     open-in-view: false
   datasource:
-    url: jdbc:postgresql://localhost:6000/postgres
-    username: postgres
-    password: 111
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: dbu
+    password: dbpass
   liquibase:
     change-log: classpath:db/changelog/liquibase-changelog.yaml
     enabled: true
