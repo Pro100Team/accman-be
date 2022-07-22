@@ -14,7 +14,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "wallet")
+@Table(name = "wallets")
 @Getter
 @Setter
 @NoArgsConstructor
