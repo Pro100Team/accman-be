@@ -29,4 +29,6 @@ public class Wallet {
 
     @Column(nullable = false)
     private String name;
+
+    private String owner;
 }
