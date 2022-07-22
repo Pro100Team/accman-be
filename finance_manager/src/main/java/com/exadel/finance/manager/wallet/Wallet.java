@@ -1,5 +1,6 @@
 package com.exadel.finance.manager.wallet;
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,16 +11,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "wallets")
 @Getter
 @Setter
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE wallets SET is_deleted = true WHERE id=?")
-@Where(clause = "is_deleted=false")
 @ToString
 public class Wallet {
     @Id
@@ -30,5 +27,5 @@ public class Wallet {
     @Column(nullable = false)
     private String name;
 
-    private String owner;
+    private BigDecimal amount;
 }

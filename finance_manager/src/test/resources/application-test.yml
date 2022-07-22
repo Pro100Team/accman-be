@@ -8,9 +8,9 @@ spring:
     show-sql: true
     open-in-view: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: baeldung
-    password: baeldung
+    url: jdbc:postgresql://localhost:5432/accman
+    username: dbu
+    password: dbpass
 
 currency-api:
   exchangerate:
