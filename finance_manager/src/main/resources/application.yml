@@ -26,7 +26,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/accman
     username: dbu
-    password: FAKEPASS
+    password: dbpass
   liquibase:
     change-log: classpath:db/changelog/liquibase-changelog.yaml
     enabled: true
