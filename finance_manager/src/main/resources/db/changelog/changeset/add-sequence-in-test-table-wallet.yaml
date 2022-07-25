@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: 4
-      author: gapserg
-      changes:
-        - createSequence:
-            sequenceName: hibernate_sequence
-            startValue: 1
-            incrementBy: 1

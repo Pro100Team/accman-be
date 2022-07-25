@@ -1,0 +1,25 @@
+databaseChangeLog:
+   - changeSet:
+        id: "1"
+        author: gapserg
+        changes:
+          - createTable:
+              tableName: wallets
+              columns:
+                - column:
+                    name: id
+                    type: int8
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: name
+                    type: varchar(255)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: amount
+                    type: numeric(20,2)
+                    constraints:
+                      nullable: false

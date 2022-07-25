@@ -6,6 +6,7 @@ public enum Currency {
     GBP("GBP"),
     BYR("BYR"),
     AED("AED"),
+    PLN("PLN"),
     UAH("UAH");
 
     private final String value;
