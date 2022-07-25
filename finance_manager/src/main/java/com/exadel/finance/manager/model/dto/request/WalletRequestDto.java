@@ -14,5 +14,6 @@ public class WalletRequestDto {
     private String name;
     private BigDecimal amount;
     private Currency currency;
+    private Long userId;
     private Boolean isDefault;
 }

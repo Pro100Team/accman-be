@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface WalletRepository extends SpecificationRepository<Wallet, Long> {
     List<Wallet> findAllByUser(User user);
+    Wallet findByUserId (Long user_id);
 }

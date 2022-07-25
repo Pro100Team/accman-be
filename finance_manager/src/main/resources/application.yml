@@ -13,8 +13,8 @@ spring:
     open-in-view: false
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    username: baeldung
-    password: baeldung
+    username: dbu
+    password: dbpass
   liquibase:
     change-log: classpath:db/changelog/liquibase-changelog.yaml
     enabled: true

@@ -30,20 +30,13 @@ public class WalletController {
 
     @GetMapping
     public ResponseEntity<List<WalletResponseDto>> getWalletsBySpecification(
-            @RequestParam(value = "search") String search) {
-        return ResponseEntity.ok(mapToList(walletService.findAll(search), WalletResponseDto.class));
+            @RequestParam(value = "search", required = false) String searchPredicate) {
+        return ResponseEntity.ok(mapToList(walletService.findAll(searchPredicate), WalletResponseDto.class));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<WalletResponseDto> getWalletById(@PathVariable("id") Long walletId) {
         return ResponseEntity.ok(map(walletService.findById(walletId), WalletResponseDto.class));
-    }
-
-    @GetMapping("/personal")
-    public ResponseEntity<List<WalletResponseDto>> getAllUserWallets(
-            @RequestParam(name = "accountId") Long userId) {
-        return ResponseEntity.ok(mapToList(walletService
-                .findAllByUser(userService.findById(userId)), WalletResponseDto.class));
     }
 
     @DeleteMapping("/{id}")
@@ -54,10 +47,9 @@ public class WalletController {
 
     @PutMapping
     public ResponseEntity<WalletResponseDto> saveOrUpdateWallet(
-            @RequestParam(name = "accountId") Long userId,
             @RequestBody @Valid WalletRequestDto walletRequestDto) {
         Wallet wallet = map(walletRequestDto, Wallet.class);
-        wallet.setUser(userService.findById(userId));
+        wallet.setUser(userService.findById(walletRequestDto.getUserId()));
         return ResponseEntity.ok(map(walletService.saveOrUpdate(wallet), WalletResponseDto.class));
     }
 }

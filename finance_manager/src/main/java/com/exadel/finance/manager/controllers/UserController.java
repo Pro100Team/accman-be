@@ -34,8 +34,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUsersBySpecification(
-            @RequestParam(value = "search") String search) {
-        return ResponseEntity.ok(mapToList(userService.findAll(search), UserResponseDto.class));
+            @RequestParam(value = "search") String searchPredicate) {
+        return ResponseEntity.ok(mapToList(userService.findAll(searchPredicate), UserResponseDto.class));
     }
 
     @GetMapping("/{id}")
