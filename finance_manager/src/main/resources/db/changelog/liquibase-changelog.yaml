@@ -1,10 +1,4 @@
 databaseChangeLog:
 
    - include:
-        file: db/changelog/changeset/create-test-table-wallet.yaml
-   - include:
-        file: db/changelog/changeset/add-data-in-test-table-wallet.yaml
-   - include:
-        file: db/changelog/changeset/add-data2-in-test-table-wallet.yaml
-   - include:
-        file: db/changelog/changeset/add-sequence-in-test-table-wallet.yaml
+        file: db/changelog/changeset/create-table-wallet.yaml

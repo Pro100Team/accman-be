@@ -1,0 +1,23 @@
+name: Checkstyle on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+
+      - name: Checkstyle with Maven
+        run: mvn -f finance_manager/pom.xml -B verify checkstyle:checkstyle

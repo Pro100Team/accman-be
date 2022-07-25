@@ -14,19 +14,21 @@ feign:
         readTimeout: 5000
         loggerLevel: full
         decode404: false
+
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     show-sql: true
     open-in-view: false
-  datasource:
-    url: jdbc:postgresql://localhost:6000/postgres
-    username: postgres
-    password: 111
   liquibase:
     change-log: classpath:db/changelog/liquibase-changelog.yaml
     enabled: true
+  profiles:
+    active: dev

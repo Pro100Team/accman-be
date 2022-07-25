@@ -1,0 +1,3 @@
+build:
+  docker:
+    web: finance_manager/Dockerfile
