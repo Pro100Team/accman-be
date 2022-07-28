@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: API for budget application
+  description: OpenAPI schema of budget application
+servers:
+  - url: https://localhost:8080/
+    description: This is where my api is
+tags:
+  - name: "User"
+
+paths:
+  /user/login:
+    get:
+      summary: Returns a UserID
+      description: Returns a UserID
+        for show start user's page
+      tags:
+        - User
+      operationId: loginUser
+
+      parameters:
+        - name: login
+          in: query
+          description: The user name for login
+          required: true
+          schema:
+            $ref: "#/components/schemas/User"
+      responses:
+        '200':
+          description: This means its ok!
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: BAD REQUES
+
+components:
+  schemas:
+    User:
+      description: This is user object
+      type: object
+      properties:
+        login:
+          description: User's email is login
+          type: string
+        password:
+          description: User's password
+          type: string
