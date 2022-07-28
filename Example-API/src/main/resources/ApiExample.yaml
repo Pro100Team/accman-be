@@ -11,21 +11,19 @@ tags:
 
 paths:
   /user/login:
-    get:
+    post:
       summary: Returns a UserID
       description: Returns a UserID
         for show start user's page
       tags:
         - User
       operationId: loginUser
-
-      parameters:
-        - name: login
-          in: query
-          description: The user name for login
-          required: true
-          schema:
-            $ref: "#/components/schemas/User"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
       responses:
         '200':
           description: This means its ok!
