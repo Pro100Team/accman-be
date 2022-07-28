@@ -19,5 +19,8 @@ jobs:
           distribution: temurin
           cache: maven
 
+      - name: API spec dependancy
+        run: mvn -f Example-API/pom.xml -B clean package
+
       - name: Checkstyle with Maven
         run: mvn -f finance_manager/pom.xml -B verify checkstyle:checkstyle
