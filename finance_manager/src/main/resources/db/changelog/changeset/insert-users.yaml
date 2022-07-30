@@ -38,4 +38,4 @@ databaseChangeLog:
                   value: "Anna@exadel.com"
               - column:
                   name: password
-                  value: "Anna"
+                  value: "Anna"                  
