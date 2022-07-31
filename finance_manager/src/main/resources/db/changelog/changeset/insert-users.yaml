@@ -7,35 +7,38 @@ databaseChangeLog:
             tableName: users
             columns:
               - column:
-                  name: login
+                  name: email
                   value: "Sergey@exadel.com"
               - column:
                   name: password
-                  value: "Sergey"
+                  value: "Sergey!2345"
+             - column:
+                  name: role
+                  value: "amin"                  
         - insert:
             tableName: users
             columns:
               - column:
-                  name: login
+                  name: email
                   value: "Jura@exadel.com"
               - column:
                   name: password
-                  value: "Jura"
+                  value: "Jura!2345"
         - insert:
             tableName: users
             columns:
               - column:
-                  name: login
+                  name: email
                   value: "Katia@exadel.com"
               - column:
                   name: password
-                  value: "Katia"
+                  value: "Katia!2345"
         - insert:
             tableName: users
             columns:
               - column:
-                  name: login
+                  name: email
                   value: "Anna@exadel.com"
               - column:
                   name: password
-                  value: "Anna"                  
+                  value: "Anna!2345"                  
