@@ -13,8 +13,8 @@ databaseChangeLog:
                   name: password
                   value: "Sergey!2345"
               - column:
-                  name: role
-                  value: "admin"                  
+                  name: is_admin
+                  value: true
         - insert:
             tableName: users
             columns:
@@ -24,6 +24,9 @@ databaseChangeLog:
               - column:
                   name: password
                   value: "Jura!2345"
+              - column:
+                  name: is_admin
+                  value: true
         - insert:
             tableName: users
             columns:
@@ -33,6 +36,9 @@ databaseChangeLog:
               - column:
                   name: password
                   value: "Katia!2345"
+              - column:
+                  name: is_admin
+                  value: false
         - insert:
             tableName: users
             columns:
@@ -41,4 +47,7 @@ databaseChangeLog:
                   value: "Anna@exadel.com"
               - column:
                   name: password
-                  value: "Anna!2345"                  
+                  value: "Anna!2345"
+              - column:
+                  name: is_admin
+                  value: false
