@@ -24,5 +24,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: role
-                  type: varchar(10)
+                  name: is_admin
+                  type: boolean
+                  constraints:
+                    nullable: false
