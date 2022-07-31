@@ -25,5 +25,4 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: role
-                  type: varchar(5)
-                 
+                  type: varchar(5)                 
