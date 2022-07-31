@@ -1,9 +1,9 @@
 databaseChangeLog:
-  - changeSet:
-      id: "2"
-      author: gs
-      changes:
-        - createTable:
+   - changeSet:
+        id: "2"
+        author: gs
+        changes:
+          - createTable:
             tableName: users
             columns:
               - column:
@@ -25,4 +25,4 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: role
-                  type: varchar(5)                 
+                  type: varchar(5)
