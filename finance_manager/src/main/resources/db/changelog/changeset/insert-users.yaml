@@ -14,7 +14,7 @@ databaseChangeLog:
                   value: "Sergey!2345"
              - column:
                   name: role
-                  value: "amin"                  
+                  value: "admin"                  
         - insert:
             tableName: users
             columns:
