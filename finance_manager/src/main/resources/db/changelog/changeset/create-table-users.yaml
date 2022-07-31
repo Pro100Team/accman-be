@@ -4,25 +4,25 @@ databaseChangeLog:
       author: gs
       changes:
         - createTable:
-            tableName: users
-            columns:
-              - column:
-                  name: u_id
-                  type: int8
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: password
-                  type: varchar(100)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: role
-                  type: varchar(10)                               
+              tableName: users
+              columns:
+                - column:
+                    name: u_id
+                    type: int8
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: email
+                    type: varchar(255)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: password
+                    type: varchar(100)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: role
+                    type: varchar(10)                               
