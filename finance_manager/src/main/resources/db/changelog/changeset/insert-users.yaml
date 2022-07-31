@@ -12,7 +12,7 @@ databaseChangeLog:
               - column:
                   name: password
                   value: "Sergey!2345"
-             - column:
+              - column:
                   name: role
                   value: "admin"                  
         - insert:
