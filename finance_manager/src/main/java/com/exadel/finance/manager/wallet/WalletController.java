@@ -21,8 +21,8 @@ public class WalletController {
         return ResponseEntity.ok(repository.findAll());
     }
 
-   @GetMapping("/{w_id}")
-    public ResponseEntity<Wallet> getWalletById(@PathVariable(name = "w_id") Long id) {
+   @GetMapping("/{id}")
+    public ResponseEntity<Wallet> getWalletById(@PathVariable(name = "id") Long id) {
         Wallet wallet = new Wallet();
         wallet.setName("NO SUCH WALLET");
         return ResponseEntity.ok(repository.findById(id).orElse(wallet));
