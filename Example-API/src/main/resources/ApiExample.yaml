@@ -25,14 +25,14 @@ paths:
               $ref: '#/components/schemas/User'
       responses:
         200:
-          description: This means its ok!
+          description: Operation completed without errors and expected response received from server
           content:
             application/json:
               schema:
                 type: string
         400:
           description: BAD REQUES
-  /user/tansactions/{species}:
+  /tansactions/{species}:
     get:
       summary: Get all or any quantity tansactions
       tags:
@@ -60,7 +60,7 @@ paths:
           required: true
       responses:
         200:
-          description: This means its ok!
+          description: Operation completed without errors and expected response received from server
           content:
             application/json:
               schema:
@@ -91,14 +91,14 @@ paths:
               $ref: '#/components/schemas/Transaction'
       responses:
         200:
-          description: This means its ok!
+          description: Operation completed without errors and expected response received from server
           content:
             application/json:
               schema:
                 type: boolean
         400:
           description: REQUES
-  /user/tansactions/{transId}:
+  /tansactions/{transId}:
     get:
       summary: Get tansactions by ID
       tags:
@@ -113,7 +113,7 @@ paths:
           required: true
       responses:
         200:
-          description: This means its ok!
+          description: Operation completed without errors and expected response received from server
           content:
             application/json:
               schema:
@@ -162,7 +162,7 @@ paths:
           required: true
       responses:
         200:
-          description: This means its ok!
+          description: Operation completed without errors and expected response received from server
           content:
             application/json:
               schema:
