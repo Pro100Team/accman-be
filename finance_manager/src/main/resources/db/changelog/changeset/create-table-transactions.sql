@@ -10,4 +10,3 @@ CREATE TABLE IF NOT EXISTS transactions
     t_created       timestamp NOT NULL,
     t_notes         varchar(200)
 );
-
