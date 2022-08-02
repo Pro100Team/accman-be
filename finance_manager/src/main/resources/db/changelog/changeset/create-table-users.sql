@@ -8,6 +8,3 @@ CREATE TABLE IF NOT EXISTS users
     u_password varchar(100) NOT NULL,
     u_is_admin boolean      NOT NULL
 );
-
-
-
