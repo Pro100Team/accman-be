@@ -28,10 +28,7 @@ public class Wallet {
 
     @Column(nullable = false, name = "w_is_default")
     private boolean isDefault;
-
-    @Column(nullable = false, name = "w_currencies_id")
-    private int currrencyId;
-
+ 
     @Column(nullable = false, name = "w_updated")
     private java.sql.Timestamp updated;
 }
