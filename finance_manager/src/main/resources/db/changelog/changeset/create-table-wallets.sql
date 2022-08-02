@@ -10,5 +10,3 @@ CREATE TABLE IF NOT EXISTS wallets
     w_currencies_id int4         NOT NULL REFERENCES currencies (cur_id),
     w_updated       timestamp    NOT NULL
 );
-
-
