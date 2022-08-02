@@ -1,6 +1,5 @@
 package com.exadel.finance.manager.wallet;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
