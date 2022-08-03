@@ -7,14 +7,14 @@ CREATE TABLE IF NOT EXISTS category_types
     ct_types varchar(255) NOT NULL
 );
 
-CREATE TABLE categories
+CREATE TABLE IF NOT EXISTS categories
 (
     cat_id                bigserial PRIMARY KEY,
     cat_name              varchar(255) NOT NULL,
     cat_category_types_id int8         NOT NULL REFERENCES category_types (ct_id)
 );
 
-CREATE TABLE sub_categories
+CREATE TABLE IF NOT EXISTS sub_categories
 (
     sc_id            bigserial PRIMARY KEY,
     sc_name          varchar(255) NOT NULL,
