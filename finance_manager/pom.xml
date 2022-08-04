@@ -32,6 +32,20 @@
 					</snapshots>
 				</repository>
 			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>myPluginRepo</id>
+					<name>My Plugins repo</name>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<url>https://maven.pkg.github.com/try-to-laugh/sandboxOpenApiSchema</url>
+				</pluginRepository>
+			</pluginRepositories>
+
 		</profile>
 	</profiles>
 
