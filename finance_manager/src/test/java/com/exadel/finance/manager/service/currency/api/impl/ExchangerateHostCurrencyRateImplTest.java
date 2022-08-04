@@ -1,7 +1,7 @@
 package com.exadel.finance.manager.service.currency.api.impl;
 
-import static com.exadel.finance.manager.currency.config.list.Currency.AED;
 import static com.exadel.finance.manager.currency.config.list.Currency.EUR;
+import static com.exadel.finance.manager.currency.config.list.Currency.GEL;
 import static com.exadel.finance.manager.currency.config.list.Currency.USD;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -76,7 +76,7 @@ class ExchangerateHostCurrencyRateImplTest extends AbstractTest {
         stubFor(get(urlEqualTo("/latest?SOMETHING_WRONG"))
                 .willReturn(aResponse().withStatus(HttpStatus.NOT_FOUND.value())));
         assertThrows(FeignException.NotFound.class,
-                () -> currencyApi.getAllRatesForBaseCurrency(AED),
+                () -> currencyApi.getAllRatesForBaseCurrency(GEL),
                 "Expected FeignException.NotFound when link is wrong");
     }
 

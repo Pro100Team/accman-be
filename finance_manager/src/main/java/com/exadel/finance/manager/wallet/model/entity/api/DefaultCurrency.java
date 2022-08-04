@@ -1,17 +1,15 @@
-package com.exadel.finance.manager.currency.config.list;
+package com.exadel.finance.manager.wallet.model.entity.api;
 
-public enum Currency {
+public enum DefaultCurrency {
+
     PLN("PLN"),
     USD("USD"),
     EUR("EUR"),
-    GEL("GEL"),
-    BYR("BYR"),
-    GBP("GBP"),
-    UAH("UAH");
+    GEL("GEL");
 
     private final String value;
 
-    Currency(String value) {
+    DefaultCurrency(String value) {
         this.value = value;
     }
 

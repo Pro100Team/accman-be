@@ -4,22 +4,22 @@ databaseChangeLog:
         author: gapserg
         changes:
           - createTable:
-              tableName: wallets
+              tableName: wallets_liq
               columns:
                 - column:
-                    name: id
+                    name: w_id
                     type: int8
                     autoIncrement: true
                     constraints:
                       primaryKey: true
                       nullable: false
                 - column:
-                    name: name
+                    name: w_name
                     type: varchar(255)
                     constraints:
                       nullable: false
                 - column:
-                    name: amount
+                    name: w_amount
                     type: numeric(20,2)
                     constraints:
                       nullable: false
