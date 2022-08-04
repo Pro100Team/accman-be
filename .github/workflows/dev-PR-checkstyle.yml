@@ -19,5 +19,12 @@ jobs:
           distribution: temurin
           cache: maven
 
+      - name: maven-settings-xml-action
+        uses: whelk-io/maven-settings-xml-action@v20
+        with:
+          repositories: '[{ "id": "github", "url": "https://maven.pkg.github.com/try-to-laugh/sandboxOpenApiSchema" }]'
+          servers: '[{ "id": "github", "username": "AlexPravda1", "password": "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" }]'
+          output_file: .m2/settings.xml
+
       - name: Checkstyle with Maven
-        run: mvn -f finance_manager/pom.xml -B verify checkstyle:checkstyle
+        run: mvn --settings m2/custom.xml -f finance_manager/pom.xml -B verify checkstyle:checkstyle
