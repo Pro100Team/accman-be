@@ -27,4 +27,4 @@ jobs:
           output_file: .m2/settings.xml
 
       - name: Checkstyle with Maven
-        run: mvn --settings m2/custom.xml -f finance_manager/pom.xml -B verify checkstyle:checkstyle
+        run: mvn --settings m2/settings.xml -f finance_manager/pom.xml -B verify checkstyle:checkstyle
