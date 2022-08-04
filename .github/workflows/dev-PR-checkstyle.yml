@@ -24,7 +24,7 @@ jobs:
         with:
           repositories: '[{ "id": "github", "url": "https://maven.pkg.github.com/try-to-laugh/sandboxOpenApiSchema" }]'
           servers: '[{ "id": "github", "username": "AlexPravda1", "password": "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" }]'
-          output_file: /home/runner/work/accman-be/accman-be/m2/settings.xml
+          output_file: .m2/settings.xml
 
       - name: Checkstyle with Maven
-        run: mvn --settings /home/runner/work/accman-be/accman-be/m2/settings.xml -f finance_manager/pom.xml -B verify checkstyle:checkstyle
+        run: mvn --settings ~/.m2/settings.xml -f finance_manager/pom.xml -B verify checkstyle:checkstyle
