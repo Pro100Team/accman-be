@@ -1,7 +1,6 @@
 package com.exadel.finance.manager.wallet.service.api;
 
 import com.exadel.finance.manager.wallet.model.entity.Wallet;
-import com.sandbox.model.WalletRequestDto;
 import java.util.List;
 
 public interface WalletService {
