@@ -1,6 +1,5 @@
 package com.exadel.finance.manager.wallet;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,11 +20,15 @@ import lombok.ToString;
 public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false, name = "w_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "w_name")
     private String name;
 
-    private BigDecimal amount;
+    @Column(nullable = false, name = "w_is_default")
+    private boolean isDefault;
+ 
+    @Column(nullable = false, name = "w_updated")
+    private java.sql.Timestamp updated;
 }

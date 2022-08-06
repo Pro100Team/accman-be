@@ -1,4 +1,13 @@
 databaseChangeLog:
-
-   - include:
-        file: db/changelog/changeset/create-table-wallet.yaml
+  - include:
+      file: db/changelog/changeset/create-table-currencies.sql
+  - include:
+      file: db/changelog/changeset/create-table-users.sql
+  - include:
+      file: db/changelog/changeset/insert-users.sql
+  - include:
+      file: db/changelog/changeset/create-table-wallets.sql
+  - include:
+      file: db/changelog/changeset/create-table-categories.sql
+  - include:
+      file: db/changelog/changeset/create-table-transactions.sql
