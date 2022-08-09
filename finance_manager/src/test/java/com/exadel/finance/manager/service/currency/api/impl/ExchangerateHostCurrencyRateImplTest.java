@@ -1,8 +1,8 @@
 package com.exadel.finance.manager.service.currency.api.impl;
 
-import static com.exadel.finance.manager.currency.config.list.Currency.EUR;
-import static com.exadel.finance.manager.currency.config.list.Currency.GEL;
-import static com.exadel.finance.manager.currency.config.list.Currency.USD;
+import static com.manager.finance.currency.config.list.Currency.EUR;
+import static com.manager.finance.currency.config.list.Currency.GEL;
+import static com.manager.finance.currency.config.list.Currency.USD;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.exadel.finance.manager.config.AbstractTest;
-import com.exadel.finance.manager.currency.model.dto.CurrencyRateDto;
-import com.exadel.finance.manager.currency.service.ExchangerateHostCurrencyRateImpl;
+import com.manager.finance.currency.model.dto.CurrencyRateDto;
+import com.manager.finance.currency.service.ExchangerateHostCurrencyRateImpl;
 import feign.FeignException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
