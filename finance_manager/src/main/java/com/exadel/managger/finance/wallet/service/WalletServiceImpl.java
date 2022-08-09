@@ -1,16 +1,15 @@
 package com.exadel.managger.finance.wallet.service;
 
-import com.exadel.managger.finance.exception.wallet.AccessDeniedError;
 import com.exadel.managger.finance.exception.wallet.WalletNotFoundException;
-import com.exadel.managger.finance.user.model.entity.User;
+import com.exadel.managger.finance.user.model.entity.Profile;
+import com.exadel.managger.finance.user.service.ProfileServiceImpl;
 import com.exadel.managger.finance.user.service.api.UserService;
-import com.exadel.managger.finance.utils.TimeZoneUtils;
+import com.exadel.managger.finance.util.TimeZoneUtils;
 import com.exadel.managger.finance.wallet.dao.WalletDao;
 import com.exadel.managger.finance.wallet.model.entity.Wallet;
 import com.exadel.managger.finance.wallet.service.api.WalletService;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +17,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WalletServiceImpl implements WalletService {
     private final UserService userService;
+    private final ProfileServiceImpl profileService;
     private final WalletDao walletDao;
 
     @Override
     public List<Wallet> getAll() {
-        User user = userService.getByUserHolder();
-        return walletDao.findWalletByUserId(user);
+        Profile profile = profileService.findByUserId(userService.getByUserHolder());
+        return walletDao.findWalletByProfileId(profile);
     }
 
     @Override
-    public Wallet get(Long id) {
-        return walletDao.findWalletByIdAndUserId(id, userService.getByUserHolder()).orElseThrow(()
-                -> new WalletNotFoundException("wallet with id: " + id + " - not found"));
+    public Wallet getByIdWithUserHolder(Long id) {
+        return walletDao.findWalletByIdAndProfileId(
+                        id, profileService.findByUserId(userService.getByUserHolder()))
+                .orElseThrow(()
+                        -> new WalletNotFoundException("wallet with id: \" + id + \" - not found"));
     }
 
     @Override
@@ -38,10 +40,9 @@ public class WalletServiceImpl implements WalletService {
         if (wallet.getIsDefault()) {
             switchDefaultWallet(wallet);
         }
-        User user = userService.getByUserHolder();
         wallet.setUsedAt(TimeZoneUtils.getGmtCurrentDate());
         wallet.setIsDeleted(false);
-        wallet.setUserId(user);
+        wallet.setProfileId(profileService.findByUserId(userService.getByUserHolder()));
         return walletDao.save(wallet).getId();
     }
 
@@ -59,11 +60,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public void delete(Long id) {
-        Wallet wallet = get(id);
-        if (!Objects.equals(wallet.getUserId().getId(), userService.getByUserHolder().getId())) {
-            throw new AccessDeniedError(
-                    "The user does not have rights to delete the wallet with id: " + id);
-        }
+        Wallet wallet = getByIdWithUserHolder(id);
         if (wallet.getIsDefault()) {
             throw new IllegalArgumentException("Unable to delete default wallet");
         }
@@ -72,8 +69,8 @@ public class WalletServiceImpl implements WalletService {
     }
 
     private void switchDefaultWallet(Wallet wallet) {
-        Wallet defaultWallet = walletDao.findWalletByIsDefaultAndUserId(true,
-                userService.getByUserHolder());
+        Wallet defaultWallet = walletDao.findWalletByIsDefaultAndProfileId(true,
+                profileService.findByUserId(userService.getByUserHolder()));
         if (defaultWallet != null) {
             if (!defaultWallet.getId().equals(wallet.getId())) {
                 defaultWallet.setIsDefault(false);

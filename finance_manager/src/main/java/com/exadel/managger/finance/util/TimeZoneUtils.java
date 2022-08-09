@@ -1,4 +1,4 @@
-package com.exadel.managger.finance.utils;
+package com.exadel.managger.finance.util;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

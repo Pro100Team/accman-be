@@ -1,5 +1,6 @@
 package com.exadel.managger.finance.wallet.dao;
 
+import com.exadel.managger.finance.user.model.entity.Profile;
 import com.exadel.managger.finance.user.model.entity.User;
 import com.exadel.managger.finance.wallet.model.entity.Wallet;
 import com.exadel.managger.finance.wallet.model.entity.api.DefaultCurrency;
@@ -8,11 +9,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WalletDao extends JpaRepository<Wallet, Long> {
-    List<Wallet> findWalletByUserId(User userId);
+    List<Wallet> findWalletByProfileId(Profile profileId);
 
-    Wallet findWalletByIsDefaultAndUserId(boolean isDefault, User userId);
+    Wallet findWalletByIsDefaultAndProfileId(boolean isDefault, Profile profileId);
 
-    Optional<Wallet> findWalletByIdAndUserId(Long id, User userId);
+    Optional<Wallet> findWalletByIdAndProfileId(Long id, Profile profileId);
 
     List<Wallet> findWalletByNameAndCurrency(String name, DefaultCurrency currency);
 }

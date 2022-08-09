@@ -1,7 +1,7 @@
 package com.exadel.managger.finance.currency.service;
 
-import com.exadel.managger.finance.currency.config.list.Currency;
 import com.exadel.managger.finance.currency.config.api.CurrencyExchangerateFeignClient;
+import com.exadel.managger.finance.currency.config.list.Currency;
 import com.exadel.managger.finance.currency.model.dto.CurrencyRateDto;
 import com.exadel.managger.finance.currency.service.api.CurrencyRateApi;
 import lombok.RequiredArgsConstructor;

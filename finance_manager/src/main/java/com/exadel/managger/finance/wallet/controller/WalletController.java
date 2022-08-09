@@ -1,8 +1,8 @@
 package com.exadel.managger.finance.wallet.controller;
 
-import com.exadel.managger.finance.mapstruct.mappers.WalletMapper;
-import com.exadel.managger.finance.wallet.service.api.WalletService;
+import com.exadel.managger.finance.mapstruct.mapper.WalletMapper;
 import com.exadel.managger.finance.wallet.model.entity.Wallet;
+import com.exadel.managger.finance.wallet.service.api.WalletService;
 import com.sandbox.api.WalletsApi;
 import com.sandbox.model.WalletRequestDto;
 import com.sandbox.model.WalletResponseDto;
@@ -42,7 +42,7 @@ public class WalletController implements WalletsApi {
 
     @Override
     public ResponseEntity<WalletResponseDto> getWalletById(Long walletId) {
-        Wallet wallet = walletService.get(walletId);
+        Wallet wallet = walletService.getByIdWithUserHolder(walletId);
         return new ResponseEntity<>(mapper.walletToWalletResponseDto(wallet), HttpStatus.OK);
     }
 

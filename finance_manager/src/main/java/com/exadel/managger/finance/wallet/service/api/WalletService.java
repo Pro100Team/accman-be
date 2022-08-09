@@ -6,7 +6,7 @@ import java.util.List;
 public interface WalletService {
     List<Wallet> getAll();
 
-    Wallet get(Long id);
+    Wallet getByIdWithUserHolder(Long id);
 
     Long save(Wallet wallet);
 

@@ -1,6 +1,6 @@
 package com.exadel.managger.finance.wallet.model.entity;
 
-import com.exadel.managger.finance.user.model.entity.User;
+import com.exadel.managger.finance.user.model.entity.Profile;
 import com.exadel.managger.finance.wallet.model.entity.api.DefaultCurrency;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -40,7 +40,7 @@ public class Wallet {
     private LocalDateTime usedAt;
 
     @ManyToOne
-    @JoinColumn(name = "w_user_id", referencedColumnName = "u_id", nullable = false)
-    private User userId;
+    @JoinColumn(name = "w_profile_id", referencedColumnName = "p_id", nullable = false)
+    private Profile profileId;
 
 }

@@ -1,4 +1,4 @@
-package com.exadel.managger.finance.mapstruct.mappers;
+package com.exadel.managger.finance.mapstruct.mapper;
 
 import com.exadel.managger.finance.wallet.model.entity.Wallet;
 import com.sandbox.model.WalletRequestDto;

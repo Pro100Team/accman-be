@@ -1,7 +1,6 @@
 package com.exadel.managger.finance.security.service;/* created by Kaminskii Ivan
  */
 
-
 import com.exadel.managger.finance.exception.user.UserNotFoundException;
 import com.exadel.managger.finance.security.service.api.SecurityService;
 import com.exadel.managger.finance.user.model.entity.User;
