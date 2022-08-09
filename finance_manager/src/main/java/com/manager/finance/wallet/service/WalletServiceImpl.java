@@ -2,6 +2,7 @@ package com.manager.finance.wallet.service;
 
 import com.manager.finance.exception.wallet.WalletNotFoundException;
 import com.manager.finance.user.model.entity.Profile;
+import com.manager.finance.user.model.entity.User;
 import com.manager.finance.user.service.ProfileServiceImpl;
 import com.manager.finance.user.service.api.UserService;
 import com.manager.finance.util.TimeZoneUtils;
@@ -28,32 +29,32 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public Wallet getByIdWithUserHolder(Long id) {
+        User user = userService.getByUserHolder();
         return walletDao.findWalletByIdAndProfileId(
-                        id, profileService.findByUserIdWithValidation(userService.getByUserHolder()))
-                .orElseThrow(()
-                        -> new WalletNotFoundException("wallet with id: \" + id + \" - not found"));
+                id, profileService.findByUserIdWithValidation(user)).orElseThrow(() ->
+                new WalletNotFoundException("wallet with id: " + id + " - not found"));
     }
 
     @Override
     public Long save(Wallet wallet) {
-        currencyNameValidation(wallet);
+        Profile profile = profileService.findByUserIdWithValidation(userService.getByUserHolder());
+        currencyNameValidation(wallet, profile);
         if (wallet.getIsDefault()) {
-            switchDefaultWallet(wallet);
+            switchDefaultWallet(wallet, profile);
         }
         wallet.setUsedAt(TimeZoneUtils.getGmtCurrentDate());
         wallet.setIsDeleted(false);
-        wallet.setProfileId(
-                profileService.findByUserIdWithValidation(userService.getByUserHolder()));
+        wallet.setProfileId(profile);
         return walletDao.save(wallet).getId();
     }
 
     @Override
-    public Wallet update(Wallet wallet, Long id) {
-        currencyNameValidation(wallet);
+    public Wallet update(Wallet wallet) {
+        Profile profile = profileService.findByUserIdWithValidation(userService.getByUserHolder());
+        currencyNameValidation(wallet, profile);
         if (wallet.getIsDefault()) {
-            switchDefaultWallet(wallet);
+            switchDefaultWallet(wallet, profile);
         }
-        wallet.setId(id);
         wallet.setUsedAt(LocalDateTime.now());
         walletDao.save(wallet);
         return wallet;
@@ -69,9 +70,8 @@ public class WalletServiceImpl implements WalletService {
         save(wallet);
     }
 
-    private void switchDefaultWallet(Wallet wallet) {
-        Wallet defaultWallet = walletDao.findWalletByIsDefaultAndProfileId(true,
-                profileService.findByUserIdWithValidation(userService.getByUserHolder()));
+    private void switchDefaultWallet(Wallet wallet, Profile profile) {
+        Wallet defaultWallet = walletDao.findWalletByIsDefaultAndProfileId(true, profile);
         if (defaultWallet != null) {
             if (!defaultWallet.getId().equals(wallet.getId())) {
                 defaultWallet.setIsDefault(false);
@@ -80,15 +80,16 @@ public class WalletServiceImpl implements WalletService {
         }
     }
 
-    private void currencyNameValidation(Wallet wallet) {
-        List<Wallet> byNameAndCurrency =
+    private void currencyNameValidation(Wallet wallet, Profile profile) {
+        List<Wallet> dbWallet =
                 walletDao.findWalletByNameAndCurrencyAndProfileId(wallet.getName(),
-                        wallet.getCurrency(),
-                        profileService.findByUserIdWithValidation(userService.getByUserHolder()));
-        if (byNameAndCurrency != null && byNameAndCurrency.size() > 0) {
+                        wallet.getCurrency(), profile);
+        if (dbWallet != null && dbWallet.size() > 0) {
+            if (dbWallet.size() == 1 && !dbWallet.get(0).getId().equals(wallet.getId())) {
+                System.exit(0);
+            }
             throw new IllegalArgumentException(
                     "You cannot have wallets with the same name and currency");
         }
     }
-
 }

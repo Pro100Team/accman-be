@@ -1,4 +1,4 @@
-package com.exadel.finance.manager;
+package com.manager.finance;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

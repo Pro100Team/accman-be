@@ -1,4 +1,4 @@
-package com.exadel.finance.manager.config;
+package com.manager.finance.config;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

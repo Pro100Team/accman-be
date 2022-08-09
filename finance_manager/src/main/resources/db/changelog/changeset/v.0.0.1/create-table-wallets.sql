@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS public.wallets
     w_profile_id int8 not null,
     CONSTRAINT WALLETS_PRIMARY_KEY PRIMARY KEY (w_id),
     CONSTRAINT FK_WALLETS_BY_PROFILE_ID FOREIGN KEY (w_profile_id)
-        REFERENCES public.profiles (p_id) MATCH SIMPLE
+        REFERENCES public.profiles (p_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )

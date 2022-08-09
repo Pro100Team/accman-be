@@ -1,8 +1,8 @@
 package com.manager.finance.wallet.controller;
 
 import com.manager.finance.mapstruct.mapper.WalletMapper;
-import com.manager.finance.wallet.service.api.WalletService;
 import com.manager.finance.wallet.model.entity.Wallet;
+import com.manager.finance.wallet.service.api.WalletService;
 import com.sandbox.api.WalletsApi;
 import com.sandbox.model.WalletRequestDto;
 import com.sandbox.model.WalletResponseDto;
@@ -49,8 +49,10 @@ public class WalletController implements WalletsApi {
     @Override
     public ResponseEntity<WalletResponseDto> updateWalletById(
             Long walletId, @Valid WalletRequestDto walletRequestDto) {
-        Wallet wallet = mapper.walletRequestDtoToWallet(walletRequestDto);
-        wallet = walletService.update(wallet, walletId);
+        Wallet wallet = walletService.getByIdWithUserHolder(walletId);
+        wallet = mapper.walletRequestDtoToWalletUpdate(wallet, walletRequestDto);
+        wallet.setId(walletId);
+        wallet = walletService.update(wallet);
         return new ResponseEntity<>(mapper.walletToWalletResponseDto(wallet), HttpStatus.OK);
     }
 

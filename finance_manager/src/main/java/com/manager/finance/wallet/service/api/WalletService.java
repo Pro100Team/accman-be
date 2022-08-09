@@ -10,7 +10,7 @@ public interface WalletService {
 
     Long save(Wallet wallet);
 
-    Wallet update(Wallet wallet, Long id);
+    Wallet update(Wallet wallet);
 
     void delete(Long id);
 }

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS public.profiles
     p_user_id int8,
     CONSTRAINT PROFILES_PRIMARY_KEY PRIMARY KEY (p_id),
     CONSTRAINT FK_PROFILES_BY_USER_ID FOREIGN KEY (p_user_id)
-            REFERENCES public.users (u_id) MATCH SIMPLE
+            REFERENCES public.users (u_id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION
 )

@@ -29,7 +29,6 @@ public class ProfileServiceImpl implements ProfileService {
         return profileDao.findProfileByUserIdAndIsDeleted(userId, false);
     }
 
-
     @Override
     public Profile findByUserIdWithValidation(User userId) {
         Profile profile = findActiveProfileByUserId(userId);

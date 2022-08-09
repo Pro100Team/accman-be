@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.exadel</groupId>
+	<groupId>com.manager.finance</groupId>
 	<artifactId>finance_manager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>finance_manager</name>

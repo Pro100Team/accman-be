@@ -6,6 +6,7 @@ import com.sandbox.model.WalletResponseDto;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface WalletMapper {
@@ -13,6 +14,9 @@ public interface WalletMapper {
     WalletResponseDto walletToWalletResponseDto(Wallet wallet);
 
     @Mapping(target = "isDefault", source = "default")
+    Wallet walletRequestDtoToWalletUpdate(@MappingTarget Wallet wallet,
+                                          WalletRequestDto walletRequestDto);
+
     Wallet walletRequestDtoToWallet(WalletRequestDto walletRequestDto);
 
     List<WalletResponseDto> walletListToWalletResponseDtoList(List<Wallet> wallets);
