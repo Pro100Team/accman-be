@@ -86,7 +86,7 @@ public class WalletServiceImpl implements WalletService {
                         wallet.getCurrency(), profile);
         if (dbWallet != null && dbWallet.size() > 0) {
             if (dbWallet.size() == 1 && !dbWallet.get(0).getId().equals(wallet.getId())) {
-                System.exit(0);
+                return;
             }
             throw new IllegalArgumentException(
                     "You cannot have wallets with the same name and currency");
