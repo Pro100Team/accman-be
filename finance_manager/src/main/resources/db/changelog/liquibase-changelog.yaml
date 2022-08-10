@@ -1,13 +1,12 @@
 databaseChangeLog:
+
+   - include:
+      file: db/changelog/changeset/v.0.0.1/create-table-users.sql
   - include:
-      file: db/changelog/changeset/create-table-currencies.sql
+      file: db/changelog/changeset/v.0.0.1/create-table-profiles.sql
   - include:
-      file: db/changelog/changeset/create-table-users.sql
+      file: db/changelog/changeset/v.0.0.1/create-table-wallets.sql
   - include:
-      file: db/changelog/changeset/insert-users.sql
+      file: db/changelog/changeset/v.0.0.1/insert-users.sql
   - include:
-      file: db/changelog/changeset/create-table-wallets.sql
-  - include:
-      file: db/changelog/changeset/create-table-categories.sql
-  - include:
-      file: db/changelog/changeset/create-table-transactions.sql
+      file: db/changelog/changeset/v.0.0.1/insert-profiles.sql
