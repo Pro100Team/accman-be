@@ -22,7 +22,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByUserHolder() {
-        return userDao.findUserByLogin(userHolder.getAuthentication().getName());
+        String login = userHolder.getAuthentication().getName();
+        return userDao.findUserByLogin(login);
     }
 
     public User getById(Long id) {

@@ -12,6 +12,7 @@ import com.manager.finance.wallet.service.api.WalletService;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,21 +24,25 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public List<Wallet> getAll() {
-        Profile profile = profileService.findByUserIdWithValidation(userService.getByUserHolder());
-        return walletDao.findWalletByProfileId(profile);
+        Sort sort = Sort.by(Sort.Direction.DESC, "isDefault", "usedAt");
+        User user = userService.getByUserHolder();
+        Profile profile = profileService.findByUserIdWithValidation(user);
+        return walletDao.findWalletByProfileId(profile, sort);
     }
 
     @Override
     public Wallet getByIdWithUserHolder(Long id) {
         User user = userService.getByUserHolder();
+        Profile profile = profileService.findByUserIdWithValidation(user);
         return walletDao.findWalletByIdAndProfileId(
-                id, profileService.findByUserIdWithValidation(user)).orElseThrow(() ->
+                id, profile).orElseThrow(() ->
                 new WalletNotFoundException("wallet with id: " + id + " - not found"));
     }
 
     @Override
     public Long save(Wallet wallet) {
-        Profile profile = profileService.findByUserIdWithValidation(userService.getByUserHolder());
+        User user = userService.getByUserHolder();
+        Profile profile = profileService.findByUserIdWithValidation(user);
         currencyNameValidation(wallet, profile);
         if (wallet.getIsDefault()) {
             switchDefaultWallet(wallet, profile);
@@ -50,7 +55,8 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public Wallet update(Wallet wallet) {
-        Profile profile = profileService.findByUserIdWithValidation(userService.getByUserHolder());
+        User user = userService.getByUserHolder();
+        Profile profile = profileService.findByUserIdWithValidation(user);
         currencyNameValidation(wallet, profile);
         if (wallet.getIsDefault()) {
             switchDefaultWallet(wallet, profile);
@@ -85,7 +91,7 @@ public class WalletServiceImpl implements WalletService {
                 walletDao.findWalletByNameAndCurrencyAndProfileId(wallet.getName(),
                         wallet.getCurrency(), profile);
         if (dbWallet != null && dbWallet.size() > 0) {
-            if (dbWallet.size() == 1 && !dbWallet.get(0).getId().equals(wallet.getId())) {
+            if (dbWallet.size() == 1 && dbWallet.get(0).getId().equals(wallet.getId())) {
                 return;
             }
             throw new IllegalArgumentException(
