@@ -24,18 +24,18 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public List<Wallet> getAll() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "isDefault", "usedAt");
         User user = userService.getByUserHolder();
         Profile profile = profileService.findByUserIdWithValidation(user);
-        return walletDao.findWalletByProfileId(profile, sort);
+        return walletDao.findWalletByProfileIdAndIsDeleted(profile, false,
+                orderByDefaultAndUsedAt());
     }
 
     @Override
     public Wallet getByIdWithUserHolder(Long id) {
         User user = userService.getByUserHolder();
         Profile profile = profileService.findByUserIdWithValidation(user);
-        return walletDao.findWalletByIdAndProfileId(
-                id, profile).orElseThrow(() ->
+        return walletDao.findWalletByIdAndProfileIdAndIsDeleted(
+                id, profile, false).orElseThrow(() ->
                 new WalletNotFoundException("wallet with id: " + id + " - not found"));
     }
 
@@ -73,7 +73,7 @@ public class WalletServiceImpl implements WalletService {
             throw new IllegalArgumentException("Unable to delete default wallet");
         }
         wallet.setIsDeleted(true);
-        save(wallet);
+        walletDao.save(wallet);
     }
 
     private void switchDefaultWallet(Wallet wallet, Profile profile) {
@@ -97,5 +97,10 @@ public class WalletServiceImpl implements WalletService {
             throw new IllegalArgumentException(
                     "You cannot have wallets with the same name and currency");
         }
+    }
+
+    private Sort orderByDefaultAndUsedAt() {
+        return Sort.by(Sort.Direction.DESC, "isDefault")
+                .and(Sort.by(Sort.Direction.DESC, "usedAt"));
     }
 }

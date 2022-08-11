@@ -9,11 +9,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WalletDao extends JpaRepository<Wallet, Long> {
-    List<Wallet> findWalletByProfileId(Profile profileId, Sort sort);
+    List<Wallet> findWalletByProfileIdAndIsDeleted(Profile profileId, Boolean isDeleted, Sort sort);
 
     Wallet findWalletByIsDefaultAndProfileId(boolean isDefault, Profile profileId);
 
-    Optional<Wallet> findWalletByIdAndProfileId(Long id, Profile profileId);
+    Optional<Wallet> findWalletByIdAndProfileIdAndIsDeleted(Long id, Profile profileId,
+                                                            boolean isDeleted);
 
     List<Wallet> findWalletByNameAndCurrencyAndProfileId(String name, DefaultCurrency currency,
                                                          Profile profileId);
