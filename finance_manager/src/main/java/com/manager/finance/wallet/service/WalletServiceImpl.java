@@ -85,7 +85,7 @@ public class WalletServiceImpl implements WalletService {
                 walletDao.findWalletByNameAndCurrencyAndProfileId(wallet.getName(),
                         wallet.getCurrency(), profile);
         if (dbWallet != null && dbWallet.size() > 0) {
-            if (dbWallet.size() == 1 && !dbWallet.get(0).getId().equals(wallet.getId())) {
+            if (dbWallet.size() == 1 && dbWallet.get(0).getId().equals(wallet.getId())) {
                 return;
             }
             throw new IllegalArgumentException(
