@@ -22,7 +22,7 @@ public class WalletController implements WalletsApi {
     private final WalletService walletService;
 
     @Override
-    public ResponseEntity<Long> createWallet(WalletRequestDto walletRequestDto) {
+    public ResponseEntity<Long> createWallet(@Valid WalletRequestDto walletRequestDto) {
         Long save = walletService.save(mapper.walletRequestDtoToWallet(walletRequestDto));
         return new ResponseEntity<>(save, HttpStatus.CREATED);
     }
