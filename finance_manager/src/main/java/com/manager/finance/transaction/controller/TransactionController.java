@@ -26,12 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TransactionController implements TransactionsApi {
 
+    TransactionService transactionService;
 
     @Override
     public ResponseEntity<Long> createTransaction(
             @Valid TransactionRequestDto transactionRequestDto) {
-        System.out.println("hello");
-        return null;
+        Long save = transactionService.save(transactionRequestDto);
+        return new ResponseEntity<>(save, HttpStatus.CREATED);
     }
 
     @Override
