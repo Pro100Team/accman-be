@@ -33,9 +33,21 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WalletServiceTest {
-    private static final List<Wallet> wallets;
+    private static List<Wallet> wallets;
 
-    static {
+    @Autowired
+    private WalletService walletService;
+
+    private static WalletDao walletDao;
+
+    @Autowired
+    public WalletServiceTest(WalletDao walletDaoDep) {
+        walletDao = walletDaoDep;
+    }
+
+
+    @BeforeAll
+    public static void sourceInitialize() {
         wallets = new ArrayList<>();
         Wallet defaultWallet = new Wallet();
         defaultWallet.setName("defaultTest");
@@ -53,21 +65,6 @@ public class WalletServiceTest {
         wallets.add(defaultWallet);
         wallets.add(thirdWallet);
 
-    }
-
-    @Autowired
-    private WalletService walletService;
-
-    private static WalletDao walletDao;
-
-    @Autowired
-    public WalletServiceTest(WalletDao walletDaoDep) {
-        walletDao = walletDaoDep;
-    }
-
-
-    @BeforeAll
-    public static void createContext() {
         UsernamePasswordAuthenticationToken auth =
                 new UsernamePasswordAuthenticationToken("Sergey@exadel.com", null,
                         null);
@@ -105,12 +102,10 @@ public class WalletServiceTest {
     @Test()
     @Order(3)
     public void getAllWallets() {
-
         wallets.get(1).setIsDeleted(false);
         LocalDateTime usedAtDefaultWallet = TimeZoneUtils.getGmtCurrentDate().plusMinutes(2L);
         wallets.get(1).setUsedAt(usedAtDefaultWallet);
         wallets.get(1).setProfileId(wallets.get(0).getProfileId());
-
         wallets.get(2).setIsDeleted(false);
         LocalDateTime usedAtTest3 = TimeZoneUtils.getGmtCurrentDate();
         wallets.get(2).setUsedAt(usedAtTest3);

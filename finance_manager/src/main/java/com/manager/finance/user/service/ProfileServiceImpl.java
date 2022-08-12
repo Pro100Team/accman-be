@@ -25,6 +25,7 @@ public class ProfileServiceImpl implements ProfileService {
         profileDao.save(activeProfile);
     }
 
+    @Override
     public Profile findActiveProfileByUserId(User userId) {
         return profileDao.findProfileByUserIdAndIsDeleted(userId, false);
     }
