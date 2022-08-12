@@ -9,9 +9,9 @@ import com.manager.finance.mapstruct.mapper.TransactionMapper;
 import com.manager.finance.transaction.dao.TransactoionDao;
 import com.manager.finance.transaction.model.entity.Transaction;
 import com.manager.finance.transaction.service.api.TransactionService;
-import com.sandbox.model.CreateTransactionRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.example.model.TransactionRequestDto;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,7 +42,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Long save(CreateTransactionRequest createTransactionRequest) {
+    public Long save(TransactionRequestDto transactionRequestDto) {
 
         return 1L;
 

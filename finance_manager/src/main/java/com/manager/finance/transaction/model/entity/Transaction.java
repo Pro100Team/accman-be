@@ -16,27 +16,54 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.example.model.TransactionTypeParameter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "transactions")
 @Data
 @RequiredArgsConstructor
+@SQLDelete(sql = "UPDATE users SET isdeleted = true WHERE id=?")
+@Where(clause = "is_deleted=false")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tr_id", updatable = false)
     private Long id;
 
-    @Column(name = "tr_name", nullable = false)
-    private String name;
+    @Column(name = "tr_type", nullable = false)
+    private TransactionTypeParameter typeOf;
+
+    @Column(name = "tr_amount", nullable = false)
+    private int amount;
+
+    @Column(name = "tr_category", nullable = false)
+    private String category;
+
+    @Column(name = "tr_sub_category", nullable = false)
+    private String subcategory;
+
+    @Column(name = "tr_payer", nullable = false)
+    private String payer;
+
+    @Column(name = "tr_notes", nullable = false)
+    private String notes;
 
     @Column(name = "tr_currency", nullable = false)
     private DefaultCurrency currency;
 
+    @Getter(AccessLevel.NONE)
     @Column(name = "tr_is_deleted")
     private Boolean isDeleted;
+
+    public Boolean isDeleted() {
+        return isDeleted;
+    }
 
     @Column(name = "tr_last_updated")
     private LocalDateTime lastUpdated;

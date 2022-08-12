@@ -6,8 +6,8 @@
 package com.manager.finance.transaction.service.api;
 
 import com.manager.finance.transaction.model.entity.Transaction;
-import com.sandbox.model.CreateTransactionRequest;
 import java.util.List;
+import org.example.model.TransactionRequestDto;
 
 public interface TransactionService {
     List<Transaction> getAll();
@@ -18,5 +18,5 @@ public interface TransactionService {
 
     void delete(Long id);
 
-    Long save(CreateTransactionRequest createTransactionRequest);
+    Long save(TransactionRequestDto transactionRequestDto);
 }
