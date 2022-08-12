@@ -23,7 +23,6 @@ public interface WalletMapper {
 
     Wallet walletRequestDtoToWalletUpdate(@MappingTarget Wallet wallet,
                                           WalletRequestDto walletRequestDto);
-
     Wallet walletRequestDtoToWallet(WalletRequestDto walletRequestDto);
 
     @Mapping(target = "balance", source = "amount", qualifiedByName = "intToStringDouble")
