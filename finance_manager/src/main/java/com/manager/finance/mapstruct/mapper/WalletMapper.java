@@ -13,6 +13,7 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface WalletMapper {
 
+
     @Named("intToStringDouble")
     public static String intToStringDouble(int amount) {
         return new Formatter().format("%.2f", ((double) (amount)) / 100).toString();

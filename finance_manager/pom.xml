@@ -132,6 +132,13 @@
 			<artifactId>rest-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.example</groupId>
+			<artifactId>Example-API</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<dependencyManagement>

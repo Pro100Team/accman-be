@@ -16,6 +16,12 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.example.api.TransactionsApi;
+import org.example.model.FilterParameter;
+import org.example.model.SortParameter;
+import org.example.model.TransactionRequestDto;
+import org.example.model.TransactionResponseDto;
+import org.example.model.TransactionTypeParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +38,7 @@ public class TransactionController implements TransactionsApi {
     @Override
     public ResponseEntity<Long> createTransaction(
             @Valid TransactionRequestDto transactionRequestDto) {
+
         return new ResponseEntity<>(transactionService.save(transactionRequestDto),
                                     HttpStatus.CREATED);
     }
