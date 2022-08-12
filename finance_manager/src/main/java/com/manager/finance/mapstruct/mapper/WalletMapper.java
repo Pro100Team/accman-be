@@ -16,6 +16,7 @@ public interface WalletMapper {
     @Mapping(target = "isDefault", source = "default")
     Wallet walletRequestDtoToWalletUpdate(@MappingTarget Wallet wallet,
                                           WalletRequestDto walletRequestDto);
+
     @Mapping(target = "isDefault", source = "default")
     Wallet walletRequestDtoToWallet(WalletRequestDto walletRequestDto);
 
