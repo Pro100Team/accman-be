@@ -5,6 +5,8 @@
 
 package com.manager.finance.transaction.controller;
 
+import com.manager.finance.mapstruct.mapper.TransactionMapper;
+import com.manager.finance.transaction.model.entity.Transaction;
 import com.manager.finance.transaction.service.api.TransactionService;
 import com.sandbox.api.TransactionsApi;
 import com.sandbox.model.FilterParameter;
@@ -16,12 +18,6 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.example.api.TransactionsApi;
-import org.example.model.FilterParameter;
-import org.example.model.SortParameter;
-import org.example.model.TransactionRequestDto;
-import org.example.model.TransactionResponseDto;
-import org.example.model.TransactionTypeParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/")
 @RequiredArgsConstructor
 public class TransactionController implements TransactionsApi {
+
     private final TransactionService transactionService;
 
     @Override
@@ -62,9 +59,7 @@ public class TransactionController implements TransactionsApi {
         return null;
     }
 
-
-
-    // INSTEAD OF ABOVE getTransactions() !!!
+     // INSTEAD OF ABOVE getTransactions() !!!
     @GetMapping("/trans/wallets")
     public ResponseEntity<List<TransactionResponseDto>> getTransactionsByWallet(
             @NotNull Long walletId,
