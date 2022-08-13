@@ -58,8 +58,8 @@ public class Transaction {
     private DefaultCurrency currency;
 
 
-    @Column(name = "tr_is_deleted")
-    private Boolean isDeleted=false;
+    @Column(name = "tr_is_deleted", columnDefinition = "boolean default false")
+    private Boolean isDeleted;
 
     @Column(name = "tr_last_updated")
     private LocalDateTime lastUpdated;

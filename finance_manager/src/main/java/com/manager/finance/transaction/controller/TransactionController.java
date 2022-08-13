@@ -5,7 +5,8 @@
 
 package com.manager.finance.transaction.controller;
 
-import com.manager.finance.transaction.service.TransactionServiceImpl;
+import com.manager.finance.mapstruct.mapper.TransactionMapper;
+import com.manager.finance.transaction.model.entity.Transaction;
 import com.manager.finance.transaction.service.api.TransactionService;
 import java.util.List;
 import javax.validation.Valid;
@@ -20,30 +21,30 @@ import org.example.model.TransactionTypeParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/")
 @RequiredArgsConstructor
 public class TransactionController implements TransactionsApi {
-
     private final TransactionService transactionService;
 
     @Override
     public ResponseEntity<Long> createTransaction(
             @Valid TransactionRequestDto transactionRequestDto) {
-        Long save = transactionService.save(transactionRequestDto);
-        return new ResponseEntity<>(save, HttpStatus.CREATED);
+        return new ResponseEntity<>(transactionService.save(transactionRequestDto), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Void> deleteTtransactionById(Long transactionId) {
-        return null;
+        transactionService.delete(transactionId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<TransactionResponseDto> getTransactionById(Long transactionId) {
-        return null;
+        return ResponseEntity.ok(transactionService.getById(transactionId));
     }
 
     @Override
@@ -54,9 +55,19 @@ public class TransactionController implements TransactionsApi {
         return null;
     }
 
+    // INSTEAD OF ABOVE getTransactions() !!!
+    public ResponseEntity<List<TransactionResponseDto>> getTransactionsByWallet(
+            @Valid Long walletId,
+            @RequestParam(defaultValue = "0") Integer pageNumber,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "date") String sortBy) {
+        return ResponseEntity.ok(transactionService.findAllByWallet(walletId, pageNumber, pageSize, sortBy));
+    }
+
     @Override
-    public ResponseEntity<TransactionResponseDto> updateTransactionById(Long transactionId,
-                                                                        @Valid TransactionRequestDto transactionRequestDto) {
-        return null;
+    public ResponseEntity<TransactionResponseDto> updateTransactionById(
+            Long transactionId,
+            @Valid TransactionRequestDto transactionRequestDto) {
+        return ResponseEntity.ok(transactionService.update(transactionId, transactionRequestDto));
     }
 }

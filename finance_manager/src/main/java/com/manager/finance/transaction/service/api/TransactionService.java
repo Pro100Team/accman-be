@@ -5,17 +5,19 @@
 
 package com.manager.finance.transaction.service.api;
 
-import com.manager.finance.transaction.model.entity.Transaction;
 import java.util.List;
 import org.example.model.TransactionRequestDto;
+import org.example.model.TransactionResponseDto;
 
 public interface TransactionService {
+    List<TransactionResponseDto> getAll();
 
-    List<Transaction> getAll();
+    List<TransactionResponseDto> findAllByWallet(Long walletId, Integer pageNumber,
+                                                 Integer pageSize, String sortBy);
 
-    Transaction getById(Long id);
+    TransactionResponseDto getById(Long id);
 
-    Transaction update(Transaction transaction);
+    TransactionResponseDto update(Long transactionId, TransactionRequestDto transactionDto);
 
     void delete(Long id);
 

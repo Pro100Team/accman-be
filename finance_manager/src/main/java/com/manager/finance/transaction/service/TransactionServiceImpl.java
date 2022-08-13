@@ -6,56 +6,68 @@
 package com.manager.finance.transaction.service;
 
 import com.manager.finance.mapstruct.mapper.TransactionMapper;
-import com.manager.finance.transaction.dao.TransactoionDao;
+import com.manager.finance.mapstruct.mapper.WalletMapper;
+import com.manager.finance.transaction.dao.TransactionDao;
 import com.manager.finance.transaction.model.entity.Transaction;
 import com.manager.finance.transaction.service.api.TransactionService;
-import com.manager.finance.user.model.entity.Profile;
-import com.manager.finance.util.TimeZoneUtils;
 import com.manager.finance.wallet.model.entity.Wallet;
 import com.manager.finance.wallet.service.api.WalletService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.model.TransactionRequestDto;
+import org.example.model.TransactionResponseDto;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
-
-    private final TransactoionDao transactoionDao;
+    private final TransactionDao transactionDao;
     private final TransactionMapper transactionMapper;
     private final WalletService walletService;
 
     @Override
-    public List<Transaction> getAll() {
+    public List<TransactionResponseDto> getAll() {
+        ///////////   TO BE REMOVED OR CHANGE IT
         return null;
     }
 
     @Override
-    public Transaction getById(Long id) {
-        return null;
+    public List<TransactionResponseDto> findAllByWallet(Long walletId,
+                                                        Integer pageNumber,
+                                                        Integer pageSize,
+                                                        String sortBy) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        List<Transaction> allByWallet = transactionDao.findAllByWallet(
+                                        walletService.getByIdWithUserHolder(walletId), paging);
+        return transactionMapper.toDtoList(allByWallet);
     }
 
     @Override
-    public Transaction update(Transaction transaction) {
-        return null;
+    public TransactionResponseDto getById(Long id) {
+        return transactionMapper.toDto(transactionDao.getReferenceById(id));
+    }
+
+    @Override
+    public TransactionResponseDto update(Long transactionId, TransactionRequestDto transactionDto) {
+        Transaction transaction = transactionMapper.toEntity(transactionDto);
+        transaction.setId(transactionId);
+        return transactionMapper.toDto(transactionDao.save(transaction));
     }
 
     @Override
     public void delete(Long id) {
-
+        transactionDao.deleteById(id);
     }
 
     @Override
     public Long save(TransactionRequestDto transactionRequestDto) {
-
-        Transaction transaction = transactionMapper.dtoToTransaction(transactionRequestDto);
+        Transaction transaction = transactionMapper.toEntity(transactionRequestDto);
         Wallet wallet = walletService.getByIdWithUserHolder(transactionRequestDto.getWalletId());
         transaction.setWallet(wallet);
         transaction.setCurrency(wallet.getCurrency());
-
-        return transactoionDao.save(transaction).getId();
-
-
+        return transactionDao.save(transaction).getId();
     }
 }
