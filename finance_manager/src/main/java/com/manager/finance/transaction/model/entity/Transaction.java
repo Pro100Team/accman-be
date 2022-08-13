@@ -57,13 +57,9 @@ public class Transaction {
     @Column(name = "tr_currency", nullable = false)
     private DefaultCurrency currency;
 
-    @Getter(AccessLevel.NONE)
-    @Column(name = "tr_is_deleted")
-    private Boolean isDeleted;
 
-    public Boolean isDeleted() {
-        return isDeleted;
-    }
+    @Column(name = "tr_is_deleted")
+    private Boolean isDeleted=false;
 
     @Column(name = "tr_last_updated")
     private LocalDateTime lastUpdated;

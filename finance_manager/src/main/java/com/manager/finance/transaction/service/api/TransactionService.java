@@ -10,6 +10,7 @@ import java.util.List;
 import org.example.model.TransactionRequestDto;
 
 public interface TransactionService {
+
     List<Transaction> getAll();
 
     Transaction getById(Long id);

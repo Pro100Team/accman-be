@@ -5,6 +5,7 @@
 
 package com.manager.finance.transaction.controller;
 
+import com.manager.finance.transaction.service.TransactionServiceImpl;
 import com.manager.finance.transaction.service.api.TransactionService;
 import java.util.List;
 import javax.validation.Valid;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TransactionController implements TransactionsApi {
 
-    TransactionService transactionService;
+    private final TransactionService transactionService;
 
     @Override
     public ResponseEntity<Long> createTransaction(
