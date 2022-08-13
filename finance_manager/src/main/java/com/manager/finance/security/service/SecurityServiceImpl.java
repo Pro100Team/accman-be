@@ -31,7 +31,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public String getJwtToken(UserLoginDto userDto) {
-        final String login = userDto.getUsername();
+        final String login = userDto.getUsername().toLowerCase();
         User user = userService.getByLogin(login);
         if (user == null || passwordEncoder.matches(user.getPassword(), userDto.getPassword())) {
             throw new UserNotFoundException("Incorrect username or password entered");
