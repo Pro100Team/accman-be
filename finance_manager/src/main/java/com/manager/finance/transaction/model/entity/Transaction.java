@@ -16,9 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.example.model.TransactionTypeParameter;
 import org.hibernate.annotations.SQLDelete;
@@ -56,7 +54,6 @@ public class Transaction {
 
     @Column(name = "tr_currency", nullable = false)
     private DefaultCurrency currency;
-
 
     @Column(name = "tr_is_deleted", columnDefinition = "boolean default false")
     private Boolean isDeleted;

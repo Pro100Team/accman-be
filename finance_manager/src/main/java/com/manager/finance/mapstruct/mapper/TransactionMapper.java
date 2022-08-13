@@ -1,9 +1,7 @@
 package com.manager.finance.mapstruct.mapper;
 
-import java.util.List;
 import com.manager.finance.transaction.model.entity.Transaction;
-import com.manager.finance.wallet.model.entity.Wallet;
-import com.sandbox.model.WalletResponseDto;
+import java.util.List;
 import org.example.model.TransactionRequestDto;
 import org.example.model.TransactionResponseDto;
 import org.mapstruct.Mapper;

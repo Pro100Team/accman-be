@@ -5,8 +5,6 @@
 
 package com.manager.finance.transaction.controller;
 
-import com.manager.finance.mapstruct.mapper.TransactionMapper;
-import com.manager.finance.transaction.model.entity.Transaction;
 import com.manager.finance.transaction.service.api.TransactionService;
 import java.util.List;
 import javax.validation.Valid;
@@ -33,7 +31,8 @@ public class TransactionController implements TransactionsApi {
     @Override
     public ResponseEntity<Long> createTransaction(
             @Valid TransactionRequestDto transactionRequestDto) {
-        return new ResponseEntity<>(transactionService.save(transactionRequestDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(transactionService.save(transactionRequestDto),
+                                    HttpStatus.CREATED);
     }
 
     @Override
@@ -61,7 +60,8 @@ public class TransactionController implements TransactionsApi {
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "date") String sortBy) {
-        return ResponseEntity.ok(transactionService.findAllByWallet(walletId, pageNumber, pageSize, sortBy));
+        return ResponseEntity.ok(transactionService.findAllByWallet(
+                walletId, pageNumber, pageSize, sortBy));
     }
 
     @Override

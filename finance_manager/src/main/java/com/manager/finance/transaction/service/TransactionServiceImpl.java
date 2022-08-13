@@ -6,7 +6,6 @@
 package com.manager.finance.transaction.service;
 
 import com.manager.finance.mapstruct.mapper.TransactionMapper;
-import com.manager.finance.mapstruct.mapper.WalletMapper;
 import com.manager.finance.transaction.dao.TransactionDao;
 import com.manager.finance.transaction.model.entity.Transaction;
 import com.manager.finance.transaction.service.api.TransactionService;
