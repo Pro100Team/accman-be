@@ -39,7 +39,7 @@ public class TransactionServiceImpl implements TransactionService {
                                                         Integer pageNumber,
                                                         Integer pageSize,
                                                         String sortBy) {
-        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy, "id").descending());
         List<Transaction> allByWallet = transactionDao.findAllByWallet(walletService.getByIdWithUserHolder(walletId), paging);
         return transactionMapper.toDtoList(allByWallet);
     }
