@@ -6,16 +6,16 @@
 package com.manager.finance.transaction.controller;
 
 import com.manager.finance.transaction.service.api.TransactionService;
+import com.sandbox.api.TransactionsApi;
+import com.sandbox.model.FilterParameter;
+import com.sandbox.model.SortParameter;
+import com.sandbox.model.TransactionRequestDto;
+import com.sandbox.model.TransactionResponseDto;
+import com.sandbox.model.TransactionTypeParameter;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.example.api.TransactionsApi;
-import org.example.model.FilterParameter;
-import org.example.model.SortParameter;
-import org.example.model.TransactionRequestDto;
-import org.example.model.TransactionResponseDto;
-import org.example.model.TransactionTypeParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +36,7 @@ public class TransactionController implements TransactionsApi {
                                     HttpStatus.CREATED);
     }
 
+
     @Override
     public ResponseEntity<Void> deleteTtransactionById(Long transactionId) {
         transactionService.delete(transactionId);
@@ -54,6 +55,8 @@ public class TransactionController implements TransactionsApi {
             @Valid List<FilterParameter> filterBy, @Valid Long walletId) {
         return null;
     }
+
+
 
     // INSTEAD OF ABOVE getTransactions() !!!
     @GetMapping("/trans/wallets")

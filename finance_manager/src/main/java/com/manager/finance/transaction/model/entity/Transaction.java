@@ -7,6 +7,7 @@ package com.manager.finance.transaction.model.entity;
 
 import com.manager.finance.wallet.model.entity.Wallet;
 import com.manager.finance.wallet.model.entity.api.DefaultCurrency;
+import com.sandbox.model.TransactionTypeParameter;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.example.model.TransactionTypeParameter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 

@@ -5,9 +5,10 @@
 
 package com.manager.finance.transaction.service.api;
 
+import com.sandbox.model.TransactionRequestDto;
+import com.sandbox.model.TransactionResponseDto;
 import java.util.List;
-import org.example.model.TransactionRequestDto;
-import org.example.model.TransactionResponseDto;
+
 
 public interface TransactionService {
     List<TransactionResponseDto> getAll();

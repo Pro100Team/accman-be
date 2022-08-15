@@ -25,7 +25,7 @@ public class UserController implements UsersApi {
     private final UserMapper userMapper;
 
     @Override
-    public ResponseEntity<Void> deleteUserById(Long userId) {
+    public ResponseEntity<Void> deleteUser() {
         profileService.deleteProfile(userService.getByUserHolder());
         return new ResponseEntity<>(HttpStatus.OK);
     }
