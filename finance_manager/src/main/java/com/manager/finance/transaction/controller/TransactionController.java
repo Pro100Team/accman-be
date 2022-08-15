@@ -59,7 +59,7 @@ public class TransactionController implements TransactionsApi {
         return null;
     }
 
-     // INSTEAD OF ABOVE getTransactions() !!!
+    // INSTEAD OF ABOVE getTransactions() !!!
     @GetMapping("/trans/wallets")
     public ResponseEntity<List<TransactionResponseDto>> getTransactionsByWallet(
             @NotNull Long walletId,
