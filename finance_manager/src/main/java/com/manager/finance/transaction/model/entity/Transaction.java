@@ -26,8 +26,8 @@ import org.hibernate.annotations.Where;
 @Table(name = "transactions")
 @Data
 @RequiredArgsConstructor
-@SQLDelete(sql = "UPDATE users SET isdeleted = true WHERE id=?")
-@Where(clause = "is_deleted=false")
+@SQLDelete(sql = "UPDATE transactions SET tr_is_deleted = true WHERE tr_id=?")
+@Where(clause = "tr_is_deleted=false")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +55,7 @@ public class Transaction {
     @Column(name = "tr_currency", nullable = false)
     private DefaultCurrency currency;
 
-    @Column(name = "tr_is_deleted", columnDefinition = "boolean default false")
+    @Column(name = "tr_is_deleted")
     private Boolean isDeleted;
 
     @Column(name = "tr_last_updated")

@@ -18,6 +18,7 @@ import org.example.model.TransactionResponseDto;
 import org.example.model.TransactionTypeParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,11 +56,12 @@ public class TransactionController implements TransactionsApi {
     }
 
     // INSTEAD OF ABOVE getTransactions() !!!
+    @GetMapping("/trans/wallets")
     public ResponseEntity<List<TransactionResponseDto>> getTransactionsByWallet(
-            @Valid Long walletId,
+            @NotNull Long walletId,
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "date") String sortBy) {
+            @RequestParam(defaultValue = "id") String sortBy) {
         return ResponseEntity.ok(transactionService.findAllByWallet(
                 walletId, pageNumber, pageSize, sortBy));
     }
