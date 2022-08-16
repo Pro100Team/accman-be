@@ -19,6 +19,7 @@ public class SimpleCorsFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods","GET, PUT, POST, DELETE");
+        response.setHeader("Access-Control-Expose-Headers","*");
         chain.doFilter(req, res);
     }
 
