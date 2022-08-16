@@ -4,7 +4,6 @@ import com.manager.finance.transaction.model.entity.Transaction;
 import com.sandbox.model.TransactionRequestDto;
 import com.sandbox.model.TransactionResponseDto;
 import java.util.List;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

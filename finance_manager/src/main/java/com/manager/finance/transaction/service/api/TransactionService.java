@@ -9,7 +9,6 @@ import com.sandbox.model.TransactionRequestDto;
 import com.sandbox.model.TransactionResponseDto;
 import java.util.List;
 
-
 public interface TransactionService {
     List<TransactionResponseDto> getAll();
 

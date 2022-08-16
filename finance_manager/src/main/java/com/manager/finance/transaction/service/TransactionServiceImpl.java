@@ -40,14 +40,16 @@ public class TransactionServiceImpl implements TransactionService {
                                                         Integer pageSize,
                                                         String sortBy) {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy, "id").descending());
-        List<Transaction> allByWallet = transactionDao.findAllByWallet(walletService.getByIdWithUserHolder(walletId), paging);
+        List<Transaction> allByWallet = transactionDao.findAllByWallet(
+                walletService.getByIdWithUserHolder(walletId), paging);
         return transactionMapper.toDtoList(allByWallet);
     }
 
     @Override
     public TransactionResponseDto getById(Long id) {
         return transactionMapper.toDto(transactionDao.findById(id).orElseThrow(
-                () -> new TransactionNotFoundException("No transaction #" + id + " or it has been deleted")));
+                () -> new TransactionNotFoundException(
+                        "No transaction #" + id + " or it has been deleted")));
     }
 
     @Override

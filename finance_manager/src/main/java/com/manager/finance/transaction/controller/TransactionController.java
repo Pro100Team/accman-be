@@ -36,7 +36,6 @@ public class TransactionController implements TransactionsApi {
                                     HttpStatus.CREATED);
     }
 
-
     @Override
     public ResponseEntity<Void> deleteTtransactionById(Long transactionId) {
         transactionService.delete(transactionId);
