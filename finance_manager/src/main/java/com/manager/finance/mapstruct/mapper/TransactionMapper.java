@@ -11,14 +11,17 @@ import org.mapstruct.Mapping;
 public interface TransactionMapper {
     @Mapping(target = "date", source = "lastUpdated")
     @Mapping(target = "walletName", source = "wallet.name")
+    @Mapping(target = "transactionType", source = "typeOf")
     TransactionResponseDto toDto(Transaction transaction);
 
     @Mapping(target = "lastUpdated", source = "date")
     @Mapping(target = "isDeleted", constant = "false")
+    @Mapping(target = "typeOf", source = "transactionType")
     Transaction toEntity(TransactionRequestDto transactionRequestDto);
 
     @Mapping(target = "date", source = "lastUpdated")
     @Mapping(target = "walletName", source = "wallet.name")
+    @Mapping(target = "transactionType", source = "typeOf")
     List<TransactionResponseDto> toDtoList(List<Transaction> transactions);
 
 }
