@@ -25,8 +25,8 @@ public class UserController implements UsersApi {
     private final UserMapper userMapper;
 
     @Override
-    public ResponseEntity<Void> deleteUserById(Long userId) {
-        profileService.deleteProfile(userService.getByUserHolder());
+    public ResponseEntity<Void> deleteUser() {
+        // TO IMPLEMENT
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -44,8 +44,7 @@ public class UserController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<Void> logout() {
-
-        return null;
+    public ResponseEntity<Void> logout(String authorization) {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
