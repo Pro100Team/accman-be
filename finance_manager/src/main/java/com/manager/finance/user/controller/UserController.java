@@ -26,7 +26,7 @@ public class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<Void> deleteUser() {
-        // TO IMPLEMENT
+        profileService.deleteProfile();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -45,6 +45,7 @@ public class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<Void> logout(String authorization) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return null;
     }
+
 }

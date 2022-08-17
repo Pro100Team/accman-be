@@ -204,7 +204,6 @@
                     <source>17</source>
                     <target>17</target>
 					<annotationProcessorPaths>
-
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>

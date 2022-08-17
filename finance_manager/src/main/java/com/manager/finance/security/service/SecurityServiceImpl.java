@@ -11,7 +11,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -40,13 +39,11 @@ public class SecurityServiceImpl implements SecurityService {
                 .commaSeparatedStringToAuthorityList(user.getRole().name());
         String token = Jwts
                 .builder()
-                .setId(UUID.randomUUID().toString())
-                .setSubject(login)
-                .claim("authorities",
+                .claim("username", login)
+                .claim("roles",
                         grantedAuthorities.stream()
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
-                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(SignatureAlgorithm.HS512,
                         secretKey.getBytes()).compact();

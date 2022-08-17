@@ -1,6 +1,6 @@
 package com.manager.finance.security.config;
 
-import com.manager.finance.security.controller.filters.JwtAuthorizationFilter;
+import com.manager.finance.user.controller.filters.JwtAuthorizationFilter;
 import com.manager.finance.user.model.entity.api.Role;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
@@ -45,13 +45,13 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         final CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowCredentials(false);
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setExposedHeaders(Arrays.asList("*"));
 
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

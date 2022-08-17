@@ -1,4 +1,4 @@
-package com.manager.finance.security.controller.filters;
+package com.manager.finance.user.controller.filters;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,8 +31,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private String secretKey;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain chain)
+            throws ServletException, IOException {
         try {
             if (checkJwtToken(request, response)) {
                 Claims claims = validateToken(request);
@@ -58,10 +61,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private void setUpSpringAuthentication(Claims claims) {
         @SuppressWarnings("unchecked")
-        List<String> authorities = (List) claims.get("authorities");
+        List<String> authorities = (List<String>) claims.get("authorities");
 
         UsernamePasswordAuthenticationToken auth =
-                new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
+                new UsernamePasswordAuthenticationToken(claims.get("userName"), null,
                         authorities.stream().map(SimpleGrantedAuthority::new)
                                 .collect(Collectors.toList()));
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -70,10 +73,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private boolean checkJwtToken(HttpServletRequest request, HttpServletResponse response) {
         String authenticationHeader = request.getHeader(header);
-        if (authenticationHeader == null || !authenticationHeader.startsWith(prefix)) {
-            return false;
-        }
-        return true;
+        return authenticationHeader != null && authenticationHeader.startsWith(prefix);
     }
 
 }
