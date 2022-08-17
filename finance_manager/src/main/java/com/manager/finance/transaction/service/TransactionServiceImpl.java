@@ -14,12 +14,14 @@ import com.manager.finance.wallet.model.entity.Wallet;
 import com.manager.finance.wallet.service.api.WalletService;
 import com.sandbox.model.TransactionRequestDto;
 import com.sandbox.model.TransactionResponseDto;
+import com.sandbox.model.TransactionTypeParameter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -65,11 +67,22 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
     public Long save(TransactionRequestDto transactionRequestDto) {
         Transaction transaction = transactionMapper.toEntity(transactionRequestDto);
         Wallet wallet = walletService.getByIdWithUserHolder(transactionRequestDto.getWalletId());
         transaction.setWallet(wallet);
         transaction.setCurrency(wallet.getCurrency());
+        walletService.update(changeWalletAmount(wallet, transaction));
         return transactionDao.save(transaction).getId();
+    }
+
+    private Wallet changeWalletAmount(Wallet wallet, Transaction transaction) {
+        if (transaction.getTypeOf() == TransactionTypeParameter.EXPENSE) {
+            wallet.setAmount(wallet.getAmount() - transaction.getAmount());
+        } else {
+            wallet.setAmount(wallet.getAmount() + transaction.getAmount());
+        }
+        return wallet;
     }
 }

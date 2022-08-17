@@ -43,4 +43,7 @@ public class Wallet {
     @JoinColumn(name = "w_profile_id", referencedColumnName = "p_id", nullable = false)
     private Profile profileId;
 
+    @Column(name = "w_amount")
+    private int amount;
+
 }

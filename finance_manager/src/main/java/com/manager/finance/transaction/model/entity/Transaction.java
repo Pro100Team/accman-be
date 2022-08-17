@@ -8,7 +8,7 @@ package com.manager.finance.transaction.model.entity;
 import com.manager.finance.wallet.model.entity.Wallet;
 import com.manager.finance.wallet.model.entity.api.DefaultCurrency;
 import com.sandbox.model.TransactionTypeParameter;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,7 +59,7 @@ public class Transaction {
     private Boolean isDeleted;
 
     @Column(name = "tr_last_updated")
-    private LocalDateTime lastUpdated;
+    private LocalDate lastUpdated;
 
     @ManyToOne
     @JoinColumn(name = "tr_wallet_id", referencedColumnName = "w_id", nullable = false)
