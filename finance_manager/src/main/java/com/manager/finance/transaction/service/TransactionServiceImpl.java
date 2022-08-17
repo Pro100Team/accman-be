@@ -55,9 +55,14 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
     public TransactionResponseDto update(Long transactionId, TransactionRequestDto transactionDto) {
         Transaction transaction = transactionMapper.toEntity(transactionDto);
         transaction.setId(transactionId);
+        Wallet wallet = walletService.getByIdWithUserHolder(transactionDto.getWalletId());
+        transaction.setWallet(wallet);
+        transaction.setCurrency(wallet.getCurrency());
+        walletService.update(changeWalletAmount(wallet, transaction));
         return transactionMapper.toDto(transactionDao.save(transaction));
     }
 
