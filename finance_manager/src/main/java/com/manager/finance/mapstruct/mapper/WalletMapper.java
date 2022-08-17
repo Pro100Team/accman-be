@@ -27,6 +27,6 @@ public interface WalletMapper {
 
     Wallet walletRequestDtoToWallet(WalletRequestDto walletRequestDto);
 
-    @Mapping(target = "balance", source = "amount", qualifiedByName = "intToStringDouble")
+       @Mapping(target = "balance", source = "amount", qualifiedByName = "intToStringDouble")
     List<WalletResponseDto> walletListToWalletResponseDtoList(List<Wallet> wallets);
 }
