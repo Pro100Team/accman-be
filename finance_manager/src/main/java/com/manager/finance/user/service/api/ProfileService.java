@@ -1,10 +1,11 @@
 package com.manager.finance.user.service.api;
 
 import com.manager.finance.user.model.entity.Profile;
-import com.manager.finance.user.model.entity.User;
 
 public interface ProfileService {
-    void deleteProfile(User id);
+    void deleteProfile();
 
-    Profile findByUserIdWithValidation(User user);
+    Profile findActiveProfileByUserId();
+
+    Profile findByUserIdWithValidation();
 }

@@ -5,6 +5,7 @@ import com.manager.finance.user.dao.ProfileDao;
 import com.manager.finance.user.model.entity.Profile;
 import com.manager.finance.user.model.entity.User;
 import com.manager.finance.user.service.api.ProfileService;
+import com.manager.finance.user.service.api.UserService;
 import com.manager.finance.util.TimeZoneUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -16,33 +17,36 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
     private final ProfileDao profileDao;
+    private final UserService userService;
     private final ProfileMapper profileMapper;
 
     @Override
-    public void deleteProfile(User id) {
-        Profile activeProfile = findByUserIdWithValidation(id);
+    public void deleteProfile() {
+        Profile activeProfile = findByUserIdWithValidation();
         activeProfile.setIsDeleted(true);
         profileDao.save(activeProfile);
     }
 
-    public Profile findActiveProfileByUserId(User userId) {
-        return profileDao.findProfileByUserIdAndIsDeleted(userId, false);
+    @Override
+    public Profile findActiveProfileByUserId() {
+        User user = userService.getByUserHolder();
+        return profileDao.findProfileByUserIdAndIsDeleted(user, false);
     }
 
     @Override
-    public Profile findByUserIdWithValidation(User userId) {
-        Profile profile = findActiveProfileByUserId(userId);
+    public Profile findByUserIdWithValidation() {
+        Profile profile = findActiveProfileByUserId();
         if (profile == null) {
-            return createDefaultProfile(userId);
+            return createDefaultProfile();
         }
         return profile;
     }
 
-    private Profile createDefaultProfile(User userId) {
+    private Profile createDefaultProfile() {
+        User user = userService.getByUserHolder();
         Pageable pageable = PageRequest.of(0, 1,
                 Sort.by("dtUpdate").descending());
-        Profile sourceProfile =
-                profileDao.findProfileByUserId(userId, pageable).getContent().get(0);
+        Profile sourceProfile = profileDao.findProfileByUserId(user, pageable).getContent().get(0);
         Profile profile = profileMapper.sourceProfileToNewProfile(sourceProfile);
         profile.setIsDeleted(false);
         profile.setDtUpdate(TimeZoneUtils.getGmtCurrentDate());
