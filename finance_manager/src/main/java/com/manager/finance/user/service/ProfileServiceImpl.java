@@ -8,8 +8,6 @@ import com.manager.finance.user.service.api.ProfileService;
 import com.manager.finance.user.service.api.UserService;
 import com.manager.finance.util.TimeZoneUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -44,9 +42,8 @@ public class ProfileServiceImpl implements ProfileService {
 
     private Profile createDefaultProfile() {
         User user = userService.getByUserHolder();
-        Pageable pageable = PageRequest.of(0, 1,
-                Sort.by("dtUpdate").descending());
-        Profile sourceProfile = profileDao.findProfileByUserId(user, pageable).getContent().get(0);
+        Sort sort = Sort.by("dtUpdate").descending();
+        Profile sourceProfile = profileDao.findProfileByUserId(user, sort);
         Profile profile = profileMapper.sourceProfileToNewProfile(sourceProfile);
         profile.setIsDeleted(false);
         profile.setDtUpdate(TimeZoneUtils.getGmtCurrentDate());
