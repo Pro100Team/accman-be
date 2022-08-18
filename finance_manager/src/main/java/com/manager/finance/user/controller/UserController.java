@@ -47,4 +47,5 @@ public class UserController implements UsersApi {
     public ResponseEntity<Void> logout(String authorization) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
