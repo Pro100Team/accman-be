@@ -13,14 +13,14 @@ import org.mapstruct.Named;
 public interface TransactionMapper {
 
     @Named("stringDoubleToInt")
-    public static int intToStringDouble(String amount){
-        return (int) Math.round (Double.parseDouble(amount)*100);
+    public static int intToStringDouble(String amount) {
+        return (int) Math.round(Double.parseDouble(amount) * 100);
     }
 
     @Named("intToStringDouble")
-    public static String stringDoubleToInt(int amount){
+    public static String stringDoubleToInt(int amount) {
         return new Formatter().format("%.2f",
-                ((double)(amount))/100).toString().replace(",",".");
+                ((double) (amount)) / 100).toString().replace(",", ".");
     }
 
     @Mapping(target = "date", source = "lastUpdated")

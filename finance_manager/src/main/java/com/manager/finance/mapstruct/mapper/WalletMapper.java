@@ -14,8 +14,8 @@ import org.mapstruct.Named;
 public interface WalletMapper {
 
     @Named("intToStringDouble")
-    public static String intToStringDouble(int amount){
-        return new Formatter().format("%.2f", ((double)(amount))/100).toString();
+    public static String intToStringDouble(int amount) {
+        return new Formatter().format("%.2f", ((double) (amount)) / 100).toString();
     }
 
     @Mapping(target = "balance", source = "amount", qualifiedByName = "intToStringDouble")

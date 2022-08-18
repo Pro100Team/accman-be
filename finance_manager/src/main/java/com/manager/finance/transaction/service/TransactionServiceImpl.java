@@ -68,6 +68,13 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void delete(Long id) {
+        Transaction transaction = transactionDao.findById(id).orElseThrow(
+                () -> new TransactionNotFoundException(
+                        "No transaction #" + id + " or it has been deleted"));
+
+        Wallet wallet = transaction.getWallet();
+        walletService.update(backChangeWalletAmount(wallet, transaction));
+
         transactionDao.deleteById(id);
     }
 
@@ -87,6 +94,15 @@ public class TransactionServiceImpl implements TransactionService {
             wallet.setAmount(wallet.getAmount() - transaction.getAmount());
         } else {
             wallet.setAmount(wallet.getAmount() + transaction.getAmount());
+        }
+        return wallet;
+    }
+
+    private Wallet backChangeWalletAmount(Wallet wallet, Transaction transaction) {
+        if (transaction.getTypeOf() == TransactionTypeParameter.EXPENSE) {
+            wallet.setAmount(wallet.getAmount() + transaction.getAmount());
+        } else {
+            wallet.setAmount(wallet.getAmount() - transaction.getAmount());
         }
         return wallet;
     }
