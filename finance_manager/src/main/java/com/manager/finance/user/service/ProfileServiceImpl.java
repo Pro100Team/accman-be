@@ -33,7 +33,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public Profile findByUserIdWithValidation() {
-        Profile profile = findActiveProfileByUserId();
+        Profile profile = this.findActiveProfileByUserId();
         if (profile == null) {
             return createDefaultProfile();
         }

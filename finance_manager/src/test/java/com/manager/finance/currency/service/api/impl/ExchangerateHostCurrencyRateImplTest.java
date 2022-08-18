@@ -1,4 +1,4 @@
-package com.manager.finance.service.currency.api.impl;
+package com.manager.finance.currency.service.api.impl;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;

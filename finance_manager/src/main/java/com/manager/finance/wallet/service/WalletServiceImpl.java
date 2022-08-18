@@ -29,9 +29,10 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public Wallet getByIdWithUserHolder(Long id) {
         Profile profile = profileService.findByUserIdWithValidation();
-        return walletDao.findWalletByIdAndProfileIdAndIsDeleted(
+        Wallet wallet = walletDao.findWalletByIdAndProfileIdAndIsDeleted(
                 id, profile, false).orElseThrow(() ->
                 new WalletNotFoundException("wallet with id: " + id + " - not found"));
+        return wallet;
     }
 
     @Override
