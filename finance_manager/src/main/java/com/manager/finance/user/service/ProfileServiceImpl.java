@@ -25,15 +25,11 @@ public class ProfileServiceImpl implements ProfileService {
         profileDao.save(activeProfile);
     }
 
-    @Override
-    public Profile findActiveProfileByUserId() {
-        User user = userService.getByUserHolder();
-        return profileDao.findProfileByUserIdAndIsDeleted(user, false);
-    }
 
     @Override
     public Profile findByUserIdWithValidation() {
-        Profile profile = this.findActiveProfileByUserId();
+        User user = userService.getByUserHolder();
+        Profile profile = profileDao.findProfileByUserIdAndIsDeleted(user, false);
         if (profile == null) {
             return createDefaultProfile();
         }
