@@ -17,20 +17,21 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
 @ActiveProfiles("test")
+@SpringBootTest
 public class WalletServiceTest extends AbstractTest {
-    @Mock
+    @MockBean
     private WalletDao walletDao;
-    @Mock
+    @MockBean
     private ProfileServiceImpl profileService;
-    @InjectMocks
+    @Autowired
     private WalletServiceImpl walletService;
 
     @BeforeAll
