@@ -45,7 +45,7 @@ public class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<Void> logout(String authorization) {
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
