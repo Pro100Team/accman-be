@@ -45,6 +45,7 @@ public class WalletServiceImpl implements WalletService {
         wallet.setUsedAt(TimeZoneUtils.getGmtCurrentDate());
         wallet.setIsDeleted(false);
         wallet.setProfileId(profile);
+        wallet.setAmount(0);
         return walletDao.save(wallet).getId();
     }
 
