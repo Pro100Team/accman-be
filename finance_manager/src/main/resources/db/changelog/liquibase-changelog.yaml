@@ -10,3 +10,12 @@ databaseChangeLog:
       file: db/changelog/changeset/v.0.0.1/insert-users.sql
   - include:
       file: db/changelog/changeset/v.0.0.1/insert-profiles.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.2/m1-create-table-transactions.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.2/m2-change-table-transactions.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.2/m3-change-table-wallet.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.2/m4-change-table-transactions.sql
+
