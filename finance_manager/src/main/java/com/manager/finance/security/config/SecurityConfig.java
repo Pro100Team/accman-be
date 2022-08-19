@@ -38,24 +38,22 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/admin/**").hasAuthority(Role.ROLE_ADMIN.name())
                 .antMatchers("/api/users/login").permitAll()
-                .antMatchers("/api/wallets/").authenticated()
+                .antMatchers("/api/wallets/**").authenticated()
                 .anyRequest().authenticated();
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         final CorsConfiguration configuration = new CorsConfiguration();
-
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowCredentials(false);
         configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("*"));
 
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
 

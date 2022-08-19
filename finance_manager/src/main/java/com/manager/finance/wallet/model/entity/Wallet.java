@@ -48,6 +48,6 @@ public class Wallet {
     private Profile profileId;
 
     @Column(name = "w_amount")
-    private int amount;
+    private Integer amount;
 
 }

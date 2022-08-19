@@ -11,22 +11,22 @@ import com.manager.finance.user.model.entity.api.Role;
 import com.manager.finance.user.service.api.ProfileService;
 import com.manager.finance.user.service.api.UserService;
 import com.manager.finance.util.TimeZoneUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("test")
-@SpringBootTest
 public class ProfileServiceImplTest extends AbstractTest {
-    @MockBean
+    @Mock
     private UserService userService;
-    @MockBean
+    @Mock
     private ProfileDao profileDao;
-    @Autowired
     private ProfileService profileService;
+
+    @BeforeEach
+    public void initialize() {
+        profileService = new ProfileServiceImpl(profileDao, userService, null);
+    }
 
     @Test
     public void findByUserIdWithValidation() {
@@ -43,7 +43,7 @@ public class ProfileServiceImplTest extends AbstractTest {
     }
 
     @Test
-    public void deleteProfile(){
+    public void deleteProfile() {
         User user = User.builder().id(1L).login("testLogin").password("test").role(Role.ROLE_USER)
                 .build();
         Profile profile = Profile.builder().id(1L).country(Country.POLAND).isDeleted(false)

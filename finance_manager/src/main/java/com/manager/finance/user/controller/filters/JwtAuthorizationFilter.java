@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,14 +30,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private String secretKey;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain chain)
             throws ServletException, IOException {
         try {
             if (checkJwtToken(request, response)) {
                 Claims claims = validateToken(request);
-                if (claims.get("authorities") != null) {
+                if (claims.get("roles") != null) {
                     setUpSpringAuthentication(claims);
                 } else {
                     SecurityContextHolder.clearContext();
@@ -61,10 +59,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private void setUpSpringAuthentication(Claims claims) {
         @SuppressWarnings("unchecked")
-        List<String> authorities = (List<String>) claims.get("authorities");
+        List<String> authorities = (List<String>) claims.get("roles");
 
         UsernamePasswordAuthenticationToken auth =
-                new UsernamePasswordAuthenticationToken(claims.get("userName"), null,
+                new UsernamePasswordAuthenticationToken(claims.get("username"), null,
                         authorities.stream().map(SimpleGrantedAuthority::new)
                                 .collect(Collectors.toList()));
         SecurityContextHolder.getContext().setAuthentication(auth);

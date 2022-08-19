@@ -8,24 +8,25 @@ import com.manager.finance.user.model.entity.api.Role;
 import com.manager.finance.user.service.api.UserService;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("test")
-@SpringBootTest
 public class UserServiceImplTest extends AbstractTest {
-    @MockBean
+    @Mock
     private UserHolder userHolder;
-    @MockBean
+    @Mock
     private UserDao userDao;
-    @Autowired
+
     private UserService userService;
+
+    @BeforeEach
+    public void initialize() {
+        userService = new UserServiceImpl(userDao, userHolder);
+    }
 
     @Test
     public void getByUserHolder() {

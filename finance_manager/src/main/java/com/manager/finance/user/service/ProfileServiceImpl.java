@@ -25,7 +25,6 @@ public class ProfileServiceImpl implements ProfileService {
         profileDao.save(activeProfile);
     }
 
-
     @Override
     public Profile findByUserIdWithValidation() {
         User user = userService.getByUserHolder();

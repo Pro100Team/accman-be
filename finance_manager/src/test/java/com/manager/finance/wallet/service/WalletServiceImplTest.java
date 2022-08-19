@@ -18,38 +18,26 @@ import com.manager.finance.wallet.model.entity.api.DefaultCurrency;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("test")
-@SpringBootTest
 public class WalletServiceImplTest extends AbstractTest {
-    @MockBean
+    @Mock
     private WalletDao walletDao;
-    @MockBean
+    @Mock
     private ProfileServiceImpl profileService;
-    @Autowired
+
     private WalletServiceImpl walletService;
 
-    @BeforeAll
-    public static void sourceInitialize() {
-    }
-
-    @AfterAll
-    public static void cleanTestSource() {
-
+    @BeforeEach
+    public void initialize() {
+        walletService = new WalletServiceImpl(profileService, walletDao);
     }
 
     @Test()
-    @Order(1)
     public void createWallet() {
         User user = User.builder().id(1L).login("testLogin").password("test").role(Role.ROLE_USER)
                 .build();
@@ -142,7 +130,6 @@ public class WalletServiceImplTest extends AbstractTest {
     }
 
     @Test
-    @Order(5)
     public void deleteWallet() {
         User user = User.builder().id(1L).login("testLogin").password("test").role(Role.ROLE_USER)
                 .build();

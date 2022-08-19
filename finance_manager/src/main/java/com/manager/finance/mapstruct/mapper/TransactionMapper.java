@@ -15,12 +15,12 @@ import org.mapstruct.Named;
 public interface TransactionMapper {
 
     @Named("stringDoubleToInt")
-    public static int intToStringDouble(String amount) {
+    public static Integer stringDoubleToIntSource(String amount) {
         return (int) Math.round(Double.parseDouble(amount) * 100);
     }
 
     @Named("intToStringDouble")
-    public static String stringDoubleToInt(int amount) {
+    public static String intToStringDouble(Integer amount) {
         return new Formatter().format("%.2f",
                 ((double) (amount)) / 100).toString().replace(",", ".");
     }
