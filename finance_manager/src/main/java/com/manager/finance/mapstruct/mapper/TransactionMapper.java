@@ -49,10 +49,6 @@ public interface TransactionMapper {
     @Mapping(target = "category", source = "category.name")
     Transaction toEntity(TransactionRequestDto transactionRequestDto);
 
-//    @Mapping(target = "date", source = "lastUpdated")
-//    @Mapping(target = "walletName", source = "wallet.name")
-//    @Mapping(target = "transactionType", source = "typeOf")
-//    @Mapping(target = "amount", source = "amount", qualifiedByName = "intToStringDouble")
     List<TransactionResponseDto> toDtoList(List<Transaction> transactions);
 
 }
