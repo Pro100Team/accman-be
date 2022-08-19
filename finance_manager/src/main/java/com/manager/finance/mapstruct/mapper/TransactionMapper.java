@@ -11,7 +11,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CategoryMapper.class})
+
 public interface TransactionMapper {
 
     @Named("stringDoubleToInt")
@@ -39,14 +40,12 @@ public interface TransactionMapper {
     @Mapping(target = "walletName", source = "wallet.name")
     @Mapping(target = "transactionType", source = "typeOf")
     @Mapping(target = "amount", source = "amount", qualifiedByName = "intToStringDouble")
-    @Mapping(target = "category", source = "category", qualifiedByName = "createCategoryByName")
     TransactionResponseDto toDto(Transaction transaction);
 
     @Mapping(target = "lastUpdated", source = "date")
     @Mapping(target = "isDeleted", constant = "false")
     @Mapping(target = "typeOf", source = "transactionType")
     @Mapping(target = "amount", source = "amount", qualifiedByName = "stringDoubleToInt")
-    @Mapping(target = "category", source = "category.name")
     Transaction toEntity(TransactionRequestDto transactionRequestDto);
 
     List<TransactionResponseDto> toDtoList(List<Transaction> transactions);
