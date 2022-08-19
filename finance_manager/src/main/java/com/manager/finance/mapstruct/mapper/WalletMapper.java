@@ -6,13 +6,12 @@ import com.sandbox.model.WalletResponseDto;
 import java.util.Formatter;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface WalletMapper {
-
-
 
     @Named("intToStringDouble")
     public static String intToStringDouble(int amount) {

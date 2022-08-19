@@ -5,8 +5,6 @@
 
 package com.manager.finance.transaction.controller;
 
-import com.manager.finance.mapstruct.mapper.TransactionMapper;
-import com.manager.finance.transaction.model.entity.Transaction;
 import com.manager.finance.transaction.service.api.TransactionService;
 import com.sandbox.api.TransactionsApi;
 import com.sandbox.model.FilterParameter;
