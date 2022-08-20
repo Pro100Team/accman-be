@@ -25,10 +25,9 @@ public class CategoryController implements CategoriesApi {
 
     private final CategoryService categoryService;
 
-
     @Override
     public ResponseEntity<Long> createCategory(@Valid CategoryRequestDto categoryRequestDto) {
-      return   new ResponseEntity<>(categoryService.save(categoryRequestDto),
+        return new ResponseEntity<>(categoryService.save(categoryRequestDto),
                 HttpStatus.CREATED);
     }
 
@@ -49,8 +48,8 @@ public class CategoryController implements CategoriesApi {
     }
 
     @Override
-    public ResponseEntity<CategoryResponseDto> updateCategoryById(Long categoryId,
-                                                                  @Valid CategoryRequestDto categoryRequestDto) {
+    public ResponseEntity<CategoryResponseDto> updateCategoryById(
+            Long categoryId, @Valid CategoryRequestDto categoryRequestDto) {
         return null;
     }
 }

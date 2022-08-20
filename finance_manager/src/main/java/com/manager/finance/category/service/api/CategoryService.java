@@ -7,8 +7,6 @@ package com.manager.finance.category.service.api;
 
 import com.sandbox.model.CategoryRequestDto;
 import com.sandbox.model.CategoryResponseDto;
-import com.sandbox.model.TransactionRequestDto;
-import com.sandbox.model.TransactionResponseDto;
 import java.util.List;
 
 public interface CategoryService {

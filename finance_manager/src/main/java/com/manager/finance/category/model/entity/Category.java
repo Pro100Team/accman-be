@@ -5,7 +5,6 @@
 
 package com.manager.finance.category.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sandbox.model.TransactionTypeParameter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
