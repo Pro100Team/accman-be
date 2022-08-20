@@ -15,7 +15,8 @@ public interface WalletMapper {
 
     @Named("intToStringDouble")
     static String intToStringDouble(Integer amount) {
-        return new Formatter().format("%.2f", ((double) (amount)) / 100).toString();
+        return amount == null ? "0.00"
+                : new Formatter().format("%.2f", ((double) (amount)) / 100).toString();
     }
 
     @Mapping(target = "balance", source = "amount", qualifiedByName = "intToStringDouble")
