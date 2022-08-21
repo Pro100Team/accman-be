@@ -2,7 +2,6 @@ package com.manager.finance.user.service;
 
 import com.manager.finance.category.dao.CategoryDao;
 import com.manager.finance.category.model.entity.Category;
-import com.manager.finance.mapstruct.mapper.ProfileMapper;
 import com.manager.finance.user.dao.ProfileDao;
 import com.manager.finance.user.model.entity.Profile;
 import com.manager.finance.user.model.entity.User;
@@ -11,7 +10,6 @@ import com.manager.finance.user.service.api.UserService;
 import com.manager.finance.util.TimeZoneUtils;
 import com.sandbox.model.TransactionTypeParameter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 public class ProfileServiceImpl implements ProfileService {
     private final ProfileDao profileDao;
     private final UserService userService;
-    private final ProfileMapper profileMapper;
     private final CategoryDao categoryDao;
 
     @Override
@@ -48,7 +45,6 @@ public class ProfileServiceImpl implements ProfileService {
         Profile createdProfile = profileDao.save(profile);
         createDefaultCategories(createdProfile);
         return createdProfile;
-
     }
 
     public void createDefaultCategories(Profile profile) {
