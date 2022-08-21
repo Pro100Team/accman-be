@@ -41,11 +41,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     private Profile createDefaultProfile() {
         User user = userService.getByUserHolder();
-        Sort sort = Sort.by("dtUpdate").descending();
-        Profile sourceProfile = profileDao.findProfileByUserId(user, sort);
-        Profile profile = profileMapper.sourceProfileToNewProfile(sourceProfile);
+        Profile profile = new Profile();
         profile.setIsDeleted(false);
         profile.setDtUpdate(TimeZoneUtils.getGmtCurrentDate());
+        profile.setUserId(user);
         Profile createdProfile = profileDao.save(profile);
         createDefaultCategories(createdProfile);
         return createdProfile;
