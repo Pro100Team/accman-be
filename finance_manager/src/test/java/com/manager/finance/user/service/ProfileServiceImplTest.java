@@ -2,6 +2,7 @@ package com.manager.finance.user.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.manager.finance.category.dao.CategoryDao;
 import com.manager.finance.config.AbstractTest;
 import com.manager.finance.user.dao.ProfileDao;
 import com.manager.finance.user.model.entity.Profile;
@@ -21,11 +22,13 @@ public class ProfileServiceImplTest extends AbstractTest {
     private UserService userService;
     @Mock
     private ProfileDao profileDao;
+    @Mock
+    private CategoryDao categoryDao;
     private ProfileService profileService;
 
     @BeforeEach
     public void initialize() {
-        profileService = new ProfileServiceImpl(profileDao, userService, null);
+        profileService = new ProfileServiceImpl(profileDao, userService, null, categoryDao);
     }
 
     @Test

@@ -6,6 +6,7 @@
 package com.manager.finance.category.controller;
 
 import com.manager.finance.category.service.api.CategoryService;
+import com.manager.finance.exception.category.CategoryNotFoundException;
 import com.sandbox.api.CategoriesApi;
 import com.sandbox.model.CategoryRequestDto;
 import com.sandbox.model.CategoryResponseDto;
@@ -33,23 +34,32 @@ public class CategoryController implements CategoriesApi {
 
     @Override
     public ResponseEntity<Void> deleteCategoryById(Long categoryId) {
-        return null;
+
+        try {
+            categoryService.delete(categoryId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (CategoryNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
     }
 
     @Override
     public ResponseEntity<List<CategoryResponseDto>> getAllCategories(
             @Valid TransactionTypeParameter categoryType) {
-        return null;
+
+        return ResponseEntity.ok(categoryService.findAllByCategoryType(categoryType));
     }
 
     @Override
     public ResponseEntity<CategoryResponseDto> getCategoryById(Long categoryId) {
-        return null;
+
+        return ResponseEntity.ok(categoryService.getById(categoryId));
     }
 
     @Override
     public ResponseEntity<CategoryResponseDto> updateCategoryById(
             Long categoryId, @Valid CategoryRequestDto categoryRequestDto) {
-        return null;
+        return ResponseEntity.ok(categoryService.update(categoryId, categoryRequestDto));
     }
 }

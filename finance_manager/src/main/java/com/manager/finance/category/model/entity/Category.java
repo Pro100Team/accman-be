@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cat_id", updatable = false)
@@ -39,6 +40,13 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "cat_profile_id", referencedColumnName = "p_id", nullable = false)
-    private Profile profileId;
+    private Profile profile;
 
+    public Category(String name, String color, TransactionTypeParameter categoryType,
+                    Profile profile) {
+        this.name = name;
+        this.color = color;
+        this.categoryType = categoryType;
+        this.profile = profile;
+    }
 }
