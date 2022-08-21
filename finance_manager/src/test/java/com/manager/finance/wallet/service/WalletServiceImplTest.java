@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.manager.finance.config.AbstractTest;
 import com.manager.finance.user.model.entity.Profile;
 import com.manager.finance.user.model.entity.User;
 import com.manager.finance.user.model.entity.api.Country;
@@ -18,38 +17,24 @@ import com.manager.finance.wallet.model.entity.api.DefaultCurrency;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("test")
-@SpringBootTest
-public class WalletServiceImplTest extends AbstractTest {
-    @MockBean
+@ExtendWith(MockitoExtension.class)
+public class WalletServiceImplTest {
+    @Mock
     private WalletDao walletDao;
-    @MockBean
+    @Mock
     private ProfileServiceImpl profileService;
-    @Autowired
+    @InjectMocks
     private WalletServiceImpl walletService;
 
-    @BeforeAll
-    public static void sourceInitialize() {
-    }
-
-    @AfterAll
-    public static void cleanTestSource() {
-
-    }
-
     @Test()
-    @Order(1)
     public void createWallet() {
         User user = User.builder().id(1L).login("testLogin").password("test").role(Role.ROLE_USER)
                 .build();
@@ -142,7 +127,6 @@ public class WalletServiceImplTest extends AbstractTest {
     }
 
     @Test
-    @Order(5)
     public void deleteWallet() {
         User user = User.builder().id(1L).login("testLogin").password("test").role(Role.ROLE_USER)
                 .build();

@@ -1,6 +1,5 @@
 package com.manager.finance.user.service;
 
-import com.manager.finance.mapstruct.mapper.ProfileMapper;
 import com.manager.finance.user.dao.ProfileDao;
 import com.manager.finance.user.model.entity.Profile;
 import com.manager.finance.user.model.entity.User;
@@ -8,7 +7,6 @@ import com.manager.finance.user.service.api.ProfileService;
 import com.manager.finance.user.service.api.UserService;
 import com.manager.finance.util.TimeZoneUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class ProfileServiceImpl implements ProfileService {
     private final ProfileDao profileDao;
     private final UserService userService;
-    private final ProfileMapper profileMapper;
 
     @Override
     public void deleteProfile() {
@@ -24,7 +21,6 @@ public class ProfileServiceImpl implements ProfileService {
         activeProfile.setIsDeleted(true);
         profileDao.save(activeProfile);
     }
-
 
     @Override
     public Profile findByUserIdWithValidation() {
@@ -38,11 +34,12 @@ public class ProfileServiceImpl implements ProfileService {
 
     private Profile createDefaultProfile() {
         User user = userService.getByUserHolder();
-        Sort sort = Sort.by("dtUpdate").descending();
-        Profile sourceProfile = profileDao.findProfileByUserId(user, sort);
-        Profile profile = profileMapper.sourceProfileToNewProfile(sourceProfile);
+        Profile profile = new Profile();
         profile.setIsDeleted(false);
         profile.setDtUpdate(TimeZoneUtils.getGmtCurrentDate());
-        return profileDao.save(profile);
+        profile.setUserId(user);
+        Profile createdProfile = profileDao.save(profile);
+        return createdProfile;
     }
+
 }
