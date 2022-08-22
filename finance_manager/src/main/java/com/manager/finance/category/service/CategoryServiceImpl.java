@@ -9,6 +9,7 @@ import com.manager.finance.category.dao.CategoryDao;
 import com.manager.finance.category.model.entity.Category;
 import com.manager.finance.category.service.api.CategoryService;
 import com.manager.finance.exception.category.CategoryNotFoundException;
+import com.manager.finance.exception.category.CategoryUsedException;
 import com.manager.finance.mapstruct.mapper.CategoryMapper;
 import com.manager.finance.transaction.dao.TransactionDao;
 import com.manager.finance.user.model.entity.Profile;
@@ -51,12 +52,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Long id) {
-        Category category = categoryDao.findById(id).orElseThrow(
+        Profile profile = profileService.findByUserIdWithValidation();
+        Category category = categoryDao.findByIdAndProfile(id, profile).orElseThrow(
                 () -> new CategoryNotFoundException(
                         "No category #" + id + " or it has been deleted"));
 
-        if (transactionDao.findAllByCategory(category) != null) {
-            throw new CategoryNotFoundException("This category is used. You can't delete it");
+        if (transactionDao.findAllByCategory(category).size() != 0) {
+            throw new CategoryUsedException("This category is used. You can't delete it");
         }
 
         categoryDao.deleteById(id);
