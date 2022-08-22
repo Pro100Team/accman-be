@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.manager.finance.config.AbstractTest;
 import com.manager.finance.user.model.entity.Profile;
 import com.manager.finance.user.model.entity.User;
 import com.manager.finance.user.model.entity.api.Country;
@@ -18,11 +17,7 @@ import com.manager.finance.wallet.model.entity.api.DefaultCurrency;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -31,7 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
 @ExtendWith(MockitoExtension.class)
-public class WalletServiceImplTest  {
+public class WalletServiceImplTest {
     @Mock
     private WalletDao walletDao;
     @Mock

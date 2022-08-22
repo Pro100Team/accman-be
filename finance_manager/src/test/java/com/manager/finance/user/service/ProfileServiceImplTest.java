@@ -3,33 +3,30 @@ package com.manager.finance.user.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.manager.finance.category.dao.CategoryDao;
-import com.manager.finance.config.AbstractTest;
 import com.manager.finance.user.dao.ProfileDao;
 import com.manager.finance.user.model.entity.Profile;
 import com.manager.finance.user.model.entity.User;
 import com.manager.finance.user.model.entity.api.Country;
 import com.manager.finance.user.model.entity.api.Role;
-import com.manager.finance.user.service.api.ProfileService;
 import com.manager.finance.user.service.api.UserService;
 import com.manager.finance.util.TimeZoneUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class ProfileServiceImplTest extends AbstractTest {
+@ExtendWith(MockitoExtension.class)
+public class ProfileServiceImplTest {
     @Mock
     private UserService userService;
     @Mock
     private ProfileDao profileDao;
     @Mock
     private CategoryDao categoryDao;
-    private ProfileService profileService;
-
-    @BeforeEach
-    public void initialize() {
-        profileService = new ProfileServiceImpl(profileDao, userService, null, categoryDao);
-    }
+    @InjectMocks
+    private ProfileServiceImpl profileServiceImpl;
 
     @Test
     public void findByUserIdWithValidation() {
@@ -41,7 +38,7 @@ public class ProfileServiceImplTest extends AbstractTest {
         Mockito.when(userService.getByUserHolder()).thenReturn(user);
         Mockito.when(profileDao.findProfileByUserIdAndIsDeleted(user, false))
                 .thenReturn(profile);
-        Profile byUserIdWithValidation = profileService.findByUserIdWithValidation();
+        Profile byUserIdWithValidation = profileServiceImpl.findByUserIdWithValidation();
         assertEquals(profile, byUserIdWithValidation);
     }
 
@@ -55,6 +52,6 @@ public class ProfileServiceImplTest extends AbstractTest {
         Mockito.when(userService.getByUserHolder()).thenReturn(user);
         Mockito.when(profileDao.findProfileByUserIdAndIsDeleted(user, false))
                 .thenReturn(profile);
-        profileService.deleteProfile();
+        profileServiceImpl.deleteProfile();
     }
 }

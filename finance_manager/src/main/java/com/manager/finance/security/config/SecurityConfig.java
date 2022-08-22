@@ -1,6 +1,7 @@
 package com.manager.finance.security.config;
 
-import com.manager.finance.user.controller.filters.JwtAuthorizationFilter;
+import com.manager.finance.security.filter.JwtAuthorizationFilter;
+import com.manager.finance.security.filter.SimpleCorsFilter;
 import com.manager.finance.user.model.entity.api.Role;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
