@@ -45,7 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryMapper.toEntity(categoryRequestDto);
         category.setId(categoryId);
         Profile profile = profileService.findByUserIdWithValidation();
-        category.setProfile(profile);
         return categoryMapper.toDto(categoryDao.save(category));
     }
 
@@ -67,7 +66,6 @@ public class CategoryServiceImpl implements CategoryService {
     public Long save(CategoryRequestDto categoryRequestDto) {
         Profile profile = profileService.findByUserIdWithValidation();
         Category category = categoryMapper.toEntity(categoryRequestDto);
-        category.setProfile(profile);
         return categoryDao.save(category).getId();
     }
 
@@ -75,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponseDto> findAllByCategoryType(TransactionTypeParameter categoryType) {
         Profile profile = profileService.findByUserIdWithValidation();
         List<Category> categories = categoryDao
-                .findAllByCategoryTypeAndProfile(categoryType, profile);
+                .findAllByCategoryType(categoryType);
         return categoryMapper.listToDtoList(categories);
     }
 

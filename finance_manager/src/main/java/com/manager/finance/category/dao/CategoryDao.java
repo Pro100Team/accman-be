@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoryDao extends JpaRepository<Category, Long> {
 
-    List<Category> findAllByCategoryTypeAndProfile(
-            TransactionTypeParameter categoryType, Profile profile);
+    List<Category> findAllByCategoryType(
+            TransactionTypeParameter categoryType);
 }

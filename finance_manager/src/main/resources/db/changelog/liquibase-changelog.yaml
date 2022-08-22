@@ -28,4 +28,8 @@ databaseChangeLog:
       file: db/changelog/changeset/v.0.0.3/m3-change-table-categories-profile-field.sql
   - include:
       file: db/changelog/changeset/v.0.0.3/remove-user-profiles.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.3/allert-table-categories.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.3/insert-default-categories.sql
 

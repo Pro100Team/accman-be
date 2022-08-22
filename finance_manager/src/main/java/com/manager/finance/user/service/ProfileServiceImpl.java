@@ -48,21 +48,6 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     public void createDefaultCategories(Profile profile) {
-        categoryDao.save(new Category(
-                "Food", "#FF0000", TransactionTypeParameter.EXPENSE, profile));
-        categoryDao.save(new Category(
-                "Sport", "#FFA500", TransactionTypeParameter.EXPENSE, profile));
-        categoryDao.save(new Category(
-                "Pets", "#FFFF00", TransactionTypeParameter.EXPENSE, profile));
-        categoryDao.save(new Category(
-                "Utilities", "#3CB371", TransactionTypeParameter.EXPENSE, profile));
-        categoryDao.save(new Category(
-                "Сlothes", "#00FFFF", TransactionTypeParameter.EXPENSE, profile));
-        categoryDao.save(new Category(
-                "Salary", "#0000CD", TransactionTypeParameter.INCOME, profile));
-        categoryDao.save(new Category(
-                "Deposit interest", "#9932CC", TransactionTypeParameter.INCOME, profile));
-        categoryDao.save(new Category(
-                "Dividends by stock", "#C71585", TransactionTypeParameter.INCOME, profile));
+
     }
 }

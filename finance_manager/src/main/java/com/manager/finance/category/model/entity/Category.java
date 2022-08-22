@@ -38,15 +38,9 @@ public class Category {
     @Column(name = "cat_type", nullable = false)
     private TransactionTypeParameter categoryType;
 
-    @ManyToOne
-    @JoinColumn(name = "cat_profile_id", referencedColumnName = "p_id", nullable = false)
-    private Profile profile;
-
-    public Category(String name, String color, TransactionTypeParameter categoryType,
-                    Profile profile) {
+    public Category(String name, String color, TransactionTypeParameter categoryType) {
         this.name = name;
         this.color = color;
         this.categoryType = categoryType;
-        this.profile = profile;
     }
 }
