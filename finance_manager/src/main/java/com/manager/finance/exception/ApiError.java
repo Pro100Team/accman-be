@@ -14,6 +14,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ApiError {
+    private int statusCode;
     private String message;
     private String debugMessage;
 
@@ -25,4 +26,14 @@ public class ApiError {
         this.debugMessage = debugMessage;
     }
 
+    public ApiError(int status, String message) {
+        this.statusCode = status;
+        this.message = message;
+    }
+
+    public ApiError(String message, String debugMessage, List<String> errors) {
+        this.message = message;
+        this.debugMessage = debugMessage;
+        this.errors = errors;
+    }
 }
