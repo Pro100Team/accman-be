@@ -26,4 +26,6 @@ databaseChangeLog:
       file: db/changelog/changeset/v.0.0.3/m2-change-table-transactions-category-field.sql
   - include:
       file: db/changelog/changeset/v.0.0.3/m3-change-table-categories-profile-field.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.3/remove-user-profiles.sql
 
