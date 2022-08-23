@@ -1,7 +1,6 @@
 package com.manager.finance.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
