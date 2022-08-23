@@ -13,29 +13,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CurrencyApiExceptionHandler extends ResponseEntityExceptionHandler {
     private ApiError apiError;
 
-
-//@ExceptionHandler(FeignException.NotFound.class)
-//@ResponseStatus(HttpStatus.NOT_FOUND)
-//public @ResponseBody ErrorResponse
-//handleFeignNotFoundException(FeignException.NotFound ex) {
-//    return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-//}
-
-//@ExceptionHandler(FeignException.BadRequest.class)
-//@ResponseStatus(HttpStatus.BAD_REQUEST)
-//public @ResponseBody ErrorResponse
-//handleFeignBadRequestException(FeignException.BadRequest ex) {
-//    return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-//}
-
-//@ExceptionHandler(FeignException.GatewayTimeout.class)
-//@ResponseStatus(HttpStatus.GATEWAY_TIMEOUT)
-//public @ResponseBody ErrorResponse
-//handleFeignGatewayTimeoutException(FeignException.BadRequest ex) {
-//    return new ErrorResponse(HttpStatus.GATEWAY_TIMEOUT.value(), ex.getMessage());
-
-
-
     @ExceptionHandler(FeignException.NotFound.class)
     protected ResponseEntity<Object> handleFeignNotFoundException(FeignException.NotFound ex, WebRequest request) {
         apiError = new ApiError("Feign not found", ex.getMessage());
@@ -59,5 +36,4 @@ public class CurrencyApiExceptionHandler extends ResponseEntityExceptionHandler 
         apiError = new ApiError("Service unavailable", ex.getMessage());
         return new ResponseEntity<>(apiError, HttpStatus.SERVICE_UNAVAILABLE);
     }
-
 }
