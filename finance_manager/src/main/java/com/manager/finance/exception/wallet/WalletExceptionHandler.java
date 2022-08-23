@@ -1,7 +1,6 @@
 package com.manager.finance.exception.wallet;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-
 import com.manager.finance.exception.ApiError;
 import java.util.List;
 import java.util.Objects;
@@ -67,7 +66,6 @@ public class WalletExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, status);
     }
 
-
     @Override
     @NonNull
     protected ResponseEntity<Object> handleNoHandlerFoundException(
@@ -91,5 +89,4 @@ public class WalletExceptionHandler extends ResponseEntityExceptionHandler {
         ApiError apiError = new ApiError("Internal Exception", ex.getMessage());
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }
