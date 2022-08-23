@@ -66,10 +66,9 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, BAD_REQUEST);
     }
 
-  //@ExceptionHandler(Exception.class)
-  //protected ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-  //    ErrorResponse errorResponse = new ErrorResponse("Internal Exception", ex.getMessage());
-  //    return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-  //}
-
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse("Internal Exception", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
