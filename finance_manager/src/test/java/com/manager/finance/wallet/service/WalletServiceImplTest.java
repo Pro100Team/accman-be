@@ -27,7 +27,6 @@ import org.springframework.data.domain.Sort;
 
 @ExtendWith(MockitoExtension.class)
 public class WalletServiceImplTest {
-
     @Mock
     private WalletDao walletDao;
     @Mock

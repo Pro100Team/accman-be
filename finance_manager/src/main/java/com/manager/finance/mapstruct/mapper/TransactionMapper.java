@@ -1,7 +1,7 @@
 package com.manager.finance.mapstruct.mapper;
 
 import com.manager.finance.transaction.model.entity.Transaction;
-import com.manager.finance.util.AmountConvertorUtils;
+import com.sandbox.model.CategoryResponseDto;
 import com.sandbox.model.TransactionRequestDto;
 import com.sandbox.model.TransactionResponseDto;
 import java.util.List;

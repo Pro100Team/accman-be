@@ -57,7 +57,7 @@ public class Transaction {
     private Boolean isDeleted;
 
     @Column(name = "tr_last_updated")
-    private LocalDate lastUpdated;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "tr_wallet_id", referencedColumnName = "w_id", nullable = false)
