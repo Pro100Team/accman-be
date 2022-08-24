@@ -41,7 +41,7 @@ public class CategoryController implements CategoriesApi {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (CategoryNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }catch (CategoryUsedException e) {
+        } catch (CategoryUsedException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 

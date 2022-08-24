@@ -36,13 +36,11 @@ public interface TransactionMapper {
         return category;
     }
 
-    @Mapping(target = "date", source = "lastUpdated")
     @Mapping(target = "walletName", source = "wallet.name")
     @Mapping(target = "transactionType", source = "typeOf")
     @Mapping(target = "amount", source = "amount", qualifiedByName = "intToStringDouble")
     TransactionResponseDto toDto(Transaction transaction);
 
-    @Mapping(target = "lastUpdated", source = "date")
     @Mapping(target = "isDeleted", constant = "false")
     @Mapping(target = "typeOf", source = "transactionType")
     @Mapping(target = "amount", source = "amount", qualifiedByName = "stringDoubleToInt")
