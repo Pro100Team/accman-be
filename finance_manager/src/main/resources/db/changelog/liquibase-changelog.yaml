@@ -18,4 +18,12 @@ databaseChangeLog:
       file: db/changelog/changeset/v.0.0.2/m3-change-table-wallet.sql
   - include:
       file: db/changelog/changeset/v.0.0.2/m4-change-table-transactions.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.2/update-user-login.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.3/m1-create-table-categories.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.3/m2-change-table-transactions-category-field.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.3/m3-change-table-categories-profile-field.sql
 

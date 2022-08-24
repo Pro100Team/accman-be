@@ -1,25 +1,19 @@
 package com.manager.finance.mapstruct.mapper;
 
+import com.manager.finance.util.AmountConvertorUtils;
 import com.manager.finance.wallet.model.entity.Wallet;
 import com.sandbox.model.WalletRequestDto;
 import com.sandbox.model.WalletResponseDto;
-import java.util.Formatter;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = { AmountConvertorUtils.class })
 public interface WalletMapper {
 
-
-
-    @Named("intToStringDouble")
-    public static String intToStringDouble(int amount) {
-        return new Formatter().format("%.2f", ((double) (amount)) / 100).toString();
-    }
-
-    @Mapping(target = "balance", source = "amount", qualifiedByName = "intToStringDouble")
+    @Mapping(target = "balance",
+            expression = "java(AmountConvertorUtils.intToStringDouble(wallet.getAmount()))")
     WalletResponseDto walletToWalletResponseDto(Wallet wallet);
 
     Wallet walletRequestDtoToWalletUpdate(@MappingTarget Wallet wallet,
