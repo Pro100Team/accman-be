@@ -59,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
                 Math.toIntExact(pageSize), sortPredicate);
         List<Transaction> allByWallet = transactionDao.findAllByWallet(
                 walletService.getByIdWithUserHolder(walletId), paging);
-        return transactionMapper.transactionsListToResponseDtoList(allByWallet);
+        return transactionMapper.toDtoList(allByWallet);
     }
 
     @Override

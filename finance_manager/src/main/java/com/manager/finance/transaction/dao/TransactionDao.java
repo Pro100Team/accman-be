@@ -15,7 +15,8 @@ public interface TransactionDao extends JpaRepository<Transaction, Long> {
     @Query(value = "SELECT * "
                     + "FROM transactions t "
                     + "JOIN wallets w on t.tr_wallet_id = w.w_id "
-                    + "WHERE w.w_profile_id = ? ORDER BY t.tr_id DESC --#pageable\\n",
+                    + "WHERE w.w_profile_id = ? AND t.tr_is_deleted = false "
+                    + "ORDER BY t.tr_id DESC --#pageable\\n",
             nativeQuery = true)
     List<Transaction> findAllByProfile(Profile profile);
 
