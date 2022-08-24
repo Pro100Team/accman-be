@@ -48,4 +48,9 @@ public class UserController implements UsersApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Long> registration(@Valid UserLoginDto userLoginDto) {
+        return null;
+    }
+
 }
