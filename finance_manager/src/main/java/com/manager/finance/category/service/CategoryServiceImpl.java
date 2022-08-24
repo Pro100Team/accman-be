@@ -9,7 +9,6 @@ import com.manager.finance.category.dao.CategoryDao;
 import com.manager.finance.category.model.entity.Category;
 import com.manager.finance.category.service.api.CategoryService;
 import com.manager.finance.exception.category.CategoryNotFoundException;
-import com.manager.finance.exception.category.CategoryUsedException;
 import com.manager.finance.mapstruct.mapper.CategoryMapper;
 import com.manager.finance.transaction.dao.TransactionDao;
 import com.manager.finance.user.model.entity.Profile;
@@ -18,7 +17,10 @@ import com.sandbox.model.CategoryRequestDto;
 import com.sandbox.model.CategoryResponseDto;
 import com.sandbox.model.TransactionTypeParameter;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,39 +38,42 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDto getById(Long id) {
 
-        return categoryMapper.toDto(categoryDao.findById(id).orElseThrow(
+        return categoryMapper.categoryToResponseDto(categoryDao.findById(id).orElseThrow(
                 () -> new CategoryNotFoundException(
                         "No category #" + id + " or it has been deleted")));
     }
 
     @Override
     public CategoryResponseDto update(Long categoryId, CategoryRequestDto categoryRequestDto) {
-        Category category = categoryMapper.toEntity(categoryRequestDto);
+        Category category = categoryMapper.requestDtoToCategory(categoryRequestDto);
         category.setId(categoryId);
         Profile profile = profileService.findByUserIdWithValidation();
         category.setProfile(profile);
-        return categoryMapper.toDto(categoryDao.save(category));
+        return categoryMapper.categoryToResponseDto(categoryDao.save(category));
     }
 
     @Override
-    public void delete(Long id) {
+    public ResponseEntity<Void> delete(Long id) {
         Profile profile = profileService.findByUserIdWithValidation();
-        Category category = categoryDao.findByIdAndProfile(id, profile).orElseThrow(
-                () -> new CategoryNotFoundException(
-                        "No category #" + id + " or it has been deleted"));
+        Optional<Category> category = categoryDao.findByIdAndProfile(id, profile);
 
-        if (transactionDao.findAllByCategory(category).size() != 0) {
-            throw new CategoryUsedException("This category is used. You can't delete it");
+        if (category.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
+        if (transactionDao.findAllByCategory(category.get()).size() != 0) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         categoryDao.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
     @Override
     public Long save(CategoryRequestDto categoryRequestDto) {
         Profile profile = profileService.findByUserIdWithValidation();
-        Category category = categoryMapper.toEntity(categoryRequestDto);
+        Category category = categoryMapper.requestDtoToCategory(categoryRequestDto);
         category.setProfile(profile);
         return categoryDao.save(category).getId();
     }
@@ -78,7 +83,7 @@ public class CategoryServiceImpl implements CategoryService {
         Profile profile = profileService.findByUserIdWithValidation();
         List<Category> categories = categoryDao
                 .findAllByCategoryTypeAndProfile(categoryType, profile);
-        return categoryMapper.listToDtoList(categories);
+        return categoryMapper.categoryListToResponseDtoList(categories);
     }
 
 }

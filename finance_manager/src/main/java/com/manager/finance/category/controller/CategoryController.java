@@ -6,8 +6,6 @@
 package com.manager.finance.category.controller;
 
 import com.manager.finance.category.service.api.CategoryService;
-import com.manager.finance.exception.category.CategoryNotFoundException;
-import com.manager.finance.exception.category.CategoryUsedException;
 import com.sandbox.api.CategoriesApi;
 import com.sandbox.model.CategoryRequestDto;
 import com.sandbox.model.CategoryResponseDto;
@@ -36,14 +34,7 @@ public class CategoryController implements CategoriesApi {
     @Override
     public ResponseEntity<Void> deleteCategoryById(Long categoryId) {
 
-        try {
-            categoryService.delete(categoryId);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (CategoryNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }catch (CategoryUsedException e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+        return categoryService.delete(categoryId);
 
     }
 

@@ -28,7 +28,7 @@ public class ProfileServiceImplTest extends AbstractTest {
 
     @BeforeEach
     public void initialize() {
-        profileService = new ProfileServiceImpl(profileDao, userService, null, categoryDao);
+        profileService = new ProfileServiceImpl(profileDao, userService, categoryDao);
     }
 
     @Test

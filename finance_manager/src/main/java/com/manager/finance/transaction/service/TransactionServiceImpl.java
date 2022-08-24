@@ -44,12 +44,12 @@ public class TransactionServiceImpl implements TransactionService {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy, "id").descending());
         List<Transaction> allByWallet = transactionDao.findAllByWallet(
                 walletService.getByIdWithUserHolder(walletId), paging);
-        return transactionMapper.toDtoList(allByWallet);
+        return transactionMapper.transactionsListToResponseDtoList(allByWallet);
     }
 
     @Override
     public TransactionResponseDto getById(Long id) {
-        return transactionMapper.toDto(transactionDao.findById(id).orElseThrow(
+        return transactionMapper.transactionToResponseDto(transactionDao.findById(id).orElseThrow(
                 () -> new TransactionNotFoundException(
                         "No transaction #" + id + " or it has been deleted")));
     }
@@ -57,13 +57,13 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public TransactionResponseDto update(Long transactionId, TransactionRequestDto transactionDto) {
-        Transaction transaction = transactionMapper.toEntity(transactionDto);
+        Transaction transaction = transactionMapper.requestDtoToTransaction(transactionDto);
         transaction.setId(transactionId);
         Wallet wallet = walletService.getByIdWithUserHolder(transactionDto.getWalletId());
         transaction.setWallet(wallet);
         transaction.setCurrency(wallet.getCurrency());
         walletService.update(changeWalletAmount(wallet, transaction));
-        return transactionMapper.toDto(transactionDao.save(transaction));
+        return transactionMapper.transactionToResponseDto(transactionDao.save(transaction));
     }
 
     @Override
@@ -81,7 +81,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public Long save(TransactionRequestDto transactionRequestDto) {
-        Transaction transaction = transactionMapper.toEntity(transactionRequestDto);
+        Transaction transaction = transactionMapper.requestDtoToTransaction(transactionRequestDto);
         Wallet wallet = walletService.getByIdWithUserHolder(transactionRequestDto.getWalletId());
         transaction.setWallet(wallet);
         transaction.setCurrency(wallet.getCurrency());

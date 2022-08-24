@@ -9,6 +9,7 @@ import com.sandbox.model.CategoryRequestDto;
 import com.sandbox.model.CategoryResponseDto;
 import com.sandbox.model.TransactionTypeParameter;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface CategoryService {
 
@@ -16,7 +17,7 @@ public interface CategoryService {
 
     CategoryResponseDto update(Long categoryId, CategoryRequestDto categoryRequestDto);
 
-    void delete(Long id);
+    ResponseEntity<Void> delete(Long id);
 
     Long save(CategoryRequestDto categoryRequestDto);
 
