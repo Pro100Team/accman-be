@@ -1,7 +1,7 @@
 package com.manager.finance.security.service;/* created by Kaminskii Ivan
  */
 
-import com.manager.finance.exception.user.UserNotFoundException;
+import com.manager.finance.exception.security.UserNotFoundException;
 import com.manager.finance.security.service.api.SecurityService;
 import com.manager.finance.user.model.entity.User;
 import com.manager.finance.user.service.api.UserService;

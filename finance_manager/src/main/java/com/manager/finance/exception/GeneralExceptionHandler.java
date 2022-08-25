@@ -1,6 +1,7 @@
 package com.manager.finance.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,7 +28,8 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     @NonNull
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex,
-            @Nullable HttpHeaders headers, @NonNull HttpStatus status, @Nullable WebRequest request) {
+            @Nullable HttpHeaders headers, @NonNull HttpStatus status,
+            @Nullable WebRequest request) {
         apiError = new ApiError("Malformed JSON Request", ex.getMessage());
         return new ResponseEntity<>(apiError, status);
     }
@@ -36,7 +38,8 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     @NonNull
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
-            @Nullable HttpHeaders headers, @NonNull HttpStatus status, @Nullable WebRequest request) {
+            @Nullable HttpHeaders headers, @NonNull HttpStatus status,
+            @Nullable WebRequest request) {
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -51,23 +54,22 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     @NonNull
     protected ResponseEntity<Object> handleNoHandlerFoundException(
             NoHandlerFoundException ex,
-            @Nullable HttpHeaders headers, @NonNull HttpStatus status, @Nullable WebRequest request) {
-        return new ResponseEntity<Object>(new ApiError("No Handler Found", ex.getMessage()), status);
+            @Nullable HttpHeaders headers, @NonNull HttpStatus status,
+            @Nullable WebRequest request) {
+        return new ResponseEntity<Object>(new ApiError("No Handler Found", ex.getMessage()),
+                status);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
-                                                                      WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(
+            MethodArgumentTypeMismatchException ex) {
         ApiError apiError = new ApiError();
-        apiError.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'",
-                ex.getName(), ex.getValue(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName()));
+        apiError.setMessage(String.format(
+                "The parameter '%s' of value '%s' could not be converted to type '%s'",
+                ex.getName(), ex.getValue(),
+                Objects.requireNonNull(ex.getRequiredType()).getSimpleName()));
         apiError.setDebugMessage(ex.getMessage());
+        apiError.setStatusCode(BAD_REQUEST.value());
         return new ResponseEntity<>(apiError, BAD_REQUEST);
-    }
-
-    @ExceptionHandler(Exception.class)
-    protected ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        ApiError apiError = new ApiError("Internal Exception", ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
