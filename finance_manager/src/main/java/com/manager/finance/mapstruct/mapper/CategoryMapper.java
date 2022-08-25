@@ -43,14 +43,13 @@ public interface CategoryMapper {
             ProfileCategory profileCategory, List<ExpenseSubcategoryResponseDto> subCategories
     );
 
-    @Mapping(target = "category", source = "subcategoryId")
+    @Mapping(target = "name", source = "subcategory.subcategoryId.name")
     ExpenseSubcategoryResponseDto toExpenseSubcategoryResponseDto(ProfileSubcategory subcategory);
 
     @Mapping(target = "category", source = "subcategoryId")
     List<ExpenseSubcategoryResponseDto> toExpenseSubcategoryResponseDto(
             List<ProfileSubcategory> profileSubCategory);
 
-    @Mapping(target = "profileId", source = "profile")
     @Mapping(target = "subcategoryId", source = "category")
     @Mapping(target = "id", ignore = true)
     ProfileSubcategory toProfileSubcategory(SubcategoryRequestDto subcategoryRequestDto,

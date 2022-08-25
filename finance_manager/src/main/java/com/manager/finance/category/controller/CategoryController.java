@@ -6,6 +6,7 @@ import com.manager.finance.category.model.dto.response.CategoryResponseDto;
 import com.manager.finance.category.model.dto.response.ExpenseCategoryResponseDto;
 import com.manager.finance.category.model.dto.response.ExpenseSubcategoryResponseDto;
 import com.manager.finance.category.model.entity.ProfileCategory;
+import com.manager.finance.category.model.entity.api.CategoryType;
 import com.manager.finance.category.service.api.ProfileCategoryService;
 import com.manager.finance.category.service.api.ProfileSubcategoryService;
 import com.manager.finance.mapstruct.mapper.CategoryMapper;
@@ -63,7 +64,12 @@ public class CategoryController {
     public ResponseEntity<List<CategoryResponseDto>> getAllIncomeCategories() {
         List<ProfileCategory> allCategoryByType =
                 categoryService.findAllIncomeCategory();
-        return new ResponseEntity<>(categoryMapper.toCategoryResponseDtoList(allCategoryByType),
+
+        List<CategoryResponseDto> categoryResponseDto =
+                categoryMapper.toCategoryResponseDtoList(allCategoryByType);
+        categoryResponseDto.forEach(
+                categoryResponseDto1 -> categoryResponseDto1.setCategoryType(CategoryType.INCOME));
+        return new ResponseEntity<>(categoryResponseDto,
                 HttpStatus.OK);
     }
 
@@ -82,9 +88,12 @@ public class CategoryController {
         for (ProfileCategory profileCategory : profileCategoryList) {
             List<ExpenseSubcategoryResponseDto> subcategories =
                     subcategoryService.findAllByCategoryId(profileCategory.getId(), profile);
+            subcategories.forEach(expenseCategories -> expenseCategories.setCategoryType(
+                    CategoryType.EXPENSE));
             expenseCategoryResponseDtoList.add(
                     categoryMapper.toExpenseCategoryResponseDto(profileCategory,
                             subcategories));
+            profileCategory.setCategoryType(CategoryType.EXPENSE);
         }
 
         return new ResponseEntity<>(expenseCategoryResponseDtoList, HttpStatus.OK);

@@ -6,7 +6,7 @@ import com.manager.finance.category.model.dto.request.CategoryRequestDto;
 import com.manager.finance.category.model.dto.response.CategoryResponseDto;
 import com.manager.finance.category.model.entity.Category;
 import com.manager.finance.category.model.entity.ProfileCategory;
-import com.manager.finance.category.model.entity.api.Type;
+import com.manager.finance.category.model.entity.api.CategoryType;
 import com.manager.finance.category.service.api.CategoryService;
 import com.manager.finance.category.service.api.ProfileCategoryService;
 import com.manager.finance.mapstruct.mapper.CategoryMapper;
@@ -73,7 +73,9 @@ public class ProfileCategoryServiceImpl implements ProfileCategoryService {
         if (profile == null) {
             profile = profileService.createDefaultProfile();
         }
-        return profileCategoryDao.findByTypeAndProfileIdAndIsDeleted(Type.INCOME, profile, false);
+        return profileCategoryDao.findByCategoryTypeAndProfileIdAndIsDeleted(CategoryType.INCOME,
+                profile,
+                false);
     }
 
     @Override
@@ -82,7 +84,9 @@ public class ProfileCategoryServiceImpl implements ProfileCategoryService {
         if (profile == null) {
             profile = profileService.createDefaultProfile();
         }
-        return profileCategoryDao.findByTypeAndProfileIdAndIsDeleted(Type.EXPENSE, profile, false);
+        return profileCategoryDao.findByCategoryTypeAndProfileIdAndIsDeleted(CategoryType.EXPENSE,
+                profile,
+                false);
     }
 
     @Override

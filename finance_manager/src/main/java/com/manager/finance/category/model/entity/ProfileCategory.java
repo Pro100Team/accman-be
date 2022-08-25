@@ -1,6 +1,6 @@
 package com.manager.finance.category.model.entity;
 
-import com.manager.finance.category.model.entity.api.Type;
+import com.manager.finance.category.model.entity.api.CategoryType;
 import com.manager.finance.user.model.entity.Profile;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,7 +39,7 @@ public class ProfileCategory {
     private String color;
 
     @Column(name = "pr_cat_type", nullable = false)
-    private Type type;
+    private CategoryType categoryType;
 
     @Column(name = "pr_cat_is_deleted", nullable = false)
     private Boolean isDeleted;
