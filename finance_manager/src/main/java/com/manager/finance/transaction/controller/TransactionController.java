@@ -55,7 +55,7 @@ public class TransactionController implements TransactionsApi {
             @Valid List<FilterParameter> filterBy,
             @Valid Long walletId) {
         return walletId == null
-                ? ResponseEntity.ok(transactionService.getAll(page, size))
+                ? ResponseEntity.ok(transactionService.getAll(page, size, transactionsType))
                 : ResponseEntity.ok(transactionService.findAllByWallet(
                         walletId, page, size, sortBy));
     }

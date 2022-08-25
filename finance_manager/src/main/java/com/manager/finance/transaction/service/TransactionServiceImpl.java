@@ -18,6 +18,7 @@ import com.sandbox.model.TransactionRequestDto;
 import com.sandbox.model.TransactionResponseDto;
 import com.sandbox.model.TransactionTypeParameter;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.PageRequest;
@@ -35,10 +36,16 @@ public class TransactionServiceImpl implements TransactionService {
     private final ProfileService profileService;
 
     @Override
-    public List<TransactionResponseDto> getAll(Long pageNumber, Long pageSize) {
-        List<Transaction> allByWallet = transactionDao
+    public List<TransactionResponseDto> getAll(Long pageNumber, Long pageSize,
+                                               TransactionTypeParameter transactionsType) {
+        List<Transaction> transactions = transactionDao
                 .findAllByProfile(profileService.findByUserIdWithValidation());
-        PagedListHolder<Transaction> pages = new PagedListHolder<>(allByWallet);
+        if (transactionsType != null) {
+            transactions = transactions.stream()
+                    .filter(t -> t.getTypeOf() == transactionsType)
+                    .collect(Collectors.toList());
+        }
+        PagedListHolder<Transaction> pages = new PagedListHolder<>(transactions);
         pages.setPage(Math.toIntExact(pageNumber));
         pages.setPageSize(Math.toIntExact(pageSize));
         return transactionMapper.toDtoList(pages.getPageList());
@@ -52,9 +59,9 @@ public class TransactionServiceImpl implements TransactionService {
         String sortParametr = sortBy.getValue();
         Sort sortPredicate = sortParametr.contains("DESC")
                 ? Sort.by(sortParametr.substring(0, sortParametr.length() - 4).toLowerCase())
-                        .descending()
+                .descending()
                 : Sort.by(sortParametr.substring(0, sortParametr.length() - 3).toLowerCase())
-                        .ascending();
+                .ascending();
         Pageable paging = PageRequest.of(Math.toIntExact(pageNumber),
                 Math.toIntExact(pageSize), sortPredicate);
         List<Transaction> allByWallet = transactionDao.findAllByWallet(
