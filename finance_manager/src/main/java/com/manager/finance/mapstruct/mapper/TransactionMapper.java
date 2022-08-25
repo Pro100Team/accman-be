@@ -17,6 +17,7 @@ public interface TransactionMapper {
     @Mapping(target = "transactionType", source = "typeOf")
     @Mapping(target = "amount",
             expression = "java(AmountConvertorUtils.intToStringDouble(transaction.getAmount()))")
+    @Mapping(target = "subcategory",ignore = true)
     TransactionResponseDto transactionToResponseDto(Transaction transaction);
 
     @Mapping(target = "isDeleted", constant = "false")
@@ -24,6 +25,7 @@ public interface TransactionMapper {
     @Mapping(target = "amount",
             expression = "java(AmountConvertorUtils"
                     + ".stringDoubleToInt(transactionRequestDto.getAmount()))")
+    @Mapping(target = "subcategory", ignore = true)
     Transaction requestDtoToTransaction(
             TransactionRequestDto transactionRequestDto);
 

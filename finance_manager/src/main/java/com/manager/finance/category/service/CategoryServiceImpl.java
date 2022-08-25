@@ -9,7 +9,6 @@ import com.manager.finance.category.dao.CategoryDao;
 import com.manager.finance.category.exception.CategoryNotFoundException;
 import com.manager.finance.category.model.entity.Category;
 import com.manager.finance.category.service.api.CategoryService;
-import com.manager.finance.mapstruct.mapper.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,6 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryDao categoryDao;
-
-    private final CategoryMapper categoryMapper;
 
     @Override
     public Category getById(Long id) {

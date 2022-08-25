@@ -1,10 +1,7 @@
 package com.manager.finance.category.controller;
 
 import com.manager.finance.category.model.dto.request.CategoryRequestDto;
-import com.manager.finance.category.model.dto.request.SubcategoryRequestDto;
 import com.manager.finance.category.model.dto.response.CategoryResponseDto;
-import com.manager.finance.category.model.dto.response.ExpenseCategoryResponseDto;
-import com.manager.finance.category.model.dto.response.ExpenseSubcategoryResponseDto;
 import com.manager.finance.category.model.entity.ProfileCategory;
 import com.manager.finance.category.model.entity.api.CategoryType;
 import com.manager.finance.category.service.api.ProfileCategoryService;
@@ -24,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,78 +33,57 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
     private final ProfileService profileService;
 
-    @PostMapping("/category/create")
+    @PostMapping("/categories")
     public ResponseEntity<Long> createCategory(@RequestBody
                                                CategoryRequestDto categoryRequestDto) {
         return new ResponseEntity<>(categoryService.save(categoryRequestDto), HttpStatus.OK);
     }
 
-    @PostMapping("/subcategory/expense/create")
-    public ResponseEntity<Long> createSubcategory(@RequestBody
-                                                  SubcategoryRequestDto categoryRequestDto) {
-        categoryService.getById(categoryRequestDto.getParentCategoryId());
-        return new ResponseEntity<>(subcategoryService.save(categoryRequestDto), HttpStatus.OK);
-    }
+    @GetMapping("/categories")
+    public ResponseEntity<List<?>> getAllIncomeCategories(
+            @RequestParam(name = "categoryType") String categoryType) {
+        List<CategoryResponseDto> categoryResponseDto = new ArrayList<>();
+        if (categoryType.equals(CategoryType.INCOME.name())) {
+            List<ProfileCategory> allCategoryByType =
+                    categoryService.findAllIncomeCategory();
 
-    @DeleteMapping("/category/{id}")
-    public ResponseEntity<Void> deleteCategoryById(@PathVariable("id") Long categoryId) {
-        categoryService.delete(categoryId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+            categoryResponseDto =
+                    categoryMapper.toCategoryResponseDtoList(allCategoryByType);
+            categoryResponseDto.forEach(
+                    categoryResponseDto1 -> categoryResponseDto1.setCategoryType(
+                            CategoryType.INCOME));
+        } else if (categoryType.equals(CategoryType.EXPENSE.name())) {
+            List<ProfileCategory> profileCategoryList =
+                    categoryService.findAllExpenseCategory();
 
-    @DeleteMapping("/subcategory/{id}")
-    public ResponseEntity<Void> deleteSubcategoryById(@PathVariable("id") Long subcategoryId) {
-        subcategoryService.delete(subcategoryId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+            Profile profile = profileService.findByUserId();
+            if (profile == null) {
+                profile = profileService.createDefaultProfile();
+            }
 
-    @GetMapping("/category/income")
-    public ResponseEntity<List<CategoryResponseDto>> getAllIncomeCategories() {
-        List<ProfileCategory> allCategoryByType =
-                categoryService.findAllIncomeCategory();
-
-        List<CategoryResponseDto> categoryResponseDto =
-                categoryMapper.toCategoryResponseDtoList(allCategoryByType);
-        categoryResponseDto.forEach(
-                categoryResponseDto1 -> categoryResponseDto1.setCategoryType(CategoryType.INCOME));
+            for (ProfileCategory profileCategory : profileCategoryList) {
+                List<CategoryResponseDto> subcategories =
+                        subcategoryService.findAllByCategoryId(profileCategory.getId(), profile);
+                subcategories.forEach(expenseCategories -> expenseCategories.setCategoryType(
+                        CategoryType.EXPENSE));
+                categoryResponseDto.add(
+                        categoryMapper.toExpenseCategoryResponseDto(profileCategory,
+                                subcategories));
+                profileCategory.setCategoryType(CategoryType.EXPENSE);
+            }
+        }
         return new ResponseEntity<>(categoryResponseDto,
                 HttpStatus.OK);
     }
 
-    @GetMapping("/category/expense")
-    public ResponseEntity<List<ExpenseCategoryResponseDto>> getAllExpenseCategories() {
-
-        List<ProfileCategory> profileCategoryList =
-                categoryService.findAllExpenseCategory();
-
-        Profile profile = profileService.findByUserId();
-        if (profile == null) {
-            profile = profileService.createDefaultProfile();
-        }
-        List<ExpenseCategoryResponseDto> expenseCategoryResponseDtoList = new ArrayList<>();
-
-        for (ProfileCategory profileCategory : profileCategoryList) {
-            List<ExpenseSubcategoryResponseDto> subcategories =
-                    subcategoryService.findAllByCategoryId(profileCategory.getId(), profile);
-            subcategories.forEach(expenseCategories -> expenseCategories.setCategoryType(
-                    CategoryType.EXPENSE));
-            expenseCategoryResponseDtoList.add(
-                    categoryMapper.toExpenseCategoryResponseDto(profileCategory,
-                            subcategories));
-            profileCategory.setCategoryType(CategoryType.EXPENSE);
-        }
-
-        return new ResponseEntity<>(expenseCategoryResponseDtoList, HttpStatus.OK);
-    }
-
-    @GetMapping("/category/update/{id}")
+    @GetMapping("/categories/{id}")
     public ResponseEntity<CategoryResponseDto> getCategoryById(
             @PathVariable("id") Long categoryId) {
         ProfileCategory category = categoryService.getById(categoryId);
         return new ResponseEntity<>(categoryMapper.toCategoryResponseDto(category), HttpStatus.OK);
     }
 
-    @PutMapping("/category/update/{id}")
+    @PutMapping("/categories/{id}")
     public ResponseEntity<CategoryResponseDto> updateCategoryById(
             @PathVariable("id") Long categoryId,
             @RequestBody CategoryRequestDto categoryRequestDto) {
@@ -114,4 +91,30 @@ public class CategoryController {
                 HttpStatus.OK);
     }
 
+    @DeleteMapping("/categories/{id}")
+    public ResponseEntity<Void> deleteCategoryById(@PathVariable("id") Long categoryId) {
+        categoryService.delete(categoryId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/subcategories/{id}")
+    public ResponseEntity<Void> deleteSubcategoryById(@PathVariable("id") Long subcategoryId) {
+        subcategoryService.delete(subcategoryId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/subcategories")
+    public ResponseEntity<Long> createSubcategory(@RequestBody
+                                                  CategoryRequestDto categoryRequestDto) {
+        categoryService.getById(categoryRequestDto.getParentCategoryId());
+        return new ResponseEntity<>(subcategoryService.save(categoryRequestDto), HttpStatus.OK);
+    }
+
+    @PutMapping("/subcategories/{id}")
+    public ResponseEntity<CategoryResponseDto> updateSubcategoryById(
+            @PathVariable("id") Long categoryId,
+            @RequestBody CategoryRequestDto categoryRequestDto) {
+        return new ResponseEntity<>(subcategoryService.update(categoryId, categoryRequestDto),
+                HttpStatus.OK);
+    }
 }

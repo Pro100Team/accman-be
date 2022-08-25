@@ -1,7 +1,6 @@
 package com.manager.finance.transaction.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.manager.finance.category.model.dto.response.ExpenseSubcategoryResponseDto;
 import com.sandbox.model.CategoryResponseDto;
 import com.sandbox.model.TransactionTypeParameter;
 
@@ -15,7 +14,7 @@ public class TransactionResponseDto {
     @JsonProperty("category")
     private CategoryResponseDto category;
     @JsonProperty("subcategory")
-    private ExpenseSubcategoryResponseDto subcategory;
+    private CategoryResponseDto subcategory;
     @JsonProperty("amount")
     private String amount;
     @JsonProperty("currency")

@@ -52,10 +52,15 @@ public class ProfileCategoryServiceImpl implements ProfileCategoryService {
         if (category == null) {
             categoryService.save(categoryRequestDto.getName());
         }
-        profileCategory = profileCategoryDao.save(
-                categoryMapper.toProfileCategoryForUpdating(profileCategory,
-                        categoryRequestDto,
-                        category));
+        ProfileCategory entity = categoryMapper.toProfileCategoryForUpdating(profileCategory,
+                categoryRequestDto,
+                category);
+        Profile profile = profileService.findByUserId();
+        if (profile == null) {
+            profile = profileService.createDefaultProfile();
+        }
+        profileCategory.setProfileId(profile);
+        profileCategory = profileCategoryDao.save(entity);
         return categoryMapper.toCategoryResponseDto(profileCategory);
     }
 
@@ -91,7 +96,7 @@ public class ProfileCategoryServiceImpl implements ProfileCategoryService {
 
     @Override
     public ProfileCategory getById(Long parentCategoryId) {
-        return profileCategoryDao.findById(parentCategoryId)
+        return profileCategoryDao.findByIdAndIsDeleted(parentCategoryId, false)
                 .orElseThrow(() -> new CategoryNotFoundException(
                         "Category with id: " + parentCategoryId + " not found"));
     }

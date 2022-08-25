@@ -39,7 +39,7 @@ public class TransactionServiceImpl implements TransactionService {
     public List<TransactionResponseDto> getAll(Long pageNumber, Long pageSize,
                                                TransactionTypeParameter transactionsType) {
         List<Transaction> transactions = transactionDao
-                .findAllByProfile(profileService.findByUserIdWithValidation());
+                .findAllByProfile(profileService.findByUserId());
         if (transactionsType != null) {
             transactions = transactions.stream()
                     .filter(t -> t.getTypeOf() == transactionsType)

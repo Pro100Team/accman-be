@@ -2,8 +2,8 @@ package com.manager.finance.category.service;
 
 import com.manager.finance.category.dao.SubcategoryDao;
 import com.manager.finance.category.exception.CategoryNotFoundException;
-import com.manager.finance.category.model.dto.request.SubcategoryRequestDto;
-import com.manager.finance.category.model.dto.response.ExpenseSubcategoryResponseDto;
+import com.manager.finance.category.model.dto.request.CategoryRequestDto;
+import com.manager.finance.category.model.dto.response.CategoryResponseDto;
 import com.manager.finance.category.model.entity.Category;
 import com.manager.finance.category.model.entity.ProfileSubcategory;
 import com.manager.finance.category.service.api.CategoryService;
@@ -24,8 +24,8 @@ public class ProfileSubcategoryServiceImpl implements ProfileSubcategoryService 
     private final CategoryService categoryService;
 
     @Override
-    public List<ExpenseSubcategoryResponseDto> findAllByCategoryId(Long categoryId,
-                                                                   Profile profileId) {
+    public List<CategoryResponseDto> findAllByCategoryId(Long categoryId,
+                                                         Profile profileId) {
         List<ProfileSubcategory> profileSubCategory =
                 subcategoryDao.findByParentCategoryIdAndProfileIdAndIsDeleted(categoryId, profileId,
                         false);
@@ -33,7 +33,7 @@ public class ProfileSubcategoryServiceImpl implements ProfileSubcategoryService 
     }
 
     @Override
-    public Long save(SubcategoryRequestDto subcategoryRequestDto) {
+    public Long save(CategoryRequestDto subcategoryRequestDto) {
         Profile profile = profileService.findByUserId();
         if (profile == null) {
             profile = profileService.createDefaultProfile();
@@ -46,6 +46,7 @@ public class ProfileSubcategoryServiceImpl implements ProfileSubcategoryService 
         ProfileSubcategory profileSubcategory =
                 categoryMapper.toProfileSubcategory(subcategoryRequestDto, category, profile);
         profileSubcategory.setIsDeleted(false);
+        profileSubcategory.setProfileId(profile);
         ProfileSubcategory savedCategory = subcategoryDao.save(profileSubcategory);
         return savedCategory.getId();
     }
@@ -56,5 +57,20 @@ public class ProfileSubcategoryServiceImpl implements ProfileSubcategoryService 
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         profileSubcategory.setIsDeleted(true);
         subcategoryDao.save(profileSubcategory);
+    }
+
+    @Override
+    public CategoryResponseDto update(Long categoryId, CategoryRequestDto categoryRequestDto) {
+        Category category = categoryService.getByName(categoryRequestDto.getName());
+        if (category == null) {
+            category = categoryService.save(categoryRequestDto.getName());
+        }
+        ProfileSubcategory subcategory = subcategoryDao.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+        subcategory =
+                categoryMapper.toProfileSubcategoryForUpdating(subcategory, categoryRequestDto,
+                        category);
+        subcategory = subcategoryDao.save(subcategory);
+        return categoryMapper.toExpenseSubcategoryResponseDto(subcategoryDao.save(subcategory));
     }
 }

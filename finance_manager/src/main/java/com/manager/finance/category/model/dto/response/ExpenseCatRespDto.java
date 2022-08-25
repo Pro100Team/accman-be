@@ -1,13 +1,14 @@
 package com.manager.finance.category.model.dto.response;
 
 import com.manager.finance.category.model.entity.api.CategoryType;
+import java.util.List;
 import lombok.Data;
 
 @Data
-public class ExpenseSubcategoryResponseDto {
+public class ExpenseCatRespDto {
     private Long id;
-    private Long parentCategoryId;
     private String name;
     private String color;
     private CategoryType categoryType;
+    private List<CategoryResponseDto> subcategory;
 }
