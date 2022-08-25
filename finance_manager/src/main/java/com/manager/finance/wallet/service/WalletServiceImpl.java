@@ -21,23 +21,22 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public List<Wallet> getAll() {
-        Profile profile = profileService.findByUserIdWithValidation();
+        Profile profile = getOrCreateProfile();
         return walletDao.findWalletByProfileIdAndIsDeleted(profile, false,
                 orderByDefaultAndUsedAt());
     }
 
     @Override
     public Wallet getByIdWithUserHolder(Long id) {
-        Profile profile = profileService.findByUserIdWithValidation();
-        Wallet wallet = walletDao.findWalletByIdAndProfileIdAndIsDeleted(
+        Profile profile = getOrCreateProfile();
+        return walletDao.findWalletByIdAndProfileIdAndIsDeleted(
                 id, profile, false).orElseThrow(() ->
                 new WalletNotFoundException("wallet with id: " + id + " - not found"));
-        return wallet;
     }
 
     @Override
     public Long save(Wallet wallet) {
-        Profile profile = profileService.findByUserIdWithValidation();
+        Profile profile = getOrCreateProfile();
         currencyNameValidation(wallet, profile);
         if (wallet.getIsDefault()) {
             switchDefaultWallet(wallet, profile);
@@ -51,7 +50,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public Wallet update(Wallet wallet) {
-        Profile profile = profileService.findByUserIdWithValidation();
+        Profile profile = getOrCreateProfile();
         currencyNameValidation(wallet, profile);
         if (wallet.getIsDefault()) {
             switchDefaultWallet(wallet, profile);
@@ -102,5 +101,13 @@ public class WalletServiceImpl implements WalletService {
     private Sort orderByDefaultAndUsedAt() {
         return Sort.by(Sort.Direction.DESC, "isDefault")
                 .and(Sort.by(Sort.Direction.DESC, "usedAt"));
+    }
+
+    private Profile getOrCreateProfile() {
+        Profile profile = profileService.findByUserId();
+        if (profile == null) {
+            profile = profileService.createDefaultProfile();
+        }
+        return profile;
     }
 }

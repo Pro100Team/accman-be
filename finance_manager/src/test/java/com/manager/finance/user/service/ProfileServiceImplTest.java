@@ -38,7 +38,7 @@ public class ProfileServiceImplTest {
         Mockito.when(userService.getByUserHolder()).thenReturn(user);
         Mockito.when(profileDao.findProfileByUserIdAndIsDeleted(user, false))
                 .thenReturn(profile);
-        Profile byUserIdWithValidation = profileServiceImpl.findByUserIdWithValidation();
+        Profile byUserIdWithValidation = profileServiceImpl.findByUserId();
         assertEquals(profile, byUserIdWithValidation);
     }
 

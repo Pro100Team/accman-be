@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset "gs":3
+--changeset "ivkam":3
 
 INSERT INTO public.profiles(p_country, p_dt_update, p_first_name, is_deleted, p_last_name, p_user_id)
 	VALUES (0, current_timestamp(0), 'Sergey', false, 'Semashko', 1);

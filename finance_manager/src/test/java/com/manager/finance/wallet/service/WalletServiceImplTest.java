@@ -44,7 +44,7 @@ public class WalletServiceImplTest {
         Wallet wallet = Wallet.builder().currency(DefaultCurrency.EUR).isDefault(true).id(1L)
                 .isDeleted(false).name("testName").usedAt(TimeZoneUtils.getGmtCurrentDate())
                 .build();
-        Mockito.when(profileService.findByUserIdWithValidation()).thenReturn(profile);
+        Mockito.when(profileService.findByUserId()).thenReturn(profile);
         Mockito.when(walletDao.save(wallet)).thenReturn(wallet);
         Long walletId = walletService.save(wallet);
         assertEquals(wallet.getId(), walletId);
@@ -61,7 +61,7 @@ public class WalletServiceImplTest {
                 .isDeleted(false).name("testName").usedAt(TimeZoneUtils.getGmtCurrentDate())
                 .build();
 
-        Mockito.when(profileService.findByUserIdWithValidation()).thenReturn(profile);
+        Mockito.when(profileService.findByUserId()).thenReturn(profile);
 
         Mockito.when(walletDao.findWalletByIdAndProfileIdAndIsDeleted(1L, profile, false))
                 .thenReturn(Optional.of(wallet));
@@ -99,7 +99,7 @@ public class WalletServiceImplTest {
         Sort sort = Sort.by(Sort.Direction.DESC, "isDefault")
                 .and(Sort.by(Sort.Direction.DESC, "usedAt"));
 
-        Mockito.when(profileService.findByUserIdWithValidation()).thenReturn(profile);
+        Mockito.when(profileService.findByUserId()).thenReturn(profile);
         Mockito.when(walletDao.findWalletByProfileIdAndIsDeleted(profile, false, sort))
                 .thenReturn(wallets);
         List<Wallet> all = walletService.getAll();
@@ -120,7 +120,7 @@ public class WalletServiceImplTest {
         Wallet wallet = Wallet.builder().currency(DefaultCurrency.EUR).isDefault(true).id(1L)
                 .isDeleted(false).name("testName").usedAt(TimeZoneUtils.getGmtCurrentDate())
                 .build();
-        Mockito.when(profileService.findByUserIdWithValidation()).thenReturn(profile);
+        Mockito.when(profileService.findByUserId()).thenReturn(profile);
         Mockito.when(walletDao.save(wallet)).thenReturn(wallet);
         Wallet walletId = walletService.update(wallet);
         assertEquals(wallet, walletId);
@@ -138,7 +138,7 @@ public class WalletServiceImplTest {
                 .build();
         Mockito.when(walletDao.findWalletByIdAndProfileIdAndIsDeleted(1L, profile, false))
                 .thenReturn(Optional.of(wallet));
-        Mockito.when(profileService.findByUserIdWithValidation()).thenReturn(profile);
+        Mockito.when(profileService.findByUserId()).thenReturn(profile);
 
         assertThrows(IllegalArgumentException.class, () -> walletService.delete(wallet.getId()));
         wallet.setIsDefault(false);
