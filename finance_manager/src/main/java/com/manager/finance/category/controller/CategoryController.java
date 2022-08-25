@@ -36,16 +36,19 @@ public class CategoryController {
     @PostMapping("/categories")
     public ResponseEntity<Long> createCategory(@RequestBody
                                                CategoryRequestDto categoryRequestDto) {
-        return new ResponseEntity<>(categoryService.save(categoryRequestDto), HttpStatus.OK);
+        Profile profile = profileService.findByUserIdOrCreate();
+        return new ResponseEntity<>(categoryService.save(categoryRequestDto, profile),
+                HttpStatus.OK);
     }
 
     @GetMapping("/categories")
     public ResponseEntity<List<?>> getAllIncomeCategories(
             @RequestParam(name = "categoryType") String categoryType) {
+        Profile profile = profileService.findByUserIdOrCreate();
         List<CategoryResponseDto> categoryResponseDto = new ArrayList<>();
         if (categoryType.equals(CategoryType.INCOME.name())) {
             List<ProfileCategory> allCategoryByType =
-                    categoryService.findAllIncomeCategory();
+                    categoryService.findAllIncomeCategory(profile);
 
             categoryResponseDto =
                     categoryMapper.toCategoryResponseDtoList(allCategoryByType);
@@ -54,16 +57,11 @@ public class CategoryController {
                             CategoryType.INCOME));
         } else if (categoryType.equals(CategoryType.EXPENSE.name())) {
             List<ProfileCategory> profileCategoryList =
-                    categoryService.findAllExpenseCategory();
-
-            Profile profile = profileService.findByUserId();
-            if (profile == null) {
-                profile = profileService.createDefaultProfile();
-            }
-
+                    categoryService.findAllExpenseCategory(profile);
             for (ProfileCategory profileCategory : profileCategoryList) {
                 List<CategoryResponseDto> subcategories =
-                        subcategoryService.findAllByCategoryId(profileCategory.getId(), profile);
+                        subcategoryService.findAllByParentCategoryId(profileCategory.getId(),
+                                profile);
                 subcategories.forEach(expenseCategories -> expenseCategories.setCategoryType(
                         CategoryType.EXPENSE));
                 categoryResponseDto.add(
@@ -87,7 +85,8 @@ public class CategoryController {
     public ResponseEntity<CategoryResponseDto> updateCategoryById(
             @PathVariable("id") Long categoryId,
             @RequestBody CategoryRequestDto categoryRequestDto) {
-        return new ResponseEntity<>(categoryService.update(categoryId, categoryRequestDto),
+        Profile profile = profileService.findByUserIdOrCreate();
+        return new ResponseEntity<>(categoryService.update(categoryId, categoryRequestDto, profile),
                 HttpStatus.OK);
     }
 
@@ -106,8 +105,10 @@ public class CategoryController {
     @PostMapping("/subcategories")
     public ResponseEntity<Long> createSubcategory(@RequestBody
                                                   CategoryRequestDto categoryRequestDto) {
+        Profile profile = profileService.findByUserIdOrCreate();
         categoryService.getById(categoryRequestDto.getParentCategoryId());
-        return new ResponseEntity<>(subcategoryService.save(categoryRequestDto), HttpStatus.OK);
+        return new ResponseEntity<>(subcategoryService.save(categoryRequestDto, profile),
+                HttpStatus.OK);
     }
 
     @PutMapping("/subcategories/{id}")

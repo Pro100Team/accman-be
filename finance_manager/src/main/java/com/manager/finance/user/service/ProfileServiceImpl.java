@@ -1,5 +1,7 @@
 package com.manager.finance.user.service;
 
+import com.manager.finance.category.service.api.ProfileCategoryService;
+import com.manager.finance.category.service.api.ProfileSubcategoryService;
 import com.manager.finance.mapstruct.mapper.ProfileMapper;
 import com.manager.finance.user.dao.ProfileDao;
 import com.manager.finance.user.model.entity.Profile;
@@ -16,13 +18,12 @@ public class ProfileServiceImpl implements ProfileService {
     private final ProfileDao profileDao;
     private final UserService userService;
     private final ProfileMapper profileMapper;
+    private final ProfileCategoryService categoryService;
+    private final ProfileSubcategoryService profileSubcategoryService;
 
     @Override
     public void deleteProfile() {
-        Profile activeProfile = findByUserId();
-        if (activeProfile == null) {
-            activeProfile = createDefaultProfile();
-        }
+        Profile activeProfile = findByUserIdOrCreate();
         if (activeProfile != null) {
             activeProfile.setIsDeleted(true);
             profileDao.save(activeProfile);
@@ -30,23 +31,23 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Profile findByUserId() {
+    public Profile findByUserIdOrCreate() {
         User user = userService.getByUserHolder();
-        return profileDao.findProfileByUserIdAndIsDeleted(user, false);
+        Profile profile =
+                profileDao.findProfileByUserIdAndIsDeleted(user, false);
+        if (profile == null) {
+            profile = createDefaultProfile();
+            categoryService.createDefaultCategory(profile);
+            profileSubcategoryService.createDefaultCategory(profile);
+        }
+        return profile;
     }
 
-    @Override
-    public Profile createDefaultProfile() {
+    private Profile createDefaultProfile() {
         User user = userService.getByUserHolder();
         Profile profile =
                 profileMapper.mapToNewProfile(false, TimeZoneUtils.getGmtCurrentDate(), user);
-
-        Profile createdProfile = profileDao.save(profile);
-        createDefaultCategories(createdProfile);
-        return createdProfile;
+        return profileDao.save(profile);
     }
 
-    public void createDefaultCategories(Profile profile) {
-
-    }
 }

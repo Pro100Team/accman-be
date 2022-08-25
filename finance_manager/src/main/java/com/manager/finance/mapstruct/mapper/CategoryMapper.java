@@ -3,9 +3,9 @@ package com.manager.finance.mapstruct.mapper;
 import com.manager.finance.category.model.dto.request.CategoryRequestDto;
 import com.manager.finance.category.model.dto.response.CategoryResponseDto;
 import com.manager.finance.category.model.entity.Category;
+import com.manager.finance.category.model.entity.DefaultCategory;
 import com.manager.finance.category.model.entity.ProfileCategory;
 import com.manager.finance.category.model.entity.ProfileSubcategory;
-import com.manager.finance.user.model.entity.Profile;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,11 +24,13 @@ public interface CategoryMapper {
             CategoryRequestDto categoryRequestDto,
             Category category);
 
+    @Mapping(target = "categoryId", source = "category")
+    @Mapping(target = "id", ignore = true)
+    ProfileCategory toCreateDefaultProfileCategory(DefaultCategory defaultCategory,
+                                                   Category category);
+
     @Mapping(target = "name", source = "profileCategory.categoryId.name")
     CategoryResponseDto toCategoryResponseDto(ProfileCategory profileCategory);
-
-    List<CategoryResponseDto> toCategoryResponseDtoList(
-            List<ProfileCategory> allCategoryByType);
 
     @Mapping(target = "subcategory", source = "subCategories")
     @Mapping(target = "name", source = "profileCategory.categoryId.name")
@@ -39,19 +41,7 @@ public interface CategoryMapper {
     @Mapping(target = "name", source = "subcategory.subcategoryId.name")
     CategoryResponseDto toExpenseSubcategoryResponseDto(ProfileSubcategory subcategory);
 
-    @Mapping(target = "category", source = "subcategoryId")
-    List<CategoryResponseDto> toExpenseSubcategoryResponseDto(
-            List<ProfileSubcategory> profileSubCategory);
+    List<CategoryResponseDto> toCategoryResponseDtoList(
+            List<ProfileCategory> allCategoryByType);
 
-    @Mapping(target = "subcategoryId", source = "category")
-    @Mapping(target = "id", ignore = true)
-    ProfileSubcategory toProfileSubcategory(CategoryRequestDto subcategoryRequestDto,
-                                            Category category, Profile profile);
-
-    @Mapping(target = "subcategoryId", source = "category")
-    @Mapping(target = "id",ignore = true)
-    ProfileSubcategory toProfileSubcategoryForUpdating(
-            @MappingTarget ProfileSubcategory subcategory,
-            CategoryRequestDto categoryRequestDto,
-            Category category);
 }

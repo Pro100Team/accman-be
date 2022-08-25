@@ -44,9 +44,9 @@ public class WalletServiceImplTest {
         Wallet wallet = Wallet.builder().currency(DefaultCurrency.EUR).isDefault(true).id(1L)
                 .isDeleted(false).name("testName").usedAt(TimeZoneUtils.getGmtCurrentDate())
                 .build();
-        Mockito.when(profileService.findByUserId()).thenReturn(profile);
+        Mockito.when(profileService.findByUserIdOrCreate()).thenReturn(profile);
         Mockito.when(walletDao.save(wallet)).thenReturn(wallet);
-        Long walletId = walletService.save(wallet);
+        Long walletId = walletService.save(wallet, profile);
         assertEquals(wallet.getId(), walletId);
     }
 
@@ -61,12 +61,12 @@ public class WalletServiceImplTest {
                 .isDeleted(false).name("testName").usedAt(TimeZoneUtils.getGmtCurrentDate())
                 .build();
 
-        Mockito.when(profileService.findByUserId()).thenReturn(profile);
+        Mockito.when(profileService.findByUserIdOrCreate()).thenReturn(profile);
 
         Mockito.when(walletDao.findWalletByIdAndProfileIdAndIsDeleted(1L, profile, false))
                 .thenReturn(Optional.of(wallet));
 
-        Wallet byIdWithUserHolder = walletService.getByIdWithUserHolder(1L);
+        Wallet byIdWithUserHolder = walletService.getById(1L, profile);
         assertEquals(wallet, byIdWithUserHolder);
     }
 
@@ -99,10 +99,10 @@ public class WalletServiceImplTest {
         Sort sort = Sort.by(Sort.Direction.DESC, "isDefault")
                 .and(Sort.by(Sort.Direction.DESC, "usedAt"));
 
-        Mockito.when(profileService.findByUserId()).thenReturn(profile);
+        Mockito.when(profileService.findByUserIdOrCreate()).thenReturn(profile);
         Mockito.when(walletDao.findWalletByProfileIdAndIsDeleted(profile, false, sort))
                 .thenReturn(wallets);
-        List<Wallet> all = walletService.getAll();
+        List<Wallet> all = walletService.getAll(profile);
 
         assertAll(
                 () -> assertTrue(all.get(0).getIsDefault()),
@@ -120,9 +120,9 @@ public class WalletServiceImplTest {
         Wallet wallet = Wallet.builder().currency(DefaultCurrency.EUR).isDefault(true).id(1L)
                 .isDeleted(false).name("testName").usedAt(TimeZoneUtils.getGmtCurrentDate())
                 .build();
-        Mockito.when(profileService.findByUserId()).thenReturn(profile);
+        Mockito.when(profileService.findByUserIdOrCreate()).thenReturn(profile);
         Mockito.when(walletDao.save(wallet)).thenReturn(wallet);
-        Wallet walletId = walletService.update(wallet);
+        Wallet walletId = walletService.update(wallet, profile);
         assertEquals(wallet, walletId);
     }
 
@@ -138,11 +138,12 @@ public class WalletServiceImplTest {
                 .build();
         Mockito.when(walletDao.findWalletByIdAndProfileIdAndIsDeleted(1L, profile, false))
                 .thenReturn(Optional.of(wallet));
-        Mockito.when(profileService.findByUserId()).thenReturn(profile);
+        Mockito.when(profileService.findByUserIdOrCreate()).thenReturn(profile);
 
-        assertThrows(IllegalArgumentException.class, () -> walletService.delete(wallet.getId()));
+        assertThrows(IllegalArgumentException.class,
+                () -> walletService.delete(wallet.getId(), profile));
         wallet.setIsDefault(false);
-        walletService.delete(wallet.getId());
+        walletService.delete(wallet.getId(), profile);
     }
 
 }

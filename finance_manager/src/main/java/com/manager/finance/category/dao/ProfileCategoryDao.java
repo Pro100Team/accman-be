@@ -1,5 +1,6 @@
 package com.manager.finance.category.dao;
 
+import com.manager.finance.category.model.entity.Category;
 import com.manager.finance.category.model.entity.ProfileCategory;
 import com.manager.finance.category.model.entity.api.CategoryType;
 import com.manager.finance.user.model.entity.Profile;
@@ -13,4 +14,6 @@ public interface ProfileCategoryDao extends JpaRepository<ProfileCategory, Long>
                                                              Boolean isDeleted);
 
     Optional<ProfileCategory> findByIdAndIsDeleted(Long parentCategoryId, boolean b);
+
+    ProfileCategory findByCategoryIdAndProfileId(Category parentCategory, Profile profile);
 }

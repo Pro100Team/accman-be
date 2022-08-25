@@ -6,11 +6,14 @@
 package com.manager.finance.category.service.api;
 
 import com.manager.finance.category.model.entity.Category;
+import java.util.List;
 
 public interface CategoryService {
     Category getById(Long id);
 
-    Category getByName(String name);
+    Category getByNameOrCreate(String name);
 
     Category save(String name);
+
+    List<Category> getByIsDefault();
 }

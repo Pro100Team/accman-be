@@ -31,7 +31,13 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/v.0.0.4/create-table-subcategory.sql
   - include:
+      file: db/changelog/changeset/v.0.0.3/m2-change-table-transactions-category-field.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.4/create-table-default-category.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.4/create-table-default-subcategory.sql
+  - include:
       file: db/changelog/changeset/v.0.0.4/insert-default-categories.sql
   - include:
-      file: db/changelog/changeset/v.0.0.3/m2-change-table-transactions-category-field.sql
+      file: db/changelog/changeset/v.0.0.4/insert-default-subcategories.sql
 

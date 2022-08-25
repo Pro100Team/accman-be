@@ -1,17 +1,18 @@
 package com.manager.finance.category.service;
 
 import com.manager.finance.category.dao.ProfileCategoryDao;
-import com.manager.finance.category.exception.CategoryNotFoundException;
+import com.manager.finance.exception.category.CategoryNotFoundException;
 import com.manager.finance.category.model.dto.request.CategoryRequestDto;
 import com.manager.finance.category.model.dto.response.CategoryResponseDto;
 import com.manager.finance.category.model.entity.Category;
+import com.manager.finance.category.model.entity.DefaultCategory;
 import com.manager.finance.category.model.entity.ProfileCategory;
 import com.manager.finance.category.model.entity.api.CategoryType;
 import com.manager.finance.category.service.api.CategoryService;
+import com.manager.finance.category.service.api.DefaultCategoryService;
 import com.manager.finance.category.service.api.ProfileCategoryService;
 import com.manager.finance.mapstruct.mapper.CategoryMapper;
 import com.manager.finance.user.model.entity.Profile;
-import com.manager.finance.user.service.api.ProfileService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,24 +20,16 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ProfileCategoryServiceImpl implements ProfileCategoryService {
-    private final ProfileService profileService;
     private final CategoryMapper categoryMapper;
     private final ProfileCategoryDao profileCategoryDao;
     private final CategoryService categoryService;
+    private final DefaultCategoryService defaultCategoryService;
 
     @Override
-    public Long save(CategoryRequestDto categoryRequestDto) {
-        String name = categoryRequestDto.getName();
-        Category category = categoryService.getByName(name);
-        if (category == null) {
-            category = categoryService.save(name);
-        }
+    public Long save(CategoryRequestDto categoryRequestDto, Profile profile) {
+        Category category = categoryService.getByNameOrCreate(categoryRequestDto.getName());
         ProfileCategory profileCategory =
                 categoryMapper.toProfileCategory(categoryRequestDto, category);
-        Profile profile = profileService.findByUserId();
-        if (profile == null) {
-            profile = profileService.createDefaultProfile();
-        }
         profileCategory.setProfileId(profile);
         profileCategory.setIsDeleted(false);
         return profileCategoryDao.save(profileCategory).getId();
@@ -44,21 +37,14 @@ public class ProfileCategoryServiceImpl implements ProfileCategoryService {
 
     @Override
     public CategoryResponseDto update(Long categoryId,
-                                      CategoryRequestDto categoryRequestDto) {
+                                      CategoryRequestDto categoryDto, Profile profile) {
         ProfileCategory profileCategory = profileCategoryDao.findById(categoryId).orElseThrow(
                 () -> new CategoryNotFoundException(
                         "Category with id: " + categoryId + " not found"));
-        Category category = categoryService.getByName(categoryRequestDto.getName());
-        if (category == null) {
-            categoryService.save(categoryRequestDto.getName());
-        }
+        Category category = categoryService.getByNameOrCreate(categoryDto.getName());
         ProfileCategory entity = categoryMapper.toProfileCategoryForUpdating(profileCategory,
-                categoryRequestDto,
+                categoryDto,
                 category);
-        Profile profile = profileService.findByUserId();
-        if (profile == null) {
-            profile = profileService.createDefaultProfile();
-        }
         profileCategory.setProfileId(profile);
         profileCategory = profileCategoryDao.save(entity);
         return categoryMapper.toCategoryResponseDto(profileCategory);
@@ -73,22 +59,14 @@ public class ProfileCategoryServiceImpl implements ProfileCategoryService {
     }
 
     @Override
-    public List<ProfileCategory> findAllIncomeCategory() {
-        Profile profile = profileService.findByUserId();
-        if (profile == null) {
-            profile = profileService.createDefaultProfile();
-        }
+    public List<ProfileCategory> findAllIncomeCategory(Profile profile) {
         return profileCategoryDao.findByCategoryTypeAndProfileIdAndIsDeleted(CategoryType.INCOME,
                 profile,
                 false);
     }
 
     @Override
-    public List<ProfileCategory> findAllExpenseCategory() {
-        Profile profile = profileService.findByUserId();
-        if (profile == null) {
-            profile = profileService.createDefaultProfile();
-        }
+    public List<ProfileCategory> findAllExpenseCategory(Profile profile) {
         return profileCategoryDao.findByCategoryTypeAndProfileIdAndIsDeleted(CategoryType.EXPENSE,
                 profile,
                 false);
@@ -99,5 +77,23 @@ public class ProfileCategoryServiceImpl implements ProfileCategoryService {
         return profileCategoryDao.findByIdAndIsDeleted(parentCategoryId, false)
                 .orElseThrow(() -> new CategoryNotFoundException(
                         "Category with id: " + parentCategoryId + " not found"));
+    }
+
+    @Override
+    public void createDefaultCategory(Profile profile) {
+        List<DefaultCategory> categoryList = defaultCategoryService.getAll();
+        for (DefaultCategory defaultCategory : categoryList) {
+            Category category = categoryService.getByNameOrCreate(defaultCategory.getName());
+            ProfileCategory profileCategory =
+                    categoryMapper.toCreateDefaultProfileCategory(defaultCategory, category);
+            profileCategory.setIsDeleted(false);
+            profileCategory.setProfileId(profile);
+            profileCategoryDao.save(profileCategory);
+        }
+    }
+
+    @Override
+    public ProfileCategory getByCategoryIdAndProfile(Category parentCategory, Profile profile) {
+        return profileCategoryDao.findByCategoryIdAndProfileId(parentCategory,profile);
     }
 }

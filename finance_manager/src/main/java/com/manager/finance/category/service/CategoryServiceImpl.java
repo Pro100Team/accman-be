@@ -6,9 +6,10 @@
 package com.manager.finance.category.service;
 
 import com.manager.finance.category.dao.CategoryDao;
-import com.manager.finance.category.exception.CategoryNotFoundException;
+import com.manager.finance.exception.category.CategoryNotFoundException;
 import com.manager.finance.category.model.entity.Category;
 import com.manager.finance.category.service.api.CategoryService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getByName(String name) {
-        return categoryDao.findByName(name);
+    public Category getByNameOrCreate(String name) {
+        Category category = categoryDao.findByName(name);
+        return category == null ? save(name) : category;
     }
 
     @Override
     public Category save(String name) {
         return categoryDao.save(Category.builder().name(name).isDefault(false).build());
+    }
+
+    @Override
+    public List<Category> getByIsDefault() {
+        return categoryDao.findByIsDefault(true);
     }
 }

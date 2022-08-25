@@ -1,34 +1,19 @@
 --liquibase formatted sql
 --changeset "ivkam":3
 
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Salary');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Child support received');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Gift');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Partner’s salary');
-
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Home & utilities');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Insurance');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Food');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Entertainment & Hobby');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Health & Sport');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Beauty');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Clothes');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Transport');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Education');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Pets');
-INSERT INTO public.categories(cat_is_default, cat_name)
-VALUES (true, 'Children');
+INSERT INTO public.default_category(id, def_cat_type, def_cat_color, def_cat_name)
+VALUES (1, 1, 'FF0000', 'Salary'),
+       (2, 1, 'FF0000', 'Child support received'),
+       (3, 1, 'FF0000', 'Gift'),
+       (4, 1, 'FF0000', 'Partner’s salary'),
+       (5, 0, 'FF0000', 'Home & utilities'),
+       (6, 0, 'FF0000', 'Insurance'),
+       (7, 0, 'FF0000', 'Food'),
+       (8, 0, 'FF0000', 'Entertainment & Hobby'),
+       (9, 0, 'FF0000', 'Health & Sport'),
+       (10, 0, 'FF0000', 'Beauty'),
+       (11, 0, 'FF0000', 'Clothes'),
+       (12, 0, 'FF0000', 'Transport'),
+       (13, 0, 'FF0000', 'Education'),
+       (14, 0, 'FF0000', 'Pets'),
+       (15, 0, 'FF0000', 'Children');
