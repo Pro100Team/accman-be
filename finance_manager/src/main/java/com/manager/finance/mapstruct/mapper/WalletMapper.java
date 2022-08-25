@@ -14,17 +14,26 @@ import org.mapstruct.Named;
 public interface WalletMapper {
 
     @Named("intToStringDouble")
-    static String intToStringDouble(Integer amount) {
-        return amount == null ? "0.00"
-                : new Formatter().format("%.2f", ((double) (amount)) / 100).toString();
+    public static String intToStringDouble(int amount) {
+        return new Formatter().format("%.2f", ((double) (amount)) / 100).toString();
     }
 
     @Mapping(target = "balance", source = "amount", qualifiedByName = "intToStringDouble")
     WalletResponseDto walletToWalletResponseDto(Wallet wallet);
 
+    @Mapping(target = "id",ignore = true)
+    @Mapping(target = "isDeleted",ignore = true)
+    @Mapping(target = "usedAt",ignore = true)
+    @Mapping(target = "profileId",ignore = true)
+    @Mapping(target = "amount",ignore = true)
     Wallet walletRequestDtoToWalletUpdate(@MappingTarget Wallet wallet,
                                           WalletRequestDto walletRequestDto);
 
+    @Mapping(target = "isDeleted",ignore = true)
+    @Mapping(target = "usedAt",ignore = true)
+    @Mapping(target = "profileId",ignore = true)
+    @Mapping(target = "amount",ignore = true)
+    @Mapping(target = "id",ignore = true)
     Wallet walletRequestDtoToWallet(WalletRequestDto walletRequestDto);
 
     @Mapping(target = "balance", source = "amount", qualifiedByName = "intToStringDouble")

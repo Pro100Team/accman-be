@@ -21,15 +21,17 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/v.0.0.2/update-user-login.sql
   - include:
-      file: db/changelog/changeset/v.0.0.3/m1-create-table-categories.sql
-  - include:
-      file: db/changelog/changeset/v.0.0.3/m2-change-table-transactions-category-field.sql
-  - include:
-      file: db/changelog/changeset/v.0.0.3/m3-change-table-categories-profile-field.sql
-  - include:
       file: db/changelog/changeset/v.0.0.3/remove-user-profiles.sql
   - include:
-      file: db/changelog/changeset/v.0.0.3/allert-table-categories.sql
+      file: db/changelog/changeset/v.0.0.3/update-user-passwords.sql
   - include:
-      file: db/changelog/changeset/v.0.0.3/insert-default-categories.sql
+      file: db/changelog/changeset/v.0.0.4/create-table-category.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.4/create-table-profile-category.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.4/create-table-subcategory.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.4/insert-default-categories.sql
+  - include:
+      file: db/changelog/changeset/v.0.0.3/m2-change-table-transactions-category-field.sql
 

@@ -12,5 +12,8 @@ public interface ProfileMapper {
     @Mapping(target = "userId", source = "user")
     @Mapping(target = "dtUpdate", source = "gmtCurrentDate")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "firstName", ignore = true)
+    @Mapping(target = "lastName", ignore = true)
+    @Mapping(target = "country", ignore = true)
     Profile mapToNewProfile(Boolean isDeleted, LocalDateTime gmtCurrentDate, User user);
 }

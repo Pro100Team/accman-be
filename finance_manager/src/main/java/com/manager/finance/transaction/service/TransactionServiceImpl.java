@@ -31,12 +31,6 @@ public class TransactionServiceImpl implements TransactionService {
     private final WalletService walletService;
 
     @Override
-    public List<TransactionResponseDto> getAll() {
-        ///////////   TO BE REMOVED OR CHANGE IT
-        return null;
-    }
-
-    @Override
     public List<TransactionResponseDto> findAllByWallet(Long walletId,
                                                         Integer pageNumber,
                                                         Integer pageSize,

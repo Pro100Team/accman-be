@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset "gs":2
+--changeset "ivkam":2
 
 CREATE TABLE IF NOT EXISTS public.profiles
 (

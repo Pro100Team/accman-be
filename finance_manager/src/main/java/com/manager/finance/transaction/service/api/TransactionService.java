@@ -10,7 +10,6 @@ import com.sandbox.model.TransactionResponseDto;
 import java.util.List;
 
 public interface TransactionService {
-    List<TransactionResponseDto> getAll();
 
     List<TransactionResponseDto> findAllByWallet(Long walletId, Integer pageNumber,
                                                  Integer pageSize, String sortBy);

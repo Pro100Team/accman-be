@@ -20,6 +20,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void deleteProfile() {
         Profile activeProfile = findByUserId();
+        if (activeProfile == null) {
+            activeProfile = createDefaultProfile();
+        }
         if (activeProfile != null) {
             activeProfile.setIsDeleted(true);
             profileDao.save(activeProfile);

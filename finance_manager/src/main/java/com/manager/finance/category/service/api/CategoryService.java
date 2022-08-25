@@ -5,21 +5,12 @@
 
 package com.manager.finance.category.service.api;
 
-import com.sandbox.model.CategoryRequestDto;
-import com.sandbox.model.CategoryResponseDto;
-import com.sandbox.model.TransactionTypeParameter;
-import java.util.List;
+import com.manager.finance.category.model.entity.Category;
 
 public interface CategoryService {
+    Category getById(Long id);
 
-    CategoryResponseDto getById(Long id);
+    Category getByName(String name);
 
-    CategoryResponseDto update(Long categoryId, CategoryRequestDto categoryRequestDto);
-
-    void delete(Long id);
-
-    Long save(CategoryRequestDto categoryRequestDto);
-
-    List<CategoryResponseDto> findAllByCategoryType(TransactionTypeParameter categoryType);
-
+    Category save(String name);
 }

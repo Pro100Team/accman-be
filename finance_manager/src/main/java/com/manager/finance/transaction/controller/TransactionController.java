@@ -35,7 +35,7 @@ public class TransactionController implements TransactionsApi {
             @Valid TransactionRequestDto transactionRequestDto) {
 
         return new ResponseEntity<>(transactionService.save(transactionRequestDto),
-                                    HttpStatus.CREATED);
+                HttpStatus.CREATED);
     }
 
     @Override
