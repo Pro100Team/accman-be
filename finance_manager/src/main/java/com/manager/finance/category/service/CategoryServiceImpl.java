@@ -6,9 +6,9 @@
 package com.manager.finance.category.service;
 
 import com.manager.finance.category.dao.CategoryDao;
-import com.manager.finance.exception.category.CategoryNotFoundException;
 import com.manager.finance.category.model.entity.Category;
 import com.manager.finance.category.service.api.CategoryService;
+import com.manager.finance.exception.category.CategoryNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

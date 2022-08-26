@@ -1,7 +1,6 @@
 package com.manager.finance.category.service;
 
 import com.manager.finance.category.dao.ProfileCategoryDao;
-import com.manager.finance.exception.category.CategoryNotFoundException;
 import com.manager.finance.category.model.dto.request.CategoryRequestDto;
 import com.manager.finance.category.model.dto.response.CategoryResponseDto;
 import com.manager.finance.category.model.entity.Category;
@@ -11,6 +10,7 @@ import com.manager.finance.category.model.entity.api.CategoryType;
 import com.manager.finance.category.service.api.CategoryService;
 import com.manager.finance.category.service.api.DefaultCategoryService;
 import com.manager.finance.category.service.api.ProfileCategoryService;
+import com.manager.finance.exception.category.CategoryNotFoundException;
 import com.manager.finance.mapstruct.mapper.CategoryMapper;
 import com.manager.finance.user.model.entity.Profile;
 import java.util.List;
@@ -94,6 +94,6 @@ public class ProfileCategoryServiceImpl implements ProfileCategoryService {
 
     @Override
     public ProfileCategory getByCategoryIdAndProfile(Category parentCategory, Profile profile) {
-        return profileCategoryDao.findByCategoryIdAndProfileId(parentCategory,profile);
+        return profileCategoryDao.findByCategoryIdAndProfileId(parentCategory, profile);
     }
 }
