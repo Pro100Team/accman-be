@@ -6,6 +6,8 @@
 package com.manager.finance.transaction.controller;
 
 import com.manager.finance.transaction.service.api.TransactionService;
+import com.manager.finance.user.model.entity.Profile;
+import com.manager.finance.user.service.api.ProfileService;
 import com.sandbox.api.TransactionsApi;
 import com.sandbox.model.FilterParameter;
 import com.sandbox.model.SortParameter;
@@ -25,20 +27,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/")
 @RequiredArgsConstructor
 public class TransactionController implements TransactionsApi {
-
+    private final ProfileService profileService;
     private final TransactionService transactionService;
 
     @Override
     public ResponseEntity<Long> createTransaction(
             @Valid TransactionRequestDto transactionRequestDto) {
-
-        return new ResponseEntity<>(transactionService.save(transactionRequestDto),
-                                    HttpStatus.CREATED);
+        Profile profile = profileService.findByUserIdOrCreate();
+        return new ResponseEntity<>(transactionService.save(transactionRequestDto, profile),
+                HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Void> deleteTtransactionById(Long transactionId) {
-        transactionService.delete(transactionId);
+        Profile profile = profileService.findByUserIdOrCreate();
+        transactionService.delete(transactionId, profile);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -54,16 +57,20 @@ public class TransactionController implements TransactionsApi {
             @Valid TransactionTypeParameter transactionsType,
             @Valid List<FilterParameter> filterBy,
             @Valid Long walletId) {
+        Profile profile = profileService.findByUserIdOrCreate();
         return walletId == null
-                ? ResponseEntity.ok(transactionService.getAll(page, size, transactionsType))
+                ?
+                ResponseEntity.ok(transactionService.getAll(page, size, transactionsType, profile))
                 : ResponseEntity.ok(transactionService.findAllByWallet(
-                        walletId, page, size, sortBy));
+                walletId, page, size, sortBy, profile));
     }
 
     @Override
     public ResponseEntity<TransactionResponseDto> updateTransactionById(
             Long transactionId,
             @Valid TransactionRequestDto transactionRequestDto) {
-        return ResponseEntity.ok(transactionService.update(transactionId, transactionRequestDto));
+        Profile profile = profileService.findByUserIdOrCreate();
+        return ResponseEntity.ok(
+                transactionService.update(transactionId, transactionRequestDto, profile));
     }
 }

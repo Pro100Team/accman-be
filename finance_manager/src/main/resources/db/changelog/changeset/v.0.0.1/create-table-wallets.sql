@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset "gs":4
+--changeset "ivkam":4
 
 --CREATE TABLE IF NOT EXISTS public.wallets
 --(

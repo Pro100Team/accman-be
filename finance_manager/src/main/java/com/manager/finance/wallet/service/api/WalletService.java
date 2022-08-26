@@ -5,15 +5,15 @@ import com.manager.finance.wallet.model.entity.Wallet;
 import java.util.List;
 
 public interface WalletService {
-    List<Wallet> getAll();
+    List<Wallet> getAll(Profile profile);
 
-    Wallet getByIdWithUserHolder(Long id);
+    Wallet getById(Long id, Profile profile);
 
-    Long save(Wallet wallet);
+    Long save(Wallet wallet, Profile profile);
 
-    Wallet update(Wallet wallet);
+    Wallet update(Wallet wallet, Profile profile);
 
-    void delete(Long id);
+    void delete(Long id, Profile profile);
 
     Wallet getDefaultWallet(Profile profile);
 }

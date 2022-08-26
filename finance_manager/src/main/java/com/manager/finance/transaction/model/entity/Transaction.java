@@ -5,7 +5,8 @@
 
 package com.manager.finance.transaction.model.entity;
 
-import com.manager.finance.category.model.entity.Category;
+import com.manager.finance.category.model.entity.ProfileCategory;
+import com.manager.finance.category.model.entity.ProfileSubcategory;
 import com.manager.finance.wallet.model.entity.Wallet;
 import com.manager.finance.wallet.model.entity.api.DefaultCurrency;
 import com.sandbox.model.TransactionTypeParameter;
@@ -41,8 +42,12 @@ public class Transaction {
     @Column(name = "tr_amount", nullable = false)
     private int amount;
 
-    @Column(name = "tr_sub_category", nullable = false)
-    private String subcategory;
+    @ManyToOne
+    @JoinColumn(name = "tr_pr_category")
+    private ProfileCategory category;
+    @ManyToOne
+    @JoinColumn(name = "tr_pr_sub_category")
+    private ProfileSubcategory subcategory;
 
     @Column(name = "tr_payer", nullable = false)
     private String payer;
@@ -57,14 +62,10 @@ public class Transaction {
     private Boolean isDeleted;
 
     @Column(name = "tr_last_updated")
-    private LocalDate date;
+    private LocalDate lastUpdated;
 
     @ManyToOne
     @JoinColumn(name = "tr_wallet_id", referencedColumnName = "w_id", nullable = false)
     private Wallet wallet;
-
-    @ManyToOne
-    @JoinColumn(name = "tr_category_id", referencedColumnName = "cat_id", nullable = false)
-    private Category category;
 
 }

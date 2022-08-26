@@ -1,4 +1,4 @@
-package com.manager.finance.security.config;
+package com.manager.finance.security.filter;
 
 import java.io.IOException;
 import javax.servlet.Filter;

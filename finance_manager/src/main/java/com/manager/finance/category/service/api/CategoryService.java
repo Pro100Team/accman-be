@@ -5,22 +5,15 @@
 
 package com.manager.finance.category.service.api;
 
-import com.sandbox.model.CategoryRequestDto;
-import com.sandbox.model.CategoryResponseDto;
-import com.sandbox.model.TransactionTypeParameter;
+import com.manager.finance.category.model.entity.Category;
 import java.util.List;
-import org.springframework.http.ResponseEntity;
 
 public interface CategoryService {
+    Category getById(Long id);
 
-    CategoryResponseDto getById(Long id);
+    Category getByNameOrCreate(String name);
 
-    CategoryResponseDto update(Long categoryId, CategoryRequestDto categoryRequestDto);
+    Category save(String name);
 
-    ResponseEntity<Void> delete(Long id);
-
-    Long save(CategoryRequestDto categoryRequestDto);
-
-    List<CategoryResponseDto> findAllByCategoryType(TransactionTypeParameter categoryType);
-
+    List<Category> getByIsDefault();
 }

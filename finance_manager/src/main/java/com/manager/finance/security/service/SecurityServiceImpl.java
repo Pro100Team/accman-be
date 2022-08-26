@@ -32,7 +32,7 @@ public class SecurityServiceImpl implements SecurityService {
     public String getJwtToken(UserLoginDto userDto) {
         final String login = userDto.getUsername();
         User user = userService.getByLogin(login);
-        if (user == null || !user.getPassword().equals(userDto.getPassword())) {
+        if (user == null || passwordEncoder.matches(user.getPassword(), userDto.getPassword())) {
             throw new UserNotFoundException("Incorrect username or password entered");
         }
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils

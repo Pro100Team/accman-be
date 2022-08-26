@@ -2,7 +2,6 @@ package com.manager.finance.wallet.service;
 
 import com.manager.finance.exception.wallet.WalletNotFoundException;
 import com.manager.finance.user.model.entity.Profile;
-import com.manager.finance.user.service.ProfileServiceImpl;
 import com.manager.finance.util.TimeZoneUtils;
 import com.manager.finance.wallet.dao.WalletDao;
 import com.manager.finance.wallet.model.entity.Wallet;
@@ -16,28 +15,23 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class WalletServiceImpl implements WalletService {
-    private final ProfileServiceImpl profileService;
     private final WalletDao walletDao;
 
     @Override
-    public List<Wallet> getAll() {
-        Profile profile = profileService.findByUserIdWithValidation();
+    public List<Wallet> getAll(Profile profile) {
         return walletDao.findWalletByProfileIdAndIsDeleted(profile, false,
                 orderByDefaultAndUsedAt());
     }
 
     @Override
-    public Wallet getByIdWithUserHolder(Long id) {
-        Profile profile = profileService.findByUserIdWithValidation();
-        Wallet wallet = walletDao.findWalletByIdAndProfileIdAndIsDeleted(
+    public Wallet getById(Long id, Profile profile) {
+        return walletDao.findWalletByIdAndProfileIdAndIsDeleted(
                 id, profile, false).orElseThrow(() ->
                 new WalletNotFoundException("wallet with id: " + id + " - not found"));
-        return wallet;
     }
 
     @Override
-    public Long save(Wallet wallet) {
-        Profile profile = profileService.findByUserIdWithValidation();
+    public Long save(Wallet wallet, Profile profile) {
         currencyNameValidation(wallet, profile);
         if (wallet.getIsDefault()) {
             switchDefaultWallet(wallet, profile);
@@ -50,8 +44,8 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public Wallet update(Wallet wallet) {
-        Profile profile = profileService.findByUserIdWithValidation();
+    public Wallet update(Wallet wallet, Profile profile) {
+
         currencyNameValidation(wallet, profile);
         if (wallet.getIsDefault()) {
             switchDefaultWallet(wallet, profile);
@@ -62,8 +56,8 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public void delete(Long id) {
-        Wallet wallet = getByIdWithUserHolder(id);
+    public void delete(Long id, Profile profile) {
+        Wallet wallet = getById(id,profile);
         if (wallet.getIsDefault()) {
             throw new IllegalArgumentException("Unable to delete default wallet");
         }
